@@ -1,13 +1,13 @@
-package ru.syndicate.atmosphere.presentation.theme
+package ru.syndicate.atmosphere.core.presentation.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import atmosphere.composeapp.generated.resources.Res
-import atmosphere.composeapp.generated.resources.inter_bold
-import atmosphere.composeapp.generated.resources.inter_medium
-import atmosphere.composeapp.generated.resources.inter_regular
+import atmosphere.core.generated.resources.Res
+import atmosphere.core.generated.resources.inter_bold
+import atmosphere.core.generated.resources.inter_medium
+import atmosphere.core.generated.resources.inter_regular
 import org.jetbrains.compose.resources.Font
 
 @Composable

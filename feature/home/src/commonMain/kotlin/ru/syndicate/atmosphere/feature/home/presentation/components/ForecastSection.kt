@@ -1,4 +1,4 @@
-package ru.syndicate.atmosphere.presentation.screen.home.components
+package ru.syndicate.atmosphere.feature.home.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -25,20 +25,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import atmosphere.composeapp.generated.resources.Res
-import atmosphere.composeapp.generated.resources.rain_svg
+import atmosphere.feature.home.generated.resources.Res
+import atmosphere.feature.home.generated.resources.rain_svg
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
-import ru.syndicate.atmosphere.presentation.theme.LightWhite
+import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
 
-enum class ForecastType(val title: String) {
+internal enum class ForecastType(val title: String) {
     Today("Today"),
     Tomorrow("Tomorrow"),
     SeveralDay("7 days")
 }
 
 @Composable
-fun ForecastSection(
+internal fun ForecastSection(
     modifier: Modifier = Modifier
 ) {
 
@@ -121,7 +121,7 @@ fun ForecastSection(
 }
 
 @Composable
-fun ForecastItem(
+internal fun ForecastItem(
     modifier: Modifier = Modifier,
     time: String,
     temperature: String,

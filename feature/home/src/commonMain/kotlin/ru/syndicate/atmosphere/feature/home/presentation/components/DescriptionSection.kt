@@ -1,46 +1,36 @@
-package ru.syndicate.atmosphere.presentation.screen.home.components
+package ru.syndicate.atmosphere.feature.home.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import atmosphere.composeapp.generated.resources.Res
-import atmosphere.composeapp.generated.resources.rain_svg
-import atmosphere.composeapp.generated.resources.temperature_svg
+import atmosphere.feature.home.generated.resources.Res
+import atmosphere.feature.home.generated.resources.rain_svg
+import atmosphere.feature.home.generated.resources.temperature_svg
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeTint
-import dev.chrisbanes.haze.haze
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
-import ru.syndicate.atmosphere.presentation.theme.BackgroundColor
+import ru.syndicate.atmosphere.core.presentation.theme.BackgroundColor
 
 @Composable
-fun DescriptionSection(
+internal fun DescriptionSection(
     modifier: Modifier = Modifier,
     hazeState: HazeState
 ) {
@@ -93,7 +83,7 @@ fun DescriptionSection(
 }
 
 @Composable
-private fun DescriptionCard(
+internal fun DescriptionCard(
     modifier: Modifier = Modifier,
     title: String,
     icon: DrawableResource,

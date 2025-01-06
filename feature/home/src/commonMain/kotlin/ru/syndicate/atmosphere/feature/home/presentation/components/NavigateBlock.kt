@@ -1,4 +1,4 @@
-package ru.syndicate.atmosphere.presentation.screen.home.components
+package ru.syndicate.atmosphere.feature.home.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -17,13 +17,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import atmosphere.composeapp.generated.resources.Res
-import atmosphere.composeapp.generated.resources.arrow_right_svg
-import atmosphere.composeapp.generated.resources.arrow_svg
+import atmosphere.feature.home.generated.resources.Res
+import atmosphere.feature.home.generated.resources.arrow_right_svg
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun NavigateBlock(
+internal fun NavigateBlock(
     modifier: Modifier = Modifier,
     title: String,
     description: String,

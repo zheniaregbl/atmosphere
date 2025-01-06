@@ -1,4 +1,4 @@
-package ru.syndicate.atmosphere.presentation.screen.home.components
+package ru.syndicate.atmosphere.feature.home.presentation.components
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Image
@@ -17,15 +17,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import atmosphere.composeapp.generated.resources.Res
-import atmosphere.composeapp.generated.resources.arrow_svg
-import atmosphere.composeapp.generated.resources.search_svg
-import atmosphere.composeapp.generated.resources.settings_svg
+import atmosphere.feature.home.generated.resources.Res
+import atmosphere.feature.home.generated.resources.arrow_svg
+import atmosphere.feature.home.generated.resources.search_svg
+import atmosphere.feature.home.generated.resources.settings_svg
 import org.jetbrains.compose.resources.painterResource
-import ru.syndicate.atmosphere.presentation.theme.LightWhite
+import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
 
 @Composable
-fun TopPanel(
+internal fun TopPanel(
     modifier: Modifier = Modifier,
     topPanelTitle: MutableState<String>,
     onSearchClick: () -> Unit,

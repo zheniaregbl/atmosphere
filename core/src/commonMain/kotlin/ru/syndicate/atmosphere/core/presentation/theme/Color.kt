@@ -1,4 +1,4 @@
-package ru.syndicate.atmosphere.presentation.theme
+package ru.syndicate.atmosphere.core.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

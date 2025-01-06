@@ -43,15 +43,12 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
 
-            implementation(libs.haze)
-            implementation(libs.haze.materials)
-
-            implementation(libs.compottie)
-            implementation(libs.compottie.resources)
-
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.screenmodel)
             implementation(libs.voyager.transitions)
+
+            implementation(projects.core)
+            implementation(projects.feature.home)
         }
         androidMain.dependencies {
             implementation(compose.preview)

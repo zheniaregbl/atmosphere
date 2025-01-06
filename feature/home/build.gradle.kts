@@ -30,6 +30,17 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            api(compose.components.resources)
+
+            implementation(libs.haze)
+            implementation(libs.haze.materials)
+
+            implementation(libs.compottie)
+            implementation(libs.compottie.resources)
+
+            implementation(libs.voyager.navigator)
+            implementation(libs.voyager.screenmodel)
+
             implementation(projects.core)
         }
     }

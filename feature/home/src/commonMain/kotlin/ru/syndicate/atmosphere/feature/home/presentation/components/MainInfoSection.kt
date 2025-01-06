@@ -1,14 +1,12 @@
-package ru.syndicate.atmosphere.presentation.screen.home.components
+package ru.syndicate.atmosphere.feature.home.presentation.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,20 +20,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import atmosphere.composeapp.generated.resources.Res
-import atmosphere.composeapp.generated.resources.arrow_svg
-import atmosphere.composeapp.generated.resources.humidity_svg
-import atmosphere.composeapp.generated.resources.wind_svg
+import atmosphere.feature.home.generated.resources.Res
+import atmosphere.feature.home.generated.resources.humidity_svg
+import atmosphere.feature.home.generated.resources.wind_svg
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeTint
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
-import ru.syndicate.atmosphere.presentation.theme.BackgroundColor
-import ru.syndicate.atmosphere.presentation.theme.LightWhite
+import ru.syndicate.atmosphere.core.presentation.theme.BackgroundColor
+import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
 
-sealed class WeatherParameter(
+internal sealed class WeatherParameter(
     val title: String,
     val unit: String,
     val icon: DrawableResource
@@ -56,7 +53,7 @@ sealed class WeatherParameter(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun MainInfoSection(
+internal fun MainInfoSection(
     modifier: Modifier = Modifier,
     hazeState: HazeState
 ) {
@@ -115,7 +112,7 @@ fun MainInfoSection(
 }
 
 @Composable
-private fun ParameterView(
+internal fun ParameterView(
     modifier: Modifier = Modifier,
     value: String,
     weatherParameter: WeatherParameter

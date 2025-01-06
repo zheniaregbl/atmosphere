@@ -1,4 +1,4 @@
-package ru.syndicate.atmosphere.presentation.screen.home
+package ru.syndicate.atmosphere.feature.home.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -14,8 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,7 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import atmosphere.composeapp.generated.resources.Res
+import atmosphere.feature.home.generated.resources.Res
 import cafe.adriel.voyager.core.screen.Screen
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
@@ -47,12 +45,12 @@ import io.github.alexzhirkevich.compottie.animateLottieCompositionAsState
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import io.github.alexzhirkevich.compottie.rememberLottiePainter
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import ru.syndicate.atmosphere.presentation.screen.home.components.DescriptionSection
-import ru.syndicate.atmosphere.presentation.screen.home.components.ForecastSection
-import ru.syndicate.atmosphere.presentation.screen.home.components.MainInfoSection
-import ru.syndicate.atmosphere.presentation.screen.home.components.NavigateBlock
-import ru.syndicate.atmosphere.presentation.screen.home.components.TopPanel
-import ru.syndicate.atmosphere.presentation.theme.BackgroundColor
+import ru.syndicate.atmosphere.core.presentation.theme.BackgroundColor
+import ru.syndicate.atmosphere.feature.home.presentation.components.DescriptionSection
+import ru.syndicate.atmosphere.feature.home.presentation.components.ForecastSection
+import ru.syndicate.atmosphere.feature.home.presentation.components.MainInfoSection
+import ru.syndicate.atmosphere.feature.home.presentation.components.NavigateBlock
+import ru.syndicate.atmosphere.feature.home.presentation.components.TopPanel
 
 class HomeScreen : Screen {
 
@@ -69,7 +67,7 @@ class HomeScreen : Screen {
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun HomeScreenImpl(
+internal fun HomeScreenImpl(
     modifier: Modifier = Modifier,
     currentTown: String,
 ) {
