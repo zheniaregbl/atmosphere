@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,6 +32,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.sp
 import atmosphere.feature.home.generated.resources.Res
 import cafe.adriel.voyager.core.screen.Screen
@@ -117,11 +119,13 @@ internal fun HomeScreenImpl(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(top = 26.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
 
             TopPanel(
                 modifier = Modifier
+                    .widthIn(max = 800.dp)
                     .fillMaxWidth()
                     .padding(horizontal = 30.dp),
                 topPanelTitle = topPanelTitle,
@@ -131,6 +135,7 @@ internal fun HomeScreenImpl(
 
             LazyColumn(
                 modifier = Modifier
+                    .widthIn(max = 800.dp)
                     .fillMaxSize()
                     .padding(horizontal = 20.dp),
                 state = lazyListState,
