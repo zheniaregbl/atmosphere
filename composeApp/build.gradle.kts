@@ -57,14 +57,6 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
             implementation(libs.ktor.client.okhttp)
-
-            implementation(libs.kotlinx.serialization.json)
-
-            implementation(libs.koin.compose)
-            implementation(libs.koin.compose.viewmodel)
-            api(libs.koin.core)
-
-            implementation(libs.bundles.ktor)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)

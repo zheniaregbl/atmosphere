@@ -1,5 +1,10 @@
 package ru.syndicate.atmosphere.feature.home.presentation
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,6 +27,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,6 +40,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import atmosphere.feature.home.generated.resources.Res
 import cafe.adriel.voyager.core.screen.Screen
 import dev.chrisbanes.haze.HazeDefaults
@@ -47,31 +54,42 @@ import io.github.alexzhirkevich.compottie.animateLottieCompositionAsState
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import io.github.alexzhirkevich.compottie.rememberLottiePainter
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.koin.compose.viewmodel.koinViewModel
 import ru.syndicate.atmosphere.core.presentation.theme.BackgroundColor
 import ru.syndicate.atmosphere.feature.home.presentation.components.DescriptionSection
 import ru.syndicate.atmosphere.feature.home.presentation.components.ForecastSection
 import ru.syndicate.atmosphere.feature.home.presentation.components.MainInfoSection
 import ru.syndicate.atmosphere.feature.home.presentation.components.NavigateBlock
 import ru.syndicate.atmosphere.feature.home.presentation.components.TopPanel
+import ru.syndicate.atmosphere.feature.home.presentation.util.lottieStringByWeatherCode
 
 class HomeScreen : Screen {
 
     @Composable
     override fun Content() {
+
+        val viewModel = koinViewModel<HomeViewModel>()
+        val state by viewModel.state.collectAsStateWithLifecycle()
+
+        LaunchedEffect(Unit) { viewModel.onAction(HomeAction.UpdateWeatherInfo) }
+
         HomeScreenImpl(
             modifier = Modifier
                 .fillMaxSize()
                 .statusBarsPadding(),
-            currentTown = "Moscow"
+            state = state,
+            currentTown = "Moscow",
+            onAction = { viewModel.onAction(it) }
         )
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 internal fun HomeScreenImpl(
     modifier: Modifier = Modifier,
+    state: HomeState = HomeState(),
     currentTown: String,
+    onAction: (HomeAction) -> Unit
 ) {
 
     val hazeState = remember { HazeState() }
@@ -79,16 +97,6 @@ internal fun HomeScreenImpl(
     val lazyListState = rememberLazyListState()
 
     val topPanelTitle = remember { mutableStateOf("Home") }
-
-    val composition by rememberLottieComposition {
-        LottieCompositionSpec.JsonString(
-            Res.readBytes("files/sun_rain.json").decodeToString()
-        )
-    }
-    val progress by animateLottieCompositionAsState(
-        composition = composition,
-        iterations = Compottie.IterateForever
-    )
 
     LaunchedEffect(lazyListState.firstVisibleItemIndex) {
         println(lazyListState.firstVisibleItemIndex)
@@ -99,26 +107,45 @@ internal fun HomeScreenImpl(
 
     Box(modifier = modifier) {
 
-        Image(
-            modifier = Modifier
-                .height(440.dp)
-                .fillMaxWidth()
-                .align(Alignment.TopCenter)
-                .padding(top = 80.dp)
-                .padding(horizontal = 50.dp)
-                .alpha(0.35f)
-                .haze(hazeState),
-            painter = rememberLottiePainter(
+        AnimatedContent(
+            targetState = state.currentWeatherParameters.weatherCode,
+            transitionSpec = {
+                fadeIn(tween(durationMillis = 200)) togetherWith
+                        ExitTransition.None
+            }
+        ) { weatherCode ->
+
+            val composition by rememberLottieComposition {
+                LottieCompositionSpec
+                    .JsonString(
+                        lottieStringByWeatherCode(weatherCode)
+                    )
+            }
+            val progress by animateLottieCompositionAsState(
                 composition = composition,
-                progress = { progress },
-            ),
-            contentDescription = null
-        )
+                iterations = Compottie.IterateForever
+            )
+
+            Image(
+                modifier = Modifier
+                    .height(380.dp)
+                    .fillMaxWidth()
+                    .align(Alignment.TopCenter)
+                    .padding(horizontal = 50.dp)
+                    .alpha(0.35f)
+                    .haze(hazeState),
+                painter = rememberLottiePainter(
+                    composition = composition,
+                    progress = { progress },
+                ),
+                contentDescription = null
+            )
+        }
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 26.dp),
+                .padding(top = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
@@ -156,7 +183,10 @@ internal fun HomeScreenImpl(
                 item {
                     MainInfoSection(
                         modifier = Modifier.fillMaxWidth(),
-                        hazeState = hazeState
+                        currentWeatherParameters = state.currentWeatherParameters,
+                        isLoading = state.isLoading,
+                        hazeState = hazeState,
+                        onRefreshClick = { onAction(HomeAction.UpdateWeatherInfo) }
                     )
                 }
 

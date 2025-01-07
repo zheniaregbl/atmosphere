@@ -42,6 +42,8 @@ kotlin {
             api(compose.ui)
             api(compose.components.resources)
             api(compose.components.uiToolingPreview)
+
+            api(libs.bundles.ktor)
         }
         desktopMain.dependencies {
             api(compose.desktop.currentOs)
