@@ -27,7 +27,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,10 +37,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import atmosphere.feature.home.generated.resources.Res
 import cafe.adriel.voyager.core.screen.Screen
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
@@ -53,7 +50,6 @@ import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.animateLottieCompositionAsState
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import io.github.alexzhirkevich.compottie.rememberLottiePainter
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.koin.compose.viewmodel.koinViewModel
 import ru.syndicate.atmosphere.core.presentation.theme.BackgroundColor
 import ru.syndicate.atmosphere.feature.home.presentation.components.DescriptionSection
@@ -108,6 +104,8 @@ internal fun HomeScreenImpl(
     Box(modifier = modifier) {
 
         AnimatedContent(
+            modifier = Modifier
+                .haze(hazeState),
             targetState = state.currentWeatherParameters.weatherCode,
             transitionSpec = {
                 fadeIn(tween(durationMillis = 200)) togetherWith
@@ -132,8 +130,7 @@ internal fun HomeScreenImpl(
                     .fillMaxWidth()
                     .align(Alignment.TopCenter)
                     .padding(horizontal = 50.dp)
-                    .alpha(0.35f)
-                    .haze(hazeState),
+                    .alpha(0.35f),
                 painter = rememberLottiePainter(
                     composition = composition,
                     progress = { progress },
@@ -191,7 +188,10 @@ internal fun HomeScreenImpl(
                 }
 
                 item {
-                    ForecastSection(modifier = Modifier.fillMaxWidth())
+                    ForecastSection(
+                        modifier = Modifier.fillMaxWidth(),
+                        hourlyWeather = state.hourlyWeather
+                    )
                 }
 
                 item {

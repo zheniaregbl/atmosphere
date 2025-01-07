@@ -10,9 +10,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,11 +28,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import atmosphere.feature.home.generated.resources.Res
-import atmosphere.feature.home.generated.resources.rain_svg
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
+import ru.syndicate.atmosphere.feature.home.domain.model.HourlyWeather
+import ru.syndicate.atmosphere.feature.home.presentation.util.iconByWeatherCode
 
 internal enum class ForecastType(val title: String) {
     Today("Today"),
@@ -39,10 +45,20 @@ internal enum class ForecastType(val title: String) {
 
 @Composable
 internal fun ForecastSection(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    hourlyWeather: HourlyWeather
 ) {
 
     var selectedForecastType by remember { mutableStateOf(ForecastType.Today) }
+
+    val forecastListState = rememberLazyListState()
+
+    LaunchedEffect(hourlyWeather) {
+        if (hourlyWeather.temperatures.isNotEmpty()) {
+            val currentHour = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).hour
+            forecastListState.animateScrollToItem(currentHour)
+        }
+    }
 
     Column(
         modifier = modifier,
@@ -102,17 +118,20 @@ internal fun ForecastSection(
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth(),
+                state = forecastListState,
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
 
-                items(24) {
+                itemsIndexed(hourlyWeather.temperatures) { index, temperature ->
 
                     ForecastItem(
                         modifier = Modifier.padding(10.dp),
-                        time = if (it < 10) "0$it:00"
-                        else "$it:00",
-                        temperature = "15°",
-                        weatherIcon = Res.drawable.rain_svg
+                        time = if (index < 9) "0$index:00"
+                        else "$index:00",
+                        temperature = "$temperature°",
+                        weatherIcon = iconByWeatherCode(
+                            hourlyWeather.weatherCodes[index]
+                        )
                     )
                 }
             }

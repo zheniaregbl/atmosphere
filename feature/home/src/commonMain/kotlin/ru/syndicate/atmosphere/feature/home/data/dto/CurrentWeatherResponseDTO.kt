@@ -4,6 +4,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class WeatherResponseDTO(
+data class CurrentWeatherResponseDTO(
     @SerialName("current") val currentParameters: CurrentParametersDTO
 )

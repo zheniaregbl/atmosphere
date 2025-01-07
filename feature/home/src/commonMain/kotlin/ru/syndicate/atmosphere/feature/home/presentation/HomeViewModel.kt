@@ -12,6 +12,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.syndicate.atmosphere.core.domain.onError
 import ru.syndicate.atmosphere.core.domain.onSuccess
+import ru.syndicate.atmosphere.feature.home.domain.model.CurrentWeatherParameters
+import ru.syndicate.atmosphere.feature.home.domain.model.HourlyWeather
 import ru.syndicate.atmosphere.feature.home.domain.repository.WeatherRepository
 
 class HomeViewModel(
@@ -20,7 +22,7 @@ class HomeViewModel(
 
     private val _state = MutableStateFlow(HomeState())
     val state = _state
-        .onStart { getCurrentWeather() }
+        .onStart { getWeather() }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
@@ -29,28 +31,47 @@ class HomeViewModel(
 
     fun onAction(action: HomeAction) {
         when (action) {
-            HomeAction.UpdateWeatherInfo -> getCurrentWeather()
+            HomeAction.UpdateWeatherInfo -> getWeather()
         }
     }
 
-    private fun getCurrentWeather() = viewModelScope.launch {
+    private fun getWeather() = viewModelScope.launch {
 
         _state.update { it.copy(isLoading = true) }
+
+        var newCurrentWeatherParameters = CurrentWeatherParameters()
+        var newHourlyWeather = HourlyWeather()
 
         delay(2000)
 
         weatherRepository.getCurrentWeather()
             .onSuccess { currentWeatherParameters ->
-                _state.update { it.copy(
-                    isLoading = false,
-                    currentWeatherParameters = currentWeatherParameters
-                ) }
+                newCurrentWeatherParameters = currentWeatherParameters
             }
             .onError {
                 println("error: ${it.name}")
                 _state.update { it.copy(
                     isLoading = false
                 ) }
+                return@launch
             }
+
+        weatherRepository.getHourlyWeather()
+            .onSuccess { hourlyWeather ->
+                newHourlyWeather = hourlyWeather
+            }
+            .onError {
+                println("error: ${it.name}")
+                _state.update { it.copy(
+                    isLoading = false
+                ) }
+                return@launch
+            }
+
+        _state.update { it.copy(
+            isLoading = false,
+            currentWeatherParameters = newCurrentWeatherParameters,
+            hourlyWeather = newHourlyWeather
+        ) }
     }
 }
