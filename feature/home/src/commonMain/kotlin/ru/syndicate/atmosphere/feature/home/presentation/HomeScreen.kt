@@ -1,10 +1,5 @@
 package ru.syndicate.atmosphere.feature.home.presentation
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,6 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -57,6 +53,7 @@ import ru.syndicate.atmosphere.feature.home.presentation.components.ForecastSect
 import ru.syndicate.atmosphere.feature.home.presentation.components.MainInfoSection
 import ru.syndicate.atmosphere.feature.home.presentation.components.NavigateBlock
 import ru.syndicate.atmosphere.feature.home.presentation.components.TopPanel
+import ru.syndicate.atmosphere.feature.home.presentation.components.WeatherImage
 import ru.syndicate.atmosphere.feature.home.presentation.util.lottieStringByWeatherCode
 
 class HomeScreen : Screen {
@@ -65,7 +62,7 @@ class HomeScreen : Screen {
     override fun Content() {
 
         val viewModel = koinViewModel<HomeViewModel>()
-        val state by viewModel.state.collectAsStateWithLifecycle()
+        val state = viewModel.state.collectAsStateWithLifecycle()
 
         LaunchedEffect(Unit) { viewModel.onAction(HomeAction.UpdateWeatherInfo) }
 
@@ -83,7 +80,7 @@ class HomeScreen : Screen {
 @Composable
 internal fun HomeScreenImpl(
     modifier: Modifier = Modifier,
-    state: HomeState = HomeState(),
+    state: State<HomeState>,
     currentTown: String,
     onAction: (HomeAction) -> Unit
 ) {
@@ -103,41 +100,13 @@ internal fun HomeScreenImpl(
 
     Box(modifier = modifier) {
 
-        AnimatedContent(
+        WeatherImage(
             modifier = Modifier
-                .haze(hazeState),
-            targetState = state.currentWeatherParameters.weatherCode,
-            transitionSpec = {
-                fadeIn(tween(durationMillis = 200)) togetherWith
-                        ExitTransition.None
-            }
-        ) { weatherCode ->
-
-            val composition by rememberLottieComposition {
-                LottieCompositionSpec
-                    .JsonString(
-                        lottieStringByWeatherCode(weatherCode)
-                    )
-            }
-            val progress by animateLottieCompositionAsState(
-                composition = composition,
-                iterations = Compottie.IterateForever
-            )
-
-            Image(
-                modifier = Modifier
-                    .height(380.dp)
-                    .fillMaxWidth()
-                    .align(Alignment.TopCenter)
-                    .padding(horizontal = 50.dp)
-                    .alpha(0.35f),
-                painter = rememberLottiePainter(
-                    composition = composition,
-                    progress = { progress },
-                ),
-                contentDescription = null
-            )
-        }
+                .height(380.dp)
+                .fillMaxWidth(),
+            hazeState = hazeState,
+            state = state
+        )
 
         Column(
             modifier = Modifier
@@ -180,8 +149,7 @@ internal fun HomeScreenImpl(
                 item {
                     MainInfoSection(
                         modifier = Modifier.fillMaxWidth(),
-                        currentWeatherParameters = state.currentWeatherParameters,
-                        isLoading = state.isLoading,
+                        state = state,
                         hazeState = hazeState,
                         onRefreshClick = { onAction(HomeAction.UpdateWeatherInfo) }
                     )
@@ -190,7 +158,7 @@ internal fun HomeScreenImpl(
                 item {
                     ForecastSection(
                         modifier = Modifier.fillMaxWidth(),
-                        hourlyWeather = state.hourlyWeather
+                        state = state
                     )
                 }
 

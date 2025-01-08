@@ -30,6 +30,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -57,6 +58,8 @@ import org.jetbrains.compose.resources.painterResource
 import ru.syndicate.atmosphere.core.presentation.theme.BackgroundColor
 import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
 import ru.syndicate.atmosphere.feature.home.domain.model.CurrentWeatherParameters
+import ru.syndicate.atmosphere.feature.home.presentation.DisplayResult
+import ru.syndicate.atmosphere.feature.home.presentation.HomeState
 
 internal sealed class WeatherParameter(
     val title: String,
@@ -81,11 +84,24 @@ internal sealed class WeatherParameter(
 @Composable
 internal fun MainInfoSection(
     modifier: Modifier = Modifier,
-    currentWeatherParameters: CurrentWeatherParameters,
-    isLoading: Boolean,
+    state: State<HomeState>,
     hazeState: HazeState,
     onRefreshClick: () -> Unit
 ) {
+
+    val shimmerInstance = rememberShimmer(
+        shimmerBounds = ShimmerBounds.Window,
+        theme = defaultShimmerTheme.copy(
+            animationSpec = infiniteRepeatable(
+                animation = shimmerSpec(
+                    durationMillis = 800,
+                    easing = LinearEasing,
+                    delayMillis = 500,
+                ),
+                repeatMode = RepeatMode.Restart,
+            )
+        )
+    )
 
     val weatherParameterList = listOf(
         WeatherParameter.Wind,
@@ -97,44 +113,35 @@ internal fun MainInfoSection(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        AnimatedContent(
-            targetState = isLoading,
-            transitionSpec = {
-                fadeIn(tween(durationMillis = 200)) togetherWith
-                        ExitTransition.None
+        state.value.toUiState().DisplayResult(
+            modifier = Modifier.fillMaxWidth(),
+            onIdle = {},
+            onError = {},
+            onLoading = {
+                AdaptiveCircularProgressIndicator(
+                    modifier = Modifier
+                        .padding(30.dp)
+                        .size(50.dp),
+                    color = Color.White,
+                )
+            },
+            onSuccess = {
+                Text(
+                    modifier = Modifier.padding(vertical = 14.dp),
+                    text = "${state.value.weatherInfo.currentWeatherParameters.temperature}°",
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 74.sp,
+                    color = Color.White
+                )
             }
-        ) { isLoadingState ->
-
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
-
-                if (!isLoadingState) {
-                    Text(
-                        modifier = Modifier.padding(vertical = 14.dp),
-                        text = "${currentWeatherParameters.temperature}°",
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 74.sp,
-                        color = Color.White
-                    )
-                } else {
-                    AdaptiveCircularProgressIndicator(
-                        modifier = Modifier
-                            .padding(30.dp)
-                            .size(50.dp),
-                        color = Color.White,
-                    )
-                }
-            }
-        }
+        )
 
         Spacer(modifier = Modifier.height(10.dp))
 
         AnimatedVisibility(
             modifier = Modifier.fillMaxWidth(),
-            visible = !isLoading,
+            visible = !state.value.isLoading,
             enter = fadeIn(),
             exit = ExitTransition.None
         ) {
@@ -168,36 +175,84 @@ internal fun MainInfoSection(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        FlowRow(
-            modifier = Modifier.padding(vertical = 14.dp),
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
+        state.value.toUiState().DisplayResult(
+            modifier = Modifier.fillMaxWidth(),
+            onIdle = {},
+            onError = {},
+            onLoading = {
+                FlowRow(
+                    modifier = Modifier.padding(vertical = 14.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
 
-            weatherParameterList.forEach {
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .shimmer(shimmerInstance)
+                            .size(
+                                width = 130.dp,
+                                height = 70.dp
+                            )
+                            .background(color = Color.LightGray)
+                            .padding(14.dp)
+                    )
 
-                ParameterView(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .hazeChild(
-                            state = hazeState,
-                            style = HazeDefaults
-                                .style(
-                                    backgroundColor = BackgroundColor,
-                                    tint = HazeTint(color = Color.DarkGray.copy(alpha = .5f)),
-                                    blurRadius = 8.dp,
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .shimmer(shimmerInstance)
+                            .size(
+                                width = 130.dp,
+                                height = 70.dp
+                            )
+                            .background(color = Color.LightGray)
+                            .padding(14.dp)
+                    )
+                }
+            },
+            onSuccess = {
+                FlowRow(
+                    modifier = Modifier.padding(vertical = 14.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+
+                    weatherParameterList.forEach {
+
+                        ParameterView(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(8.dp))
+                                .hazeChild(
+                                    state = hazeState,
+                                    style = HazeDefaults
+                                        .style(
+                                            backgroundColor = BackgroundColor,
+                                            tint = HazeTint(color = Color.DarkGray.copy(alpha = .5f)),
+                                            blurRadius = 8.dp,
+                                        )
                                 )
+                                .padding(14.dp),
+                            value = when (it) {
+                                WeatherParameter.Wind -> state
+                                    .value
+                                    .weatherInfo
+                                    .currentWeatherParameters
+                                    .windSpeed
+                                    .toString()
+                                WeatherParameter.Humidity -> state
+                                    .value
+                                    .weatherInfo
+                                    .currentWeatherParameters
+                                    .humidity
+                                    .toString()
+                            },
+                            weatherParameter = it
                         )
-                        .padding(14.dp),
-                    value = when (it) {
-                        WeatherParameter.Wind -> currentWeatherParameters.windSpeed.toString()
-                        WeatherParameter.Humidity -> currentWeatherParameters.humidity.toString()
-                    },
-                    isLoading = isLoading,
-                    weatherParameter = it
-                )
+                    }
+                }
             }
-        }
+        )
     }
 }
 
@@ -205,23 +260,8 @@ internal fun MainInfoSection(
 internal fun ParameterView(
     modifier: Modifier = Modifier,
     value: String,
-    isLoading: Boolean,
     weatherParameter: WeatherParameter
 ) {
-
-    val shimmerInstance = rememberShimmer(
-        shimmerBounds = ShimmerBounds.View,
-        theme = defaultShimmerTheme.copy(
-            animationSpec = infiniteRepeatable(
-                animation = shimmerSpec(
-                    durationMillis = 800,
-                    easing = LinearEasing,
-                    delayMillis = 500,
-                ),
-                repeatMode = RepeatMode.Restart,
-            )
-        )
-    )
 
     Column(
         modifier = modifier,
@@ -239,39 +279,13 @@ internal fun ParameterView(
                 contentDescription = null
             )
 
-            AnimatedContent(
-                targetState = isLoading,
-                transitionSpec = {
-                    fadeIn(tween(durationMillis = 200)) togetherWith
-                            ExitTransition.None
-                }
-            ) { isLoadingState ->
-
-                Box(modifier = Modifier.wrapContentSize()) {
-
-                    if (!isLoadingState) {
-                        Text(
-                            text = "$value ${weatherParameter.unit}",
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.Normal,
-                            fontSize = 16.sp,
-                            color = LightWhite
-                        )
-                    } else {
-                        Box(
-                            modifier = Modifier
-                                .shimmer(shimmerInstance)
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .clip(RoundedCornerShape(2.dp))
-                                    .size(height = 20.dp, width = 40.dp)
-                                    .background(color = Color.LightGray)
-                            )
-                        }
-                    }
-                }
-            }
+            Text(
+                text = "$value ${weatherParameter.unit}",
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Normal,
+                fontSize = 16.sp,
+                color = LightWhite
+            )
         }
 
         Text(

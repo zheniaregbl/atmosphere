@@ -10,10 +10,13 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import ru.syndicate.atmosphere.core.domain.DataError
+import ru.syndicate.atmosphere.core.domain.Result
 import ru.syndicate.atmosphere.core.domain.onError
 import ru.syndicate.atmosphere.core.domain.onSuccess
 import ru.syndicate.atmosphere.feature.home.domain.model.CurrentWeatherParameters
 import ru.syndicate.atmosphere.feature.home.domain.model.HourlyWeather
+import ru.syndicate.atmosphere.feature.home.domain.model.WeatherInfo
 import ru.syndicate.atmosphere.feature.home.domain.repository.WeatherRepository
 
 class HomeViewModel(
@@ -21,8 +24,17 @@ class HomeViewModel(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
+
     val state = _state
-        .onStart { getWeather() }
+        .onStart {
+            viewModelScope.launch {
+                _state.update {  it.copy(isLoading = true)}
+                delay(2000)
+                getCurrentWeather()
+                getHourlyWeather()
+                _state.update {  it.copy(isLoading = false)}
+            }
+        }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
@@ -31,47 +43,51 @@ class HomeViewModel(
 
     fun onAction(action: HomeAction) {
         when (action) {
-            HomeAction.UpdateWeatherInfo -> getWeather()
+            HomeAction.UpdateWeatherInfo -> {
+                viewModelScope.launch {
+                    _state.update {  it.copy(isLoading = true)}
+                    delay(2000)
+                    getCurrentWeather()
+                    getHourlyWeather()
+                    _state.update {  it.copy(isLoading = false)}
+                }
+            }
         }
     }
 
-    private fun getWeather() = viewModelScope.launch {
-
-        _state.update { it.copy(isLoading = true) }
-
-        var newCurrentWeatherParameters = CurrentWeatherParameters()
-        var newHourlyWeather = HourlyWeather()
-
-        delay(2000)
+    private suspend fun getCurrentWeather() {
 
         weatherRepository.getCurrentWeather()
             .onSuccess { currentWeatherParameters ->
-                newCurrentWeatherParameters = currentWeatherParameters
+                _state.update { it.copy(
+                    weatherInfo = _state.value.weatherInfo.copy(
+                        currentWeatherParameters = currentWeatherParameters
+                    )
+                ) }
             }
             .onError {
                 println("error: ${it.name}")
                 _state.update { it.copy(
                     isLoading = false
                 ) }
-                return@launch
             }
+    }
+
+    private suspend fun getHourlyWeather() {
 
         weatherRepository.getHourlyWeather()
             .onSuccess { hourlyWeather ->
-                newHourlyWeather = hourlyWeather
+                _state.update { it.copy(
+                    weatherInfo = _state.value.weatherInfo.copy(
+                        hourlyWeather = hourlyWeather
+                    )
+                ) }
             }
             .onError {
                 println("error: ${it.name}")
                 _state.update { it.copy(
                     isLoading = false
                 ) }
-                return@launch
             }
-
-        _state.update { it.copy(
-            isLoading = false,
-            currentWeatherParameters = newCurrentWeatherParameters,
-            hourlyWeather = newHourlyWeather
-        ) }
     }
 }
