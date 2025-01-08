@@ -1,6 +1,5 @@
 package ru.syndicate.atmosphere.feature.home.presentation
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,12 +22,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -39,22 +36,15 @@ import cafe.adriel.voyager.core.screen.Screen
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeTint
-import dev.chrisbanes.haze.haze
 import dev.chrisbanes.haze.hazeChild
-import io.github.alexzhirkevich.compottie.Compottie
-import io.github.alexzhirkevich.compottie.LottieCompositionSpec
-import io.github.alexzhirkevich.compottie.animateLottieCompositionAsState
-import io.github.alexzhirkevich.compottie.rememberLottieComposition
-import io.github.alexzhirkevich.compottie.rememberLottiePainter
 import org.koin.compose.viewmodel.koinViewModel
 import ru.syndicate.atmosphere.core.presentation.theme.BackgroundColor
 import ru.syndicate.atmosphere.feature.home.presentation.components.DescriptionSection
 import ru.syndicate.atmosphere.feature.home.presentation.components.ForecastSection
-import ru.syndicate.atmosphere.feature.home.presentation.components.MainInfoSection
+import ru.syndicate.atmosphere.feature.home.presentation.components.WeatherParameterSection
 import ru.syndicate.atmosphere.feature.home.presentation.components.NavigateBlock
 import ru.syndicate.atmosphere.feature.home.presentation.components.TopPanel
 import ru.syndicate.atmosphere.feature.home.presentation.components.WeatherImage
-import ru.syndicate.atmosphere.feature.home.presentation.util.lottieStringByWeatherCode
 
 class HomeScreen : Screen {
 
@@ -147,7 +137,7 @@ internal fun HomeScreenImpl(
                 }
 
                 item {
-                    MainInfoSection(
+                    WeatherParameterSection(
                         modifier = Modifier.fillMaxWidth(),
                         state = state,
                         hazeState = hazeState,

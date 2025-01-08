@@ -1,15 +1,11 @@
 package ru.syndicate.atmosphere.feature.home.presentation.components
 
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.core.Ease
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,7 +22,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,7 +43,6 @@ import atmosphere.feature.home.generated.resources.Res
 import atmosphere.feature.home.generated.resources.humidity_svg
 import atmosphere.feature.home.generated.resources.wind_svg
 import com.mohamedrejeb.calf.ui.progress.AdaptiveCircularProgressIndicator
-import com.valentinilk.shimmer.Shimmer
 import com.valentinilk.shimmer.ShimmerBounds
 import com.valentinilk.shimmer.defaultShimmerTheme
 import com.valentinilk.shimmer.rememberShimmer
@@ -57,9 +56,9 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import ru.syndicate.atmosphere.core.presentation.theme.BackgroundColor
 import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
-import ru.syndicate.atmosphere.feature.home.domain.model.CurrentWeatherParameters
 import ru.syndicate.atmosphere.feature.home.presentation.DisplayResult
 import ru.syndicate.atmosphere.feature.home.presentation.HomeState
+import ru.syndicate.atmosphere.feature.home.presentation.util.descriptionByWeatherCode
 
 internal sealed class WeatherParameter(
     val title: String,
@@ -82,7 +81,7 @@ internal sealed class WeatherParameter(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-internal fun MainInfoSection(
+internal fun WeatherParameterSection(
     modifier: Modifier = Modifier,
     state: State<HomeState>,
     hazeState: HazeState,
@@ -126,18 +125,39 @@ internal fun MainInfoSection(
                 )
             },
             onSuccess = {
-                Text(
-                    modifier = Modifier.padding(vertical = 14.dp),
-                    text = "${state.value.weatherInfo.currentWeatherParameters.temperature}°",
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 74.sp,
-                    color = Color.White
-                )
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+
+                    Text(
+                        text = descriptionByWeatherCode(
+                            state
+                                .value
+                                .weatherInfo
+                                .currentWeatherParameters
+                                .weatherCode
+                        ),
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 22.sp,
+                        color = Color.White
+                    )
+
+                    Text(
+                        modifier = Modifier.padding(vertical = 14.dp),
+                        text = "${state.value.weatherInfo.currentWeatherParameters.temperature}°",
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 74.sp,
+                        color = Color.White
+                    )
+                }
             }
         )
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(6.dp))
 
         AnimatedVisibility(
             modifier = Modifier.fillMaxWidth(),
@@ -148,7 +168,7 @@ internal fun MainInfoSection(
             Box(
                 modifier = Modifier
                     .wrapContentSize()
-                    .clip(RoundedCornerShape(8.dp))
+                    .clip(CircleShape)
                     .hazeChild(
                         state = hazeState,
                         style = HazeDefaults
@@ -163,13 +183,14 @@ internal fun MainInfoSection(
                         interactionSource = remember { MutableInteractionSource() },
                         onClick = onRefreshClick
                     )
-                    .padding(
-                        horizontal = 14.dp,
-                        vertical = 10.dp
-                    ),
+                    .padding(14.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text("Refresh", color = Color.White)
+                Icon(
+                    imageVector = Icons.Default.Refresh,
+                    contentDescription = null,
+                    tint = Color.White
+                )
             }
         }
 

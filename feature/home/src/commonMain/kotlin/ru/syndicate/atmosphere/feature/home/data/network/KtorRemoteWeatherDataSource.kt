@@ -11,12 +11,6 @@ import ru.syndicate.atmosphere.feature.home.data.dto.HourlyWeatherResponseDTO
 
 private const val BASE_URL = "https://api.open-meteo.com/v1/forecast"
 
-// latitude=58.5213
-// &longitude=31.271
-// &current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,surface_pressure,wind_speed_10m,wind_direction_10m
-// &wind_speed_unit=ms
-// &timezone=Europe%2FMoscow
-
 class KtorRemoteWeatherDataSource(
     private val httpClient: HttpClient
 ): RemoteWeatherDataSource {

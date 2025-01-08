@@ -163,7 +163,7 @@ internal fun ForecastSection(
                             Box(
                                 modifier = Modifier
                                     .padding(10.dp)
-                                    .clip(RoundedCornerShape(2.dp))
+                                    .clip(RoundedCornerShape(4.dp))
                                     .shimmer(shimmerInstance)
                                     .size(
                                         width = 40.dp,

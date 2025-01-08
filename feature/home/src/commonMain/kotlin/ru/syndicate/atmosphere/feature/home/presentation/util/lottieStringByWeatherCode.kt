@@ -18,6 +18,7 @@ suspend fun lottieStringByWeatherCode(weatherCode: Int) = Res
             75, 77 -> "snow"
             in 80..82 -> "sun_rain"
             85, 86 -> "snow"
+            in 95..99 -> "rain_light"
             else -> ""
         }
         + ".json"

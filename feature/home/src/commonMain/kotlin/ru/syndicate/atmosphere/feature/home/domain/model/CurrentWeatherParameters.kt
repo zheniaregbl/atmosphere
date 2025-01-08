@@ -5,7 +5,7 @@ data class CurrentWeatherParameters(
     val humidity: Int = 0,
     val apparentTemperature: Double = 0.0,
     val isDay: Int = 1,
-    val weatherCode: Int = 99,
+    val weatherCode: Int = -1,
     val pressure: Double = 0.0,
     val windSpeed: Double = 0.0,
     val windDirection: Int = 0
