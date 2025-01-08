@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
+    <!--Text for UI components-->
+    <string name="hourly_forecast_title">Hourly forecast</string>
+    <string name="feel_like_title">Feel like</string>
+    <string name="weather_desc_title">Weather</string>
+    <string name="detail_forecast_title">Detailed forecast</string>
+    <string name="some_day_forecast_title">7 day forecast</string>
+    <string name="little_diff_temperature_text">The temperature outside feels slightly different from the readings.</string>
+    <string name="big_diff_temperature_text">The temperature outside is very different from the readings.</string>
+    <string name="no_diff_temperature_text">The temperature does not differ from the readings.</string>
+
+    <!--Weather description-->
     <string name="sun_desc">The sky is completely clear, offering a bright and sunny day with no clouds in sight. Perfect for outdoor activities!</string>
     <string name="mainly_clear_desc">Mainly clear skies with occasional small clouds. A pleasant and calm day.</string>
     <string name="partly_cloudy_desc">Partly cloudy skies with a mix of sun and clouds. Mild and comfortable.</string>

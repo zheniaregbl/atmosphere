@@ -5,12 +5,9 @@ import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -37,6 +34,8 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import atmosphere.feature.home.generated.resources.Res
+import atmosphere.feature.home.generated.resources.hourly_forecast_title
 import com.valentinilk.shimmer.ShimmerBounds
 import com.valentinilk.shimmer.defaultShimmerTheme
 import com.valentinilk.shimmer.rememberShimmer
@@ -47,25 +46,19 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
 import ru.syndicate.atmosphere.core.presentation.theme.SelectedBlue
 import ru.syndicate.atmosphere.feature.home.presentation.DisplayResult
 import ru.syndicate.atmosphere.feature.home.presentation.HomeState
 import ru.syndicate.atmosphere.feature.home.presentation.util.iconByWeatherCode
-
-internal enum class ForecastType(val title: String) {
-    Today("Today"),
-    Tomorrow("Tomorrow"),
-    SeveralDay("7 days")
-}
+import kotlin.math.roundToInt
 
 @Composable
 internal fun ForecastSection(
     modifier: Modifier = Modifier,
     state: State<HomeState>
 ) {
-
-    var selectedForecastType by remember { mutableStateOf(ForecastType.Today) }
 
     val forecastListState = rememberLazyListState()
     var currentHourIndex by remember { mutableStateOf(0) }
@@ -93,50 +86,26 @@ internal fun ForecastSection(
 
     Column(
         modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-
-            ForecastType.entries.forEach {
-
-                Text(
-                    modifier = Modifier
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) { selectedForecastType = it }
-                        .padding(
-                            horizontal = 24.dp,
-                            vertical = 14.dp
-                        ),
-                    text = it.title,
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = if (selectedForecastType == it) FontWeight.Medium
-                    else FontWeight.Normal,
-                    fontSize = 16.sp,
-                    color = Color.White
-                        .copy(alpha = if (selectedForecastType == it) 1f else 0.5f)
-                )
-            }
-        }
+        Text(
+            modifier = Modifier
+                .padding(
+                    start = 10.dp,
+                    top = 10.dp
+                ),
+            text = stringResource(Res.string.hourly_forecast_title),
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Medium,
+            fontSize = 20.sp,
+            color = Color.White
+        )
 
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .drawBehind {
-
-                    drawLine(
-                        start = Offset(x = 0f, y = 0f),
-                        end = Offset(x = size.width, y = 0f),
-                        color = LightWhite
-                    )
-
                     drawLine(
                         start = Offset(x = 0f, y = size.height),
                         end = Offset(x = size.width, y = size.height),
@@ -188,7 +157,7 @@ internal fun ForecastSection(
                                 modifier = Modifier.padding(10.dp),
                                 time = if (index < 9) "0$index:00"
                                 else "$index:00",
-                                temperature = "$temperature°",
+                                temperature = "${temperature.roundToInt()}°",
                                 weatherIcon = iconByWeatherCode(
                                     state.value.weatherInfo.hourlyWeather.weatherCodes[index]
                                 ),

@@ -32,11 +32,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import atmosphere.feature.home.generated.resources.Res
+import atmosphere.feature.home.generated.resources.detail_forecast_title
+import atmosphere.feature.home.generated.resources.some_day_forecast_title
 import cafe.adriel.voyager.core.screen.Screen
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeTint
 import dev.chrisbanes.haze.hazeChild
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import ru.syndicate.atmosphere.core.presentation.theme.BackgroundColor
 import ru.syndicate.atmosphere.feature.home.presentation.components.DescriptionSection
@@ -155,9 +159,9 @@ internal fun HomeScreenImpl(
                 item {
                     DescriptionSection(
                         modifier = Modifier
+                            .padding(top = 10.dp)
                             .height(IntrinsicSize.Min)
-                            .fillMaxWidth()
-                            .padding(vertical = 10.dp),
+                            .fillMaxWidth(),
                         state = state,
                         hazeState = hazeState
                     )
@@ -178,8 +182,8 @@ internal fun HomeScreenImpl(
                                     )
                             )
                             .padding(16.dp),
-                        title = "Detailed forecast",
-                        description = "check out the weather forecast for today and more."
+                        title = stringResource(Res.string.detail_forecast_title),
+                        description = "Check out the weather forecast for today and more."
                     )
                 }
 
@@ -198,7 +202,7 @@ internal fun HomeScreenImpl(
                                     )
                             )
                             .padding(16.dp),
-                        title = "7 day forecast",
+                        title = stringResource(Res.string.some_day_forecast_title),
                         description = "View a quick overview of the weather forecast for the next 7 days."
                     )
                 }

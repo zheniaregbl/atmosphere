@@ -1,11 +1,11 @@
 package ru.syndicate.atmosphere.feature.home.presentation.components
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -59,6 +59,7 @@ import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
 import ru.syndicate.atmosphere.feature.home.presentation.DisplayResult
 import ru.syndicate.atmosphere.feature.home.presentation.HomeState
 import ru.syndicate.atmosphere.feature.home.presentation.util.weatherTitleByWeatherCode
+import kotlin.math.roundToInt
 
 internal sealed class WeatherParameter(
     val title: String,
@@ -147,7 +148,7 @@ internal fun WeatherParameterSection(
 
                     Text(
                         modifier = Modifier.padding(vertical = 14.dp),
-                        text = "${state.value.weatherInfo.currentWeatherParameters.temperature}°",
+                        text = "${state.value.weatherInfo.currentWeatherParameters.temperature.roundToInt()}°",
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Medium,
                         fontSize = 74.sp,
@@ -162,7 +163,7 @@ internal fun WeatherParameterSection(
         AnimatedVisibility(
             modifier = Modifier.fillMaxWidth(),
             visible = !state.value.isLoading,
-            enter = fadeIn(),
+            enter = EnterTransition.None,
             exit = ExitTransition.None
         ) {
             Box(
