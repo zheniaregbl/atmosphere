@@ -158,6 +158,7 @@ internal fun HomeScreenImpl(
                             .height(IntrinsicSize.Min)
                             .fillMaxWidth()
                             .padding(vertical = 10.dp),
+                        state = state,
                         hazeState = hazeState
                     )
                 }

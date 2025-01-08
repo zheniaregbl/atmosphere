@@ -1,30 +1,64 @@
 package ru.syndicate.atmosphere.feature.home.presentation.util
 
-fun descriptionByWeatherCode(weatherCode: Int) = when(weatherCode) {
-    0 -> "Clear sky"
-    1 -> "Mainly clear"
-    2 -> "Partly cloudy"
-    3 -> "Overcast"
-    in 45..48 -> "Fog"
-    51 -> "Light drizzle"
-    53 -> "Moderate drizzle"
-    55 -> "Heavy drizzle"
-    56 -> "Light freezing drizzle"
-    57 -> "Heavy freezing drizzle"
-    61 -> "Slight rain"
-    63 -> "Moderate rain"
-    65 -> "Heavy rain"
-    66 -> "Light freezing rain"
-    67 -> "Heavy freezing rain"
-    71 -> "Slight snow fall"
-    73 -> "Moderate snow fall"
-    75 -> "Heavy snow fall"
-    77 -> "Snow grains"
-    80 -> "Slight rain shower"
-    81 -> "Moderate rain shower"
-    82 -> "Violent rain shower"
-    85 -> "Slight snow shower"
-    86 -> "Heavy snow shower"
-    in 95..99 -> "Thunderstorm"
-    else -> ""
-}
+import androidx.compose.runtime.Composable
+import atmosphere.feature.home.generated.resources.Res
+import atmosphere.feature.home.generated.resources.dense_drizzle_desc
+import atmosphere.feature.home.generated.resources.dense_freezing_drizzle_desc
+import atmosphere.feature.home.generated.resources.fog_desc
+import atmosphere.feature.home.generated.resources.heavy_freezing_rain_desc
+import atmosphere.feature.home.generated.resources.heavy_rain_desc
+import atmosphere.feature.home.generated.resources.heavy_snow_shower_desc
+import atmosphere.feature.home.generated.resources.heavy_snowfall_desc
+import atmosphere.feature.home.generated.resources.light_drizzle_desc
+import atmosphere.feature.home.generated.resources.light_freezing_drizzle_desc
+import atmosphere.feature.home.generated.resources.light_freezing_rain_desc
+import atmosphere.feature.home.generated.resources.mainly_clear_desc
+import atmosphere.feature.home.generated.resources.moderate_drizzle_desc
+import atmosphere.feature.home.generated.resources.moderate_rain_desc
+import atmosphere.feature.home.generated.resources.moderate_rain_shower_desc
+import atmosphere.feature.home.generated.resources.moderate_snowfall_desc
+import atmosphere.feature.home.generated.resources.overcast_desc
+import atmosphere.feature.home.generated.resources.partly_cloudy_desc
+import atmosphere.feature.home.generated.resources.slight_rain_desc
+import atmosphere.feature.home.generated.resources.slight_rain_shower_desc
+import atmosphere.feature.home.generated.resources.slight_snow_shower_desc
+import atmosphere.feature.home.generated.resources.slight_snowfall_desc
+import atmosphere.feature.home.generated.resources.snow_grains_desc
+import atmosphere.feature.home.generated.resources.sun_desc
+import atmosphere.feature.home.generated.resources.thunderstorm_desc
+import atmosphere.feature.home.generated.resources.thunderstorm_hail_desc
+import atmosphere.feature.home.generated.resources.violent_rain_shower_desc
+import org.jetbrains.compose.resources.stringResource
+
+@Composable
+fun descriptionByWeatherCode(weatherCode: Int) = stringResource(
+    when (weatherCode) {
+        0 -> Res.string.sun_desc
+        1 -> Res.string.partly_cloudy_desc
+        2 -> Res.string.mainly_clear_desc
+        3 -> Res.string.overcast_desc
+        45, 48 -> Res.string.fog_desc
+        51 -> Res.string.light_drizzle_desc
+        53 -> Res.string.moderate_drizzle_desc
+        55 -> Res.string.dense_drizzle_desc
+        56 -> Res.string.light_freezing_drizzle_desc
+        57 -> Res.string.dense_freezing_drizzle_desc
+        61 -> Res.string.slight_rain_desc
+        63 -> Res.string.moderate_rain_desc
+        65 -> Res.string.heavy_rain_desc
+        66 -> Res.string.light_freezing_rain_desc
+        67 -> Res.string.heavy_freezing_rain_desc
+        71 -> Res.string.slight_snowfall_desc
+        73 -> Res.string.moderate_snowfall_desc
+        75 -> Res.string.heavy_snowfall_desc
+        77 -> Res.string.snow_grains_desc
+        80 -> Res.string.slight_rain_shower_desc
+        81 -> Res.string.moderate_rain_shower_desc
+        82 -> Res.string.violent_rain_shower_desc
+        85 -> Res.string.slight_snow_shower_desc
+        86 -> Res.string.heavy_snow_shower_desc
+        95 -> Res.string.thunderstorm_desc
+        96, 99 -> Res.string.thunderstorm_hail_desc
+        else -> Res.string.sun_desc
+    }
+)

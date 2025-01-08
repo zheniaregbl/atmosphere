@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="sun_desc">The sky is completely clear, offering a bright and sunny day with no clouds in sight. Perfect for outdoor activities!</string>
+    <string name="mainly_clear_desc">Mainly clear skies with occasional small clouds. A pleasant and calm day.</string>
+    <string name="partly_cloudy_desc">Partly cloudy skies with a mix of sun and clouds. Mild and comfortable.</string>
+    <string name="overcast_desc">Overcast skies, fully covered with clouds. Expect a gray and muted atmosphere.</string>
+    <string name="fog_desc">Dense fog reducing visibility significantly, creating a mysterious and tranquil environment.</string>
+    <string name="light_drizzle_desc">Light drizzle with a soft, gentle spray. Barely noticeable but can dampen surfaces.</string>
+    <string name="moderate_drizzle_desc">Moderate drizzle with consistent light rain. Might need an umbrella.</string>
+    <string name="dense_drizzle_desc">Dense drizzle with a steady, heavier flow. Likely to make outdoor activities challenging.</string>
+    <string name="light_freezing_drizzle_desc">Light freezing drizzle with droplets freezing on contact. Surfaces may become slippery.</string>
+    <string name="dense_freezing_drizzle_desc">Dense freezing drizzle with higher intensity. Roads and sidewalks can turn dangerously icy.</string>
+    <string name="slight_rain_desc">Slight rain with a soft, refreshing touch. Great for cooling down.</string>
+    <string name="moderate_rain_desc">Moderate rain with a steady and consistent fall. An umbrella is recommended.</string>
+    <string name="heavy_rain_desc">Heavy rain with a powerful downpour. Visibility may be reduced, and flooding could occur in low-lying areas.</string>
+    <string name="light_freezing_rain_desc">Light freezing rain that freezes upon impact. Caution required for icy conditions.</string>
+    <string name="heavy_freezing_rain_desc">Heavy freezing rain with larger droplets freezing rapidly. Extreme caution needed due to significant ice buildup.</string>
+    <string name="slight_snowfall_desc">Slight snowfall with light, fluffy flakes. Creates a picturesque, wintry vibe.</string>
+    <string name="moderate_snowfall_desc">Moderate snowfall with steady accumulation. Snow is heavier but still manageable.</string>
+    <string name="heavy_snowfall_desc">Heavy snowfall with intense accumulation. Expect disruptions and stunning snowy landscapes.</string>
+    <string name="snow_grains_desc">Tiny, granular snow particles falling intermittently. A delicate and frosty weather event.</string>
+    <string name="slight_rain_shower_desc">Slight rain showers with brief, light bursts. Short-lived but refreshing.</string>
+    <string name="moderate_rain_shower_desc">Moderate rain showers with stronger bursts. May come and go quickly.</string>
+    <string name="violent_rain_shower_desc">Violent rain showers with intense downpours. Prepare for rapid weather changes.</string>
+    <string name="slight_snow_shower_desc">Slight snow showers with light, scattered flurries. A touch of winter magic.</string>
+    <string name="heavy_snow_shower_desc">Heavy snow showers with dense and sudden snowfall. Reduced visibility and quick accumulations possible.</string>
+    <string name="thunderstorm_desc">A slight or moderate thunderstorm with occasional lightning and rumbles of thunder. Exciting but generally not severe.</string>
+    <string name="thunderstorm_hail_desc">A thunderstorm accompanied by slight hail. Small hailstones may cover the ground briefly.</string>
+</resources>

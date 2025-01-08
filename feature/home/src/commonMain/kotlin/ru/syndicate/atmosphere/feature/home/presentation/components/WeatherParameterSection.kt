@@ -58,7 +58,7 @@ import ru.syndicate.atmosphere.core.presentation.theme.BackgroundColor
 import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
 import ru.syndicate.atmosphere.feature.home.presentation.DisplayResult
 import ru.syndicate.atmosphere.feature.home.presentation.HomeState
-import ru.syndicate.atmosphere.feature.home.presentation.util.descriptionByWeatherCode
+import ru.syndicate.atmosphere.feature.home.presentation.util.weatherTitleByWeatherCode
 
 internal sealed class WeatherParameter(
     val title: String,
@@ -132,7 +132,7 @@ internal fun WeatherParameterSection(
                 ) {
 
                     Text(
-                        text = descriptionByWeatherCode(
+                        text = weatherTitleByWeatherCode(
                             state
                                 .value
                                 .weatherInfo

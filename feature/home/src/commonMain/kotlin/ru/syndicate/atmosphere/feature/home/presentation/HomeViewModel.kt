@@ -28,11 +28,11 @@ class HomeViewModel(
     val state = _state
         .onStart {
             viewModelScope.launch {
-                _state.update {  it.copy(isLoading = true)}
+                _state.update { it.copy(isLoading = true) }
                 delay(2000)
                 getCurrentWeather()
                 getHourlyWeather()
-                _state.update {  it.copy(isLoading = false)}
+                _state.update { it.copy(isLoading = false) }
             }
         }
         .stateIn(
