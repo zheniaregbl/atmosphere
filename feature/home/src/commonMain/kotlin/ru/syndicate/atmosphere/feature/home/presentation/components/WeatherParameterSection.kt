@@ -24,9 +24,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import atmosphere.feature.home.generated.resources.Res
 import atmosphere.feature.home.generated.resources.humidity_svg
+import atmosphere.feature.home.generated.resources.refresh_svg
 import atmosphere.feature.home.generated.resources.wind_svg
 import com.mohamedrejeb.calf.ui.progress.AdaptiveCircularProgressIndicator
 import com.valentinilk.shimmer.ShimmerBounds
@@ -187,10 +185,10 @@ internal fun WeatherParameterSection(
                     .padding(14.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    imageVector = Icons.Default.Refresh,
-                    contentDescription = null,
-                    tint = Color.White
+                Image(
+                    modifier = Modifier.size(28.dp),
+                    painter = painterResource(Res.drawable.refresh_svg),
+                    contentDescription = null
                 )
             }
         }

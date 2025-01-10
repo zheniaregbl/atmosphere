@@ -1,0 +1,109 @@
+package ru.syndicate.atmosphere.feature.search.presentation.components
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.LocalTextSelectionColors
+import androidx.compose.foundation.text.selection.TextSelectionColors
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import ru.syndicate.atmosphere.core.presentation.theme.InterFontFamily
+import ru.syndicate.atmosphere.core.presentation.theme.SelectedBlue
+import ru.syndicate.atmosphere.feature.search.presentation.theme.CardColor
+import ru.syndicate.atmosphere.feature.search.presentation.theme.HintColor
+
+@Composable
+internal fun SearchBar(
+    modifier: Modifier = Modifier,
+    value: String,
+    onValueChange: (String) -> Unit,
+    onImeSearch: () -> Unit
+) {
+
+    CompositionLocalProvider(
+        LocalTextSelectionColors provides TextSelectionColors(
+            handleColor = SelectedBlue,
+            backgroundColor = SelectedBlue
+        )
+    ) {
+
+        BasicTextField(
+            modifier = modifier,
+            textStyle = TextStyle(
+                fontFamily = InterFontFamily(),
+                fontWeight = FontWeight.Normal,
+                fontSize = 18.sp,
+                color = Color.White
+            ),
+            value = value,
+            onValueChange = onValueChange,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Search
+            ),
+            keyboardActions = KeyboardActions(
+                onSearch = { onImeSearch() }
+            ),
+            singleLine = true,
+            cursorBrush = SolidColor(SelectedBlue)
+        ) { innerTextField ->
+
+            Row(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                    .fillMaxWidth()
+                    .background(color = CardColor)
+                    .padding(14.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Icon(
+                    modifier = Modifier.size(26.dp),
+                    imageVector = Icons.Default.Search,
+                    contentDescription = null,
+                    tint = if (value.isNotBlank()) Color.White else HintColor
+                )
+
+                Box(modifier = Modifier.weight(1f)) {
+
+                    innerTextField()
+
+                    if (value.isBlank()) {
+                        Text(
+                            text = "Enter city...",
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 18.sp,
+                            color = HintColor
+                        )
+                    }
+                }
+            }
+        }
+    }
+}

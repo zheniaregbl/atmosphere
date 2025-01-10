@@ -30,41 +30,18 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            api(compose.components.resources)
-            api(libs.androidx.lifecycle.viewmodel)
             api(libs.androidx.lifecycle.runtime.compose)
-
-            api(libs.kotlinx.datetime)
-
-            api(libs.calf.ui)
-
-            api(libs.shimmer)
-
-            api(libs.haze)
-            api(libs.haze.materials)
-
-            api(libs.compottie)
-            api(libs.compottie.resources)
 
             api(libs.voyager.navigator)
             api(libs.voyager.screenmodel)
 
-            api(libs.kotlinx.serialization.json)
-
-            api(libs.koin.compose)
-            api(libs.koin.compose.viewmodel)
-            api(libs.koin.core)
-
-            api(libs.bundles.ktor)
-
-            implementation(projects.core)
-            implementation(projects.navigation)
+            api(projects.feature.search)
         }
     }
 }
 
 android {
-    namespace = "ru.syndicate.atmosphere.feature.home"
+    namespace = "ru.syndicate.atmosphere.navigation"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

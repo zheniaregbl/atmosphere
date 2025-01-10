@@ -30,9 +30,34 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            api(compose.components.resources)
+            api(libs.androidx.lifecycle.viewmodel)
+            api(libs.androidx.lifecycle.runtime.compose)
+
+            api(libs.shimmer)
+
+            api(libs.bundles.coil)
+
+            api(libs.voyager.navigator)
+            api(libs.voyager.screenmodel)
+
+            api(libs.kotlinx.serialization.json)
+
+            api(libs.koin.compose)
+            api(libs.koin.compose.viewmodel)
+            api(libs.koin.core)
+
+            api(libs.bundles.ktor)
+
             implementation(projects.core)
         }
     }
+}
+
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "ru.syndicate.atmosphere.feature.search.resources"
+    generateResClass = auto
 }
 
 android {

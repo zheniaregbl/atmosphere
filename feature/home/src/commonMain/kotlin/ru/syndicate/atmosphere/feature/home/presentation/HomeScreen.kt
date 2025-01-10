@@ -35,7 +35,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import atmosphere.feature.home.generated.resources.Res
 import atmosphere.feature.home.generated.resources.detail_forecast_title
 import atmosphere.feature.home.generated.resources.some_day_forecast_title
+import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeTint
@@ -49,11 +52,15 @@ import ru.syndicate.atmosphere.feature.home.presentation.components.WeatherParam
 import ru.syndicate.atmosphere.feature.home.presentation.components.NavigateBlock
 import ru.syndicate.atmosphere.feature.home.presentation.components.TopPanel
 import ru.syndicate.atmosphere.feature.home.presentation.components.WeatherImage
+import ru.syndicate.atmosphere.navigation.SharedScreen
 
 class HomeScreen : Screen {
 
     @Composable
     override fun Content() {
+
+        val navigator = LocalNavigator.currentOrThrow
+        val searchScreen = rememberScreen(SharedScreen.SearchScreen)
 
         val viewModel = koinViewModel<HomeViewModel>()
         val state = viewModel.state.collectAsStateWithLifecycle()
@@ -66,7 +73,8 @@ class HomeScreen : Screen {
                 .statusBarsPadding(),
             state = state,
             currentTown = "Moscow",
-            onAction = { viewModel.onAction(it) }
+            onAction = { viewModel.onAction(it) },
+            onSearchClick = { navigator.push(searchScreen) }
         )
     }
 }
@@ -76,7 +84,8 @@ internal fun HomeScreenImpl(
     modifier: Modifier = Modifier,
     state: State<HomeState>,
     currentTown: String,
-    onAction: (HomeAction) -> Unit
+    onAction: (HomeAction) -> Unit,
+    onSearchClick: () -> Unit
 ) {
 
     val hazeState = remember { HazeState() }
@@ -105,7 +114,7 @@ internal fun HomeScreenImpl(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 20.dp),
+                .padding(top = 10.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
@@ -114,9 +123,9 @@ internal fun HomeScreenImpl(
                 modifier = Modifier
                     .widthIn(max = 800.dp)
                     .fillMaxWidth()
-                    .padding(horizontal = 30.dp),
+                    .padding(horizontal = 20.dp),
                 topPanelTitle = topPanelTitle,
-                onSearchClick = { },
+                onSearchClick = onSearchClick,
                 onSettingsClick = { }
             )
 
