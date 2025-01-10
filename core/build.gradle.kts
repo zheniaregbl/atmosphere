@@ -43,6 +43,10 @@ kotlin {
             api(compose.components.resources)
             api(compose.components.uiToolingPreview)
 
+            api(libs.koin.compose)
+            api(libs.koin.compose.viewmodel)
+            api(libs.koin.core)
+
             api(libs.bundles.ktor)
         }
         desktopMain.dependencies {
