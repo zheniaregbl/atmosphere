@@ -34,6 +34,8 @@ kotlin {
             api(libs.androidx.lifecycle.viewmodel)
             api(libs.androidx.lifecycle.runtime.compose)
 
+            api(libs.calf.ui)
+
             api(libs.shimmer)
 
             api(libs.bundles.coil)

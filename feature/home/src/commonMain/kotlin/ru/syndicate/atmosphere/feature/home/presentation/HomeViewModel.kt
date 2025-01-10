@@ -5,18 +5,12 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import ru.syndicate.atmosphere.core.domain.DataError
-import ru.syndicate.atmosphere.core.domain.Result
 import ru.syndicate.atmosphere.core.domain.onError
 import ru.syndicate.atmosphere.core.domain.onSuccess
-import ru.syndicate.atmosphere.feature.home.domain.model.CurrentWeatherParameters
-import ru.syndicate.atmosphere.feature.home.domain.model.HourlyWeather
-import ru.syndicate.atmosphere.feature.home.domain.model.WeatherInfo
 import ru.syndicate.atmosphere.feature.home.domain.repository.WeatherRepository
 
 class HomeViewModel(

@@ -1,4 +1,4 @@
-package ru.syndicate.atmosphere.feature.search.domain
+package ru.syndicate.atmosphere.feature.search.domain.model
 
 data class City(
     val title: String = "Moscow",

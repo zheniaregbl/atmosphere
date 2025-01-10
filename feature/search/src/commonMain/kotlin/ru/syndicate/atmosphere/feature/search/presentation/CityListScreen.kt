@@ -16,26 +16,29 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.State
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.mohamedrejeb.calf.ui.progress.AdaptiveCircularProgressIndicator
 import org.jetbrains.compose.resources.painterResource
-import ru.syndicate.atmosphere.feature.search.domain.City
+import org.koin.compose.viewmodel.koinViewModel
 import ru.syndicate.atmosphere.feature.search.presentation.components.CityCard
 import ru.syndicate.atmosphere.feature.search.presentation.components.SearchBar
 import ru.syndicate.atmosphere.feature.search.presentation.theme.CardColor
@@ -49,24 +52,29 @@ class SearchScreen : Screen {
 
         val navigator = LocalNavigator.currentOrThrow
 
-        SearchScreenImpl(
+        val viewModel = koinViewModel<CityListViewModel>()
+        val state = viewModel.state.collectAsStateWithLifecycle()
+
+        CityListScreenImpl(
             modifier = Modifier
                 .fillMaxSize()
                 .statusBarsPadding(),
+            state = state,
+            onAction = { viewModel.onAction(it) },
             onBackClick = { navigator.pop() }
         )
     }
 }
 
 @Composable
-internal fun SearchScreenImpl(
+internal fun CityListScreenImpl(
     modifier: Modifier = Modifier,
+    state: State<CityListState>,
+    onAction: (CityListAction) -> Unit,
     onBackClick: () -> Unit
 ) {
 
-    var searchText by remember { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
-    val cityList = listOf(City(), City(), City(), City(), City(), City(), City())
 
     Box(modifier = modifier) {
 
@@ -99,40 +107,58 @@ internal fun SearchScreenImpl(
                 modifier = Modifier
                     .widthIn(max = 800.dp)
                     .fillMaxWidth(),
-                value = searchText,
-                onValueChange = { searchText = it },
+                value = state.value.searchCityText,
+                onValueChange = {
+                    onAction(CityListAction.OnSearchCityChange(it))
+                },
                 onImeSearch = { keyboardController?.hide() }
             )
 
-            LazyColumn(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(14.dp)
-            ) {
-
-                items(cityList) {
-                    CityCard(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
-                            .fillMaxWidth()
-                            .background(CardColor),
-                        city = it,
-                        onClick = { }
+            state.value.toUiState().DisplayResult(
+                modifier = Modifier.fillMaxSize(),
+                onLoading = {
+                    AdaptiveCircularProgressIndicator(
+                        modifier = Modifier.size(50.dp),
+                        color = Color.White,
                     )
-                }
-
-                item {
-                    Spacer(
+                },
+                onError = {
+                    Text("error")
+                },
+                onSuccess = { screenState ->
+                    LazyColumn(
                         modifier = Modifier
-                            .height(50.dp)
-                            .padding(
-                                bottom = WindowInsets
-                                    .navigationBars
-                                    .asPaddingValues()
-                                    .calculateBottomPadding()
+                            .widthIn(max = 800.dp)
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.spacedBy(14.dp)
+                    ) {
+
+                        items(screenState.cityList) {
+                            CityCard(
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .fillMaxWidth()
+                                    .background(CardColor),
+                                city = it,
+                                onClick = { }
                             )
-                    )
+                        }
+
+                        item {
+                            Spacer(
+                                modifier = Modifier
+                                    .height(50.dp)
+                                    .padding(
+                                        bottom = WindowInsets
+                                            .navigationBars
+                                            .asPaddingValues()
+                                            .calculateBottomPadding()
+                                    )
+                            )
+                        }
+                    }
                 }
-            }
+            )
         }
     }
 }
