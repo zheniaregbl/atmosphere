@@ -20,15 +20,7 @@ class HomeViewModel(
     private val _state = MutableStateFlow(HomeState())
 
     val state = _state
-        .onStart {
-            viewModelScope.launch {
-                _state.update { it.copy(isLoading = true) }
-                delay(2000)
-                getCurrentWeather()
-                getHourlyWeather()
-                _state.update { it.copy(isLoading = false) }
-            }
-        }
+        .onStart { getHourlyWeather() }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
@@ -37,44 +29,21 @@ class HomeViewModel(
 
     fun onAction(action: HomeAction) {
         when (action) {
-            HomeAction.UpdateWeatherInfo -> {
-                viewModelScope.launch {
-                    _state.update {  it.copy(isLoading = true)}
-                    delay(2000)
-                    getCurrentWeather()
-                    getHourlyWeather()
-                    _state.update {  it.copy(isLoading = false)}
-                }
-            }
+            HomeAction.UpdateWeatherInfo -> getHourlyWeather()
         }
     }
 
-    private suspend fun getCurrentWeather() {
+    private fun getHourlyWeather() = viewModelScope.launch {
 
-        weatherRepository.getCurrentWeather()
-            .onSuccess { currentWeatherParameters ->
-                _state.update { it.copy(
-                    weatherInfo = _state.value.weatherInfo.copy(
-                        currentWeatherParameters = currentWeatherParameters
-                    )
-                ) }
-            }
-            .onError {
-                println("error: ${it.name}")
-                _state.update { it.copy(
-                    isLoading = false
-                ) }
-            }
-    }
+        _state.update { it.copy(isLoading = true) }
 
-    private suspend fun getHourlyWeather() {
+        delay(2000)
 
         weatherRepository.getHourlyWeather()
-            .onSuccess { hourlyWeather ->
+            .onSuccess { weatherInfo ->
                 _state.update { it.copy(
-                    weatherInfo = _state.value.weatherInfo.copy(
-                        hourlyWeather = hourlyWeather
-                    )
+                    isLoading = false,
+                    weatherInfo = weatherInfo
                 ) }
             }
             .onError {

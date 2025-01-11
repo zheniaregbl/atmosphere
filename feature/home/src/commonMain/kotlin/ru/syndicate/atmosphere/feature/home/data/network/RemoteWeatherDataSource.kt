@@ -2,15 +2,9 @@ package ru.syndicate.atmosphere.feature.home.data.network
 
 import ru.syndicate.atmosphere.core.domain.DataError
 import ru.syndicate.atmosphere.core.domain.Result
-import ru.syndicate.atmosphere.feature.home.data.dto.CurrentWeatherResponseDTO
 import ru.syndicate.atmosphere.feature.home.data.dto.HourlyWeatherResponseDTO
 
 interface RemoteWeatherDataSource {
-
-    suspend fun getCurrentWeather(
-        latitude: Double = 58.5213,
-        longitude: Double = 31.271
-    ): Result<CurrentWeatherResponseDTO, DataError.Remote>
 
     suspend fun getHourlyWeather(
         latitude: Double = 58.5213,

@@ -8,25 +8,22 @@ import ru.syndicate.atmosphere.feature.home.data.mapper.toHourlyWeather
 import ru.syndicate.atmosphere.feature.home.data.network.RemoteWeatherDataSource
 import ru.syndicate.atmosphere.feature.home.domain.model.CurrentWeatherParameters
 import ru.syndicate.atmosphere.feature.home.domain.model.HourlyWeather
+import ru.syndicate.atmosphere.feature.home.domain.model.WeatherInfo
 import ru.syndicate.atmosphere.feature.home.domain.repository.WeatherRepository
 
 class DefaultWeatherRepository(
     private val remoteWeatherDataSource: RemoteWeatherDataSource
 ): WeatherRepository {
 
-    override suspend fun getCurrentWeather(): Result<CurrentWeatherParameters, DataError.Remote> {
-        return remoteWeatherDataSource
-            .getCurrentWeather()
-            .map { dto ->
-                dto
-                    .currentParameters
-                    .toCurrentWeatherParameters()
-            }
-    }
-
-    override suspend fun getHourlyWeather(): Result<HourlyWeather, DataError.Remote> {
+    override suspend fun getHourlyWeather(): Result<WeatherInfo, DataError.Remote> {
         return remoteWeatherDataSource
             .getHourlyWeather()
-            .map { dto -> dto.toHourlyWeather() }
+            .map { dto ->
+
+                WeatherInfo(
+                    currentWeatherParameters = dto.currentParameters.toCurrentWeatherParameters(),
+                    hourlyWeather = dto.hourlyParameters.toHourlyWeather()
+                )
+            }
     }
 }
