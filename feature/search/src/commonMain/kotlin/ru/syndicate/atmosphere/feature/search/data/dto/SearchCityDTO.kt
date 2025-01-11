@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SearchCityDTO(
+internal data class SearchCityDTO(
     @SerialName("name") val title: String,
     @SerialName("latitude") val latitude: Double,
     @SerialName("longitude") val longitude: Double,

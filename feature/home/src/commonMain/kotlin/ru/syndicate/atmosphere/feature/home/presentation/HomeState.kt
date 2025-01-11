@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import ru.syndicate.atmosphere.feature.home.domain.model.WeatherInfo
 
-sealed class HomeScreenState {
+internal sealed class HomeScreenState {
     data object Idle : HomeScreenState()
     data object Loading : HomeScreenState()
     data class Error(val errorMessage: String) : HomeScreenState()
@@ -22,7 +22,7 @@ sealed class HomeScreenState {
 }
 
 @Composable
-fun HomeScreenState.DisplayResult(
+internal fun HomeScreenState.DisplayResult(
     modifier: Modifier = Modifier,
     contentAlignment: Alignment = Alignment.Center,
     transitionSpec: AnimatedContentTransitionScope<HomeScreenState>.() -> ContentTransform = {
@@ -61,7 +61,7 @@ fun HomeScreenState.DisplayResult(
     }
 }
 
-data class HomeState(
+internal data class HomeState(
     val isLoading: Boolean = false,
     val weatherInfo: WeatherInfo = WeatherInfo()
 ) {

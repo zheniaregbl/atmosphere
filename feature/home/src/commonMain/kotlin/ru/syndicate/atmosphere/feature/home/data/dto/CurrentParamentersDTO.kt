@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CurrentParametersDTO(
+internal data class CurrentParametersDTO(
     @SerialName("temperature_2m") val temperature: Double,
     @SerialName("relative_humidity_2m") val humidity: Int,
     @SerialName("apparent_temperature") val apparentTemperature: Double,

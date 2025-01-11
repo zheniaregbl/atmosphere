@@ -1,6 +1,6 @@
 package ru.syndicate.atmosphere.feature.home.presentation.util
 
-fun weatherTitleByWeatherCode(weatherCode: Int) = when(weatherCode) {
+internal fun weatherTitleByWeatherCode(weatherCode: Int) = when(weatherCode) {
     0 -> "Clear sky"
     1 -> "Mainly clear"
     2 -> "Partly cloudy"

@@ -18,7 +18,7 @@ import ru.syndicate.atmosphere.core.domain.onError
 import ru.syndicate.atmosphere.core.domain.onSuccess
 import ru.syndicate.atmosphere.feature.search.domain.repository.SearchCityRepository
 
-class CityListViewModel(
+internal class CityListViewModel(
     private val searchCityRepository: SearchCityRepository
 ): ViewModel() {
 

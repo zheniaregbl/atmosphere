@@ -1,6 +1,6 @@
 package ru.syndicate.atmosphere.feature.home.domain.model
 
-data class CurrentWeatherParameters(
+internal data class CurrentWeatherParameters(
     val temperature: Double = 0.0,
     val humidity: Int = 0,
     val apparentTemperature: Double = 0.0,

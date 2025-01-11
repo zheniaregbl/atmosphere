@@ -13,7 +13,7 @@ import ru.syndicate.atmosphere.core.domain.onError
 import ru.syndicate.atmosphere.core.domain.onSuccess
 import ru.syndicate.atmosphere.feature.home.domain.repository.WeatherRepository
 
-class HomeViewModel(
+internal class HomeViewModel(
     private val weatherRepository: WeatherRepository
 ) : ViewModel() {
 

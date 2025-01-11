@@ -31,7 +31,7 @@ import atmosphere.feature.home.generated.resources.violent_rain_shower_desc
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun descriptionByWeatherCode(weatherCode: Int) = stringResource(
+internal fun descriptionByWeatherCode(weatherCode: Int) = stringResource(
     when (weatherCode) {
         0 -> Res.string.sun_desc
         1 -> Res.string.partly_cloudy_desc

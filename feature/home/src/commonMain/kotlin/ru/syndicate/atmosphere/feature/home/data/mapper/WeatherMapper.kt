@@ -5,14 +5,14 @@ import ru.syndicate.atmosphere.feature.home.data.dto.HourlyParametersDTO
 import ru.syndicate.atmosphere.feature.home.domain.model.CurrentWeatherParameters
 import ru.syndicate.atmosphere.feature.home.domain.model.HourlyWeather
 
-fun CurrentParametersDTO.toCurrentWeatherParameters(): CurrentWeatherParameters {
+internal fun CurrentParametersDTO.toCurrentWeatherParameters(): CurrentWeatherParameters {
     return CurrentWeatherParameters(
         temperature, humidity, apparentTemperature, isDay, weatherCode, pressure,
         windSpeed, windDirection
     )
 }
 
-fun HourlyParametersDTO.toHourlyWeather(): HourlyWeather {
+internal fun HourlyParametersDTO.toHourlyWeather(): HourlyWeather {
     return HourlyWeather(
         temperatures = this.temperatures,
         weatherCodes = this.weatherCodes

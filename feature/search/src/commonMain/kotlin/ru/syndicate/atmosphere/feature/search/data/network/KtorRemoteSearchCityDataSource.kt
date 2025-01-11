@@ -10,7 +10,7 @@ import ru.syndicate.atmosphere.feature.search.data.dto.SearchCityResponseDTO
 
 private const val BASE_URL = "https://geocoding-api.open-meteo.com/v1/search"
 
-class KtorRemoteSearchCityDataSource(
+internal class KtorRemoteSearchCityDataSource(
     private val httpClient: HttpClient
 ): RemoteSearchCityDataSource {
 

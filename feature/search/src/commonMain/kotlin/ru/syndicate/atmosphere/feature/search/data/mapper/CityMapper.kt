@@ -5,7 +5,7 @@ import ru.syndicate.atmosphere.feature.search.domain.model.City
 
 private const val CIRCLE_FLAGS = "https://hatscripts.github.io/circle-flags/flags"
 
-fun SearchCityDTO.toCity() = City(
+internal fun SearchCityDTO.toCity() = City(
     title = title,
     country = country ?: "",
     flagUrl = "$CIRCLE_FLAGS/${countryCode.lowercase()}.svg",

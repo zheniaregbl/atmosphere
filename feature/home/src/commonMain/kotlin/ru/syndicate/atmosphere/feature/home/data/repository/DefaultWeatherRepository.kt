@@ -9,7 +9,7 @@ import ru.syndicate.atmosphere.feature.home.data.network.RemoteWeatherDataSource
 import ru.syndicate.atmosphere.feature.home.domain.model.WeatherInfo
 import ru.syndicate.atmosphere.feature.home.domain.repository.WeatherRepository
 
-class DefaultWeatherRepository(
+internal class DefaultWeatherRepository(
     private val remoteWeatherDataSource: RemoteWeatherDataSource
 ): WeatherRepository {
 

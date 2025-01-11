@@ -4,7 +4,7 @@ import atmosphere.feature.home.generated.resources.Res
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 @OptIn(ExperimentalResourceApi::class)
-suspend fun lottieStringByWeatherCode(weatherCode: Int) = Res
+internal suspend fun lottieStringByWeatherCode(weatherCode: Int) = Res
     .readBytes(
         "files/" +
         when (weatherCode) {

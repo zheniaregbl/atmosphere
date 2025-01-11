@@ -8,7 +8,7 @@ import ru.syndicate.atmosphere.feature.search.data.network.RemoteSearchCityDataS
 import ru.syndicate.atmosphere.feature.search.domain.model.City
 import ru.syndicate.atmosphere.feature.search.domain.repository.SearchCityRepository
 
-class DefaultSearchCityRepository(
+internal class DefaultSearchCityRepository(
     private val remoteSearchCityDataSource: RemoteSearchCityDataSource
 ): SearchCityRepository {
 

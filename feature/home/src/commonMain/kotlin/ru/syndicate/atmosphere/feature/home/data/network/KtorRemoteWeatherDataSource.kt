@@ -10,7 +10,7 @@ import ru.syndicate.atmosphere.feature.home.data.dto.HourlyWeatherResponseDTO
 
 private const val BASE_URL = "https://api.open-meteo.com/v1/forecast"
 
-class KtorRemoteWeatherDataSource(
+internal class KtorRemoteWeatherDataSource(
     private val httpClient: HttpClient
 ): RemoteWeatherDataSource {
 

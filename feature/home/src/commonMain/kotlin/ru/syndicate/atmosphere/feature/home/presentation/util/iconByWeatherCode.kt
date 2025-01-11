@@ -20,7 +20,7 @@ import atmosphere.feature.home.generated.resources.snow_shower_svg
 import atmosphere.feature.home.generated.resources.sun_svg
 import atmosphere.feature.home.generated.resources.thunderstorm_svg
 
-fun iconByWeatherCode(weatherCode: Int) = when (weatherCode) {
+internal fun iconByWeatherCode(weatherCode: Int) = when (weatherCode) {
     0 -> Res.drawable.sun_svg
     1 -> Res.drawable.light_cloudy_svg
     2 -> Res.drawable.middle_cloudy_svg

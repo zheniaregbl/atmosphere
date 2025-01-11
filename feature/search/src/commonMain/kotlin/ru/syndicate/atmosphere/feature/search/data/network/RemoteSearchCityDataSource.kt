@@ -4,7 +4,7 @@ import ru.syndicate.atmosphere.core.domain.DataError
 import ru.syndicate.atmosphere.core.domain.Result
 import ru.syndicate.atmosphere.feature.search.data.dto.SearchCityResponseDTO
 
-interface RemoteSearchCityDataSource {
+internal interface RemoteSearchCityDataSource {
 
     suspend fun searchCity(
         name: String,

@@ -4,7 +4,7 @@ import ru.syndicate.atmosphere.core.domain.DataError
 import ru.syndicate.atmosphere.core.domain.Result
 import ru.syndicate.atmosphere.feature.home.data.dto.HourlyWeatherResponseDTO
 
-interface RemoteWeatherDataSource {
+internal interface RemoteWeatherDataSource {
 
     suspend fun getHourlyWeather(
         latitude: Double = 58.5213,

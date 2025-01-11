@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import ru.syndicate.atmosphere.feature.search.domain.model.City
 
-sealed class CityListScreenState {
+internal sealed class CityListScreenState {
     data object Idle : CityListScreenState()
     data object Loading : CityListScreenState()
     data class Error(val errorMessage: String) : CityListScreenState()
@@ -21,7 +21,7 @@ sealed class CityListScreenState {
 }
 
 @Composable
-fun CityListScreenState.DisplayResult(
+internal fun CityListScreenState.DisplayResult(
     modifier: Modifier = Modifier,
     contentAlignment: Alignment = Alignment.Center,
     transitionSpec: AnimatedContentTransitionScope<CityListScreenState>.() -> ContentTransform = {
@@ -58,7 +58,7 @@ fun CityListScreenState.DisplayResult(
     }
 }
 
-data class CityListState(
+internal data class CityListState(
     val isLoading: Boolean = false,
     val searchCityText: String = "",
     val searchCityList: List<City> = emptyList()
