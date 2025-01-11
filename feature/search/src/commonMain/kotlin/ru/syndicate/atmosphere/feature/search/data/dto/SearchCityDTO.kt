@@ -9,6 +9,6 @@ data class SearchCityDTO(
     @SerialName("latitude") val latitude: Double,
     @SerialName("longitude") val longitude: Double,
     @SerialName("country_code") val countryCode: String,
-    @SerialName("timezone") val timeZone: String,
+    @SerialName("timezone") val timeZone: String? = null,
     @SerialName("country") val country: String? = null
 )
