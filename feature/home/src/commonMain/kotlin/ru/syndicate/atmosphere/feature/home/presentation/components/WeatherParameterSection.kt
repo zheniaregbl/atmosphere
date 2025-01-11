@@ -6,6 +6,7 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -123,7 +124,7 @@ internal fun WeatherParameterSection(
                     color = Color.White,
                 )
             },
-            onSuccess = {
+            onSuccess = { screenState ->
 
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -132,8 +133,7 @@ internal fun WeatherParameterSection(
 
                     Text(
                         text = weatherTitleByWeatherCode(
-                            state
-                                .value
+                            screenState
                                 .weatherInfo
                                 .currentWeatherParameters
                                 .weatherCode
@@ -146,7 +146,7 @@ internal fun WeatherParameterSection(
 
                     Text(
                         modifier = Modifier.padding(vertical = 14.dp),
-                        text = "${state.value.weatherInfo.currentWeatherParameters.temperature.roundToInt()}°",
+                        text = "${screenState.weatherInfo.currentWeatherParameters.temperature.roundToInt()}°",
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Medium,
                         fontSize = 74.sp,
@@ -164,7 +164,7 @@ internal fun WeatherParameterSection(
             enter = EnterTransition.None,
             exit = ExitTransition.None
         ) {
-            Box(
+            RefreshButton(
                 modifier = Modifier
                     .wrapContentSize()
                     .clip(CircleShape)
@@ -176,21 +176,9 @@ internal fun WeatherParameterSection(
                                 tint = HazeTint(color = Color.DarkGray.copy(alpha = .5f)),
                                 blurRadius = 8.dp,
                             )
-                    )
-                    .clickable(
-                        indication = null,
-                        interactionSource = remember { MutableInteractionSource() },
-                        onClick = onRefreshClick
-                    )
-                    .padding(14.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    modifier = Modifier.size(28.dp),
-                    painter = painterResource(Res.drawable.refresh_svg),
-                    contentDescription = null
-                )
-            }
+                    ),
+                onClick = onRefreshClick
+            )
         }
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -231,7 +219,7 @@ internal fun WeatherParameterSection(
                     )
                 }
             },
-            onSuccess = {
+            onSuccess = { screenState ->
                 FlowRow(
                     modifier = Modifier.padding(vertical = 14.dp),
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -254,14 +242,12 @@ internal fun WeatherParameterSection(
                                 )
                                 .padding(14.dp),
                             value = when (it) {
-                                WeatherParameter.Wind -> state
-                                    .value
+                                WeatherParameter.Wind -> screenState
                                     .weatherInfo
                                     .currentWeatherParameters
                                     .windSpeed
                                     .toString()
-                                WeatherParameter.Humidity -> state
-                                    .value
+                                WeatherParameter.Humidity -> screenState
                                     .weatherInfo
                                     .currentWeatherParameters
                                     .humidity
@@ -272,6 +258,30 @@ internal fun WeatherParameterSection(
                     }
                 }
             }
+        )
+    }
+}
+
+@Composable
+internal fun RefreshButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+
+    Box(
+        modifier = modifier
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() },
+                onClick = onClick
+            )
+            .padding(14.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            modifier = Modifier.size(28.dp),
+            painter = painterResource(Res.drawable.refresh_svg),
+            contentDescription = null
         )
     }
 }

@@ -31,9 +31,9 @@ fun HomeScreenState.DisplayResult(
     },
     onIdle: (@Composable () -> Unit)? = null,
     onLoading: @Composable () -> Unit,
-    onSuccess: @Composable () -> Unit,
-    onSuccessBox: (@Composable BoxScope.() -> Unit)? = null,
-    onError: @Composable () -> Unit
+    onSuccess: @Composable (HomeScreenState.Success) -> Unit,
+    onSuccessBox: (@Composable BoxScope.(HomeScreenState.Success) -> Unit)? = null,
+    onError: @Composable (HomeScreenState.Error) -> Unit
 ) {
 
     AnimatedContent(
@@ -48,14 +48,14 @@ fun HomeScreenState.DisplayResult(
 
             when (state) {
 
-                is HomeScreenState.Error -> onError.invoke()
+                is HomeScreenState.Error -> onError.invoke(state)
 
                 HomeScreenState.Idle -> onIdle?.invoke()
 
                 HomeScreenState.Loading -> onLoading.invoke()
 
-                is HomeScreenState.Success -> if (onSuccessBox != null) onSuccessBox()
-                else onSuccess.invoke()
+                is HomeScreenState.Success -> if (onSuccessBox != null) onSuccessBox(state)
+                else onSuccess.invoke(state)
             }
         }
     }

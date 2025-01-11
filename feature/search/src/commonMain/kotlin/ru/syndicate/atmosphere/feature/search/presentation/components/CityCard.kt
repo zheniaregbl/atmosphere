@@ -23,8 +23,6 @@ import androidx.compose.ui.unit.sp
 import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
 import ru.syndicate.atmosphere.feature.search.domain.model.City
 
-const val CIRCLE_FLAGS = "https://hatscripts.github.io/circle-flags/flags"
-
 @Composable
 internal fun CityCard(
     modifier: Modifier = Modifier,
@@ -74,7 +72,7 @@ internal fun CityCard(
             modifier = Modifier
                 .clip(CircleShape)
                 .size(40.dp),
-            url = "$CIRCLE_FLAGS/${city.countryCode.lowercase()}.svg"
+            url = city.flagUrl
         )
     }
 }

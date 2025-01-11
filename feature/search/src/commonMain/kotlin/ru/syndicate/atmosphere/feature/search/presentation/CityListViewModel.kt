@@ -78,14 +78,12 @@ class CityListViewModel(
         searchCityRepository
             .searchCity(text)
             .onSuccess { searchCityList ->
-                println("searchCity : SUCCESS")
                 _state.update { it.copy(
                     isLoading = false,
                     searchCityList = searchCityList
                 ) }
             }
             .onError {
-                println("searchCity : ERROR")
                 _state.update { it.copy(
                     searchCityList = emptyList(),
                     isLoading = false

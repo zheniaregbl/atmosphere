@@ -143,7 +143,7 @@ internal fun ForecastSection(
                         }
                     }
                 },
-                onSuccess = {
+                onSuccess = { screenState ->
                     LazyRow(
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -151,7 +151,7 @@ internal fun ForecastSection(
                         horizontalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
 
-                        itemsIndexed(state.value.weatherInfo.hourlyWeather.temperatures) { index, temperature ->
+                        itemsIndexed(screenState.weatherInfo.hourlyWeather.temperatures) { index, temperature ->
 
                             ForecastItem(
                                 modifier = Modifier.padding(10.dp),

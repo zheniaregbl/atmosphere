@@ -7,7 +7,7 @@ import ru.syndicate.atmosphere.feature.search.data.dto.SearchCityResponseDTO
 interface RemoteSearchCityDataSource {
 
     suspend fun searchCity(
-        name: String = "Moscow",
+        name: String,
         count: Int = 50,
         language: String = "en"
     ): Result<SearchCityResponseDTO, DataError.Remote>

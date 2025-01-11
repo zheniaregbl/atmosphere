@@ -65,7 +65,7 @@ internal fun TopPanel(
 
             AnimatedContent(
                 targetState = topPanelTitle.value,
-                transitionSpec = { fadeIn().togetherWith(fadeOut()) }
+                transitionSpec = { fadeIn() togetherWith fadeOut() }
             ) { title ->
 
                 Text(
