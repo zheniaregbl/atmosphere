@@ -75,7 +75,7 @@ internal fun SearchBar(
                     .clip(RoundedCornerShape(8.dp))
                     .fillMaxWidth()
                     .background(color = CardColor)
-                    .padding(14.dp),
+                    .padding(12.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {

@@ -47,6 +47,9 @@ kotlin {
             api(libs.koin.compose.viewmodel)
             api(libs.koin.core)
 
+            api(libs.datastore)
+            api(libs.datastore.preferences)
+
             api(libs.bundles.ktor)
         }
         desktopMain.dependencies {

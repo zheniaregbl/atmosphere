@@ -117,10 +117,17 @@ internal fun CityListScreenImpl(
             state.value.toUiState().DisplayResult(
                 modifier = Modifier.fillMaxSize(),
                 onLoading = {
-                    AdaptiveCircularProgressIndicator(
-                        modifier = Modifier.size(50.dp),
-                        color = Color.White,
-                    )
+                    Box(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        AdaptiveCircularProgressIndicator(
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .padding(bottom = 80.dp)
+                                .size(50.dp),
+                            color = Color.White,
+                        )
+                    }
                 },
                 onError = {
                     Text("error")

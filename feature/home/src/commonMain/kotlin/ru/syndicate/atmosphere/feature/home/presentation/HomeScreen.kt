@@ -95,7 +95,6 @@ internal fun HomeScreenImpl(
     val topPanelTitle = remember { mutableStateOf("Home") }
 
     LaunchedEffect(lazyListState.firstVisibleItemIndex) {
-        println(lazyListState.firstVisibleItemIndex)
         if (lazyListState.firstVisibleItemIndex > 0)
             topPanelTitle.value = currentTown
         else topPanelTitle.value = "Home"
