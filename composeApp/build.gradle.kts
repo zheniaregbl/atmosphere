@@ -102,6 +102,12 @@ dependencies {
     debugImplementation(compose.uiTooling)
 }
 
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "ru.syndicate.atmosphere.composeApp.resources"
+    generateResClass = auto
+}
+
 compose.desktop {
     application {
         mainClass = "ru.syndicate.atmosphere.MainKt"
@@ -113,6 +119,10 @@ compose.desktop {
 
             macOS {
                 iconFile.set(project.file("launch_app_icon_macos.icns"))
+            }
+
+            windows {
+                iconFile.set(project.file("launch_app_icon_win.ico"))
             }
         }
     }
