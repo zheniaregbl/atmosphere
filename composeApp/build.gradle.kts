@@ -112,7 +112,7 @@ compose.desktop {
             packageVersion = "1.0.0"
 
             macOS {
-                iconFile.set(project.file("macos_app_icon.icns"))
+                iconFile.set(project.file("launch_app_icon_macos.icns"))
             }
         }
     }
