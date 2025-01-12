@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import ru.syndicate.atmosphere.core.domain.model.CurrentLocation
 import ru.syndicate.atmosphere.feature.home.domain.model.WeatherInfo
 
 internal sealed class HomeScreenState {
@@ -63,7 +64,8 @@ internal fun HomeScreenState.DisplayResult(
 
 internal data class HomeState(
     val isLoading: Boolean = false,
-    val weatherInfo: WeatherInfo = WeatherInfo()
+    val weatherInfo: WeatherInfo = WeatherInfo(),
+    val currentLocation: CurrentLocation = CurrentLocation()
 ) {
 
     fun toUiState(): HomeScreenState {

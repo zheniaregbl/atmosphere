@@ -16,7 +16,8 @@ internal class KtorRemoteWeatherDataSource(
 
     override suspend fun getHourlyWeather(
         latitude: Double,
-        longitude: Double
+        longitude: Double,
+        timeZone: String
     ): Result<HourlyWeatherResponseDTO, DataError.Remote> {
         return safeCall<HourlyWeatherResponseDTO> {
             httpClient.get(urlString = BASE_URL) {
@@ -25,7 +26,7 @@ internal class KtorRemoteWeatherDataSource(
                 parameter("current", "temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,surface_pressure,wind_speed_10m,wind_direction_10m")
                 parameter("hourly", "temperature_2m,weather_code")
                 parameter("wind_speed_unit", "ms")
-                parameter("timezone", "Europe/Moscow")
+                parameter("timezone", timeZone)
                 parameter("forecast_days", 1)
             }
         }

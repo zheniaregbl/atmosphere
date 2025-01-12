@@ -14,8 +14,10 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import ru.syndicate.atmosphere.core.domain.model.CurrentLocation
 import ru.syndicate.atmosphere.core.domain.onError
 import ru.syndicate.atmosphere.core.domain.onSuccess
+import ru.syndicate.atmosphere.feature.search.domain.model.City
 import ru.syndicate.atmosphere.feature.search.domain.repository.SearchCityRepository
 
 internal class CityListViewModel(
@@ -43,7 +45,7 @@ internal class CityListViewModel(
                 ) }
             }
 
-            is CityListAction.OnCityClick -> {}
+            is CityListAction.OnCityClick -> selectCity(action.city)
         }
     }
 
@@ -89,5 +91,16 @@ internal class CityListViewModel(
                     isLoading = false
                 ) }
             }
+    }
+
+    private fun selectCity(city: City) = viewModelScope.launch {
+        searchCityRepository.saveSelectedCity(
+            CurrentLocation(
+                title = city.title,
+                timeZone = city.timeZone,
+                latitude = city.latitude,
+                longitude = city.longitude
+            )
+        )
     }
 }

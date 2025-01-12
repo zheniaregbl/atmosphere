@@ -60,7 +60,13 @@ class SearchScreen : Screen {
                 .fillMaxSize()
                 .statusBarsPadding(),
             state = state,
-            onAction = { viewModel.onAction(it) },
+            onAction = { action ->
+                viewModel.onAction(action)
+                when (action) {
+                    is CityListAction.OnCityClick -> navigator.pop()
+                    else -> Unit
+                }
+            },
             onBackClick = { navigator.pop() }
         )
     }
@@ -147,7 +153,7 @@ internal fun CityListScreenImpl(
                                     .fillMaxWidth()
                                     .background(CardColor),
                                 city = it,
-                                onClick = { }
+                                onClick = { onAction(CityListAction.OnCityClick(it)) }
                             )
                         }
 

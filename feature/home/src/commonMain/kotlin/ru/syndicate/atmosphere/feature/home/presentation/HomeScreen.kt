@@ -72,7 +72,7 @@ class HomeScreen : Screen {
                 .fillMaxSize()
                 .statusBarsPadding(),
             state = state,
-            currentTown = "Moscow",
+            currentTown = state.value.currentLocation.title,
             onAction = { viewModel.onAction(it) },
             onSearchClick = { navigator.push(searchScreen) }
         )

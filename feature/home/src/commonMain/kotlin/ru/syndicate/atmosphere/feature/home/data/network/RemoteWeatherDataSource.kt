@@ -7,7 +7,8 @@ import ru.syndicate.atmosphere.feature.home.data.dto.HourlyWeatherResponseDTO
 internal interface RemoteWeatherDataSource {
 
     suspend fun getHourlyWeather(
-        latitude: Double = 58.5213,
-        longitude: Double = 31.271
+        latitude: Double,
+        longitude: Double,
+        timeZone: String
     ): Result<HourlyWeatherResponseDTO, DataError.Remote>
 }
