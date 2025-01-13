@@ -33,7 +33,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import atmosphere.feature.home.generated.resources.Res
+import atmosphere.feature.home.generated.resources.detail_forecast_desc
 import atmosphere.feature.home.generated.resources.detail_forecast_title
+import atmosphere.feature.home.generated.resources.screen_title
+import atmosphere.feature.home.generated.resources.some_day_forecast_desc
 import atmosphere.feature.home.generated.resources.some_day_forecast_title
 import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.core.screen.Screen
@@ -92,12 +95,13 @@ internal fun HomeScreenImpl(
 
     val lazyListState = rememberLazyListState()
 
-    val topPanelTitle = remember { mutableStateOf("Home") }
+    val screenTitle = stringResource(Res.string.screen_title)
+    val topPanelTitle = remember { mutableStateOf(screenTitle) }
 
     LaunchedEffect(lazyListState.firstVisibleItemIndex) {
         if (lazyListState.firstVisibleItemIndex > 0)
             topPanelTitle.value = currentTown
-        else topPanelTitle.value = "Home"
+        else topPanelTitle.value = screenTitle
     }
 
     Box(modifier = modifier) {
@@ -191,7 +195,7 @@ internal fun HomeScreenImpl(
                             )
                             .padding(16.dp),
                         title = stringResource(Res.string.detail_forecast_title),
-                        description = "Check out the weather forecast for today and more."
+                        description = stringResource(Res.string.detail_forecast_desc)
                     )
                 }
 
@@ -211,7 +215,7 @@ internal fun HomeScreenImpl(
                             )
                             .padding(16.dp),
                         title = stringResource(Res.string.some_day_forecast_title),
-                        description = "View a quick overview of the weather forecast for the next 7 days."
+                        description = stringResource(Res.string.some_day_forecast_desc)
                     )
                 }
 

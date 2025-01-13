@@ -29,10 +29,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import ru.syndicate.atmosphere.core.presentation.theme.SelectedBlue
 import ru.syndicate.atmosphere.feature.search.presentation.theme.CardColor
 import ru.syndicate.atmosphere.feature.search.presentation.theme.HintColor
 import ru.syndicate.atmosphere.feature.search.resources.Res
+import ru.syndicate.atmosphere.feature.search.resources.search_bar_hint
 import ru.syndicate.atmosphere.feature.search.resources.search_svg
 
 @Composable
@@ -94,7 +96,7 @@ internal fun SearchBar(
 
                     if (value.isBlank()) {
                         Text(
-                            text = "Enter city...",
+                            text = stringResource(Res.string.search_bar_hint),
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.Normal,
                             fontSize = 18.sp,
