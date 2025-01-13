@@ -33,9 +33,9 @@ internal class DefaultSearchCityRepository(
     override suspend fun saveSelectedCity(location: CurrentLocation) {
         val locationKey = stringPreferencesKey("selected_location")
         dataStore.edit {
-            val value = it[locationKey]
-            println("saved location : $value")
-            it[locationKey] = Json.encodeToString(location.toDTO())
+            val saveLocation = Json.encodeToString(location.toDTO())
+            it[locationKey] = saveLocation
+            println("saved location : $saveLocation")
         }
     }
 }

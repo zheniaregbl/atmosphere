@@ -102,5 +102,10 @@ internal class CityListViewModel(
                 longitude = city.longitude
             )
         )
+        _state.update { it.copy(savedCity = CurrentLocation()) }
+    }
+
+    fun clearData() {
+        _state.update { CityListState() }
     }
 }

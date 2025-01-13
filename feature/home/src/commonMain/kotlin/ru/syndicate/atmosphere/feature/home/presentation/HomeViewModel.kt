@@ -21,7 +21,6 @@ internal class HomeViewModel(
     val state = _state
         .onStart {
             viewModelScope.launch {
-                getCurrentLocation()
                 getHourlyWeather()
             }
         }
@@ -31,9 +30,20 @@ internal class HomeViewModel(
             _state.value
         )
 
+    init {
+        viewModelScope.launch {
+            weatherRepository.currentLocation
+                .collect { currentLocation ->
+                    _state.update { it.copy(currentLocation = currentLocation) }
+                }
+        }
+    }
+
     fun onAction(action: HomeAction) {
         when (action) {
-            HomeAction.UpdateWeatherInfo -> viewModelScope.launch { getHourlyWeather() }
+            HomeAction.UpdateWeatherInfo -> viewModelScope.launch {
+                getHourlyWeather()
+            }
         }
     }
 

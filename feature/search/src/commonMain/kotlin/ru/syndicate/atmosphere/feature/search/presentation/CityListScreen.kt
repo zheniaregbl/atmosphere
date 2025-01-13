@@ -24,6 +24,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -55,6 +57,12 @@ class SearchScreen : Screen {
         val viewModel = koinViewModel<CityListViewModel>()
         val state = viewModel.state.collectAsStateWithLifecycle()
 
+        LaunchedEffect(state.value.savedCity) {
+            if (state.value.savedCity != null) {
+                navigator.pop()
+            }
+        }
+
         CityListScreenImpl(
             modifier = Modifier
                 .fillMaxSize()
@@ -62,13 +70,15 @@ class SearchScreen : Screen {
             state = state,
             onAction = { action ->
                 viewModel.onAction(action)
-                when (action) {
-                    is CityListAction.OnCityClick -> navigator.pop()
-                    else -> Unit
-                }
             },
             onBackClick = { navigator.pop() }
         )
+
+        DisposableEffect(Unit) {
+            onDispose {
+                viewModel.clearData()
+            }
+        }
     }
 }
 

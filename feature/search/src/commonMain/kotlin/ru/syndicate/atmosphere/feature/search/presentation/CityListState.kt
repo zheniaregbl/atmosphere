@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import ru.syndicate.atmosphere.core.domain.model.CurrentLocation
 import ru.syndicate.atmosphere.feature.search.domain.model.City
 
 internal sealed class CityListScreenState {
@@ -61,7 +62,8 @@ internal fun CityListScreenState.DisplayResult(
 internal data class CityListState(
     val isLoading: Boolean = false,
     val searchCityText: String = "",
-    val searchCityList: List<City> = emptyList()
+    val searchCityList: List<City> = emptyList(),
+    val savedCity: CurrentLocation? = null
 ) {
 
     fun toUiState(): CityListScreenState {
