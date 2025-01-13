@@ -46,6 +46,8 @@ internal class CityListViewModel(
             }
 
             is CityListAction.OnCityClick -> selectCity(action.city)
+
+            CityListAction.ClearData -> _state.update { CityListState() }
         }
     }
 
@@ -103,9 +105,5 @@ internal class CityListViewModel(
             )
         )
         _state.update { it.copy(savedCity = CurrentLocation()) }
-    }
-
-    fun clearData() {
-        _state.update { CityListState() }
     }
 }

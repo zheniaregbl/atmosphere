@@ -1,13 +1,13 @@
 package ru.syndicate.atmosphere.core.data
 
-import ru.syndicate.atmosphere.core.domain.Result
-import ru.syndicate.atmosphere.core.domain.DataError
 import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
 import io.ktor.client.network.sockets.SocketTimeoutException
 import io.ktor.client.statement.HttpResponse
 import io.ktor.util.network.UnresolvedAddressException
 import kotlinx.coroutines.ensureActive
+import ru.syndicate.atmosphere.core.domain.DataError
+import ru.syndicate.atmosphere.core.domain.Result
 import kotlin.coroutines.coroutineContext
 
 suspend inline fun <reified T> safeCall(

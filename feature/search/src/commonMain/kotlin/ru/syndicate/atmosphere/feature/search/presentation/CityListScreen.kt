@@ -76,7 +76,7 @@ class SearchScreen : Screen {
 
         DisposableEffect(Unit) {
             onDispose {
-                viewModel.clearData()
+                viewModel.onAction(CityListAction.ClearData)
             }
         }
     }

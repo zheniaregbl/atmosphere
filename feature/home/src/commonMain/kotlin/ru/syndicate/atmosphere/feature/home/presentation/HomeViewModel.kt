@@ -47,14 +47,6 @@ internal class HomeViewModel(
         }
     }
 
-    private suspend fun getCurrentLocation() {
-        weatherRepository.getCurrentLocation().also { currentLocation ->
-            _state.update { it.copy(
-                currentLocation = currentLocation
-            ) }
-        }
-    }
-
     private suspend fun getHourlyWeather() {
 
         _state.update { it.copy(isLoading = true) }

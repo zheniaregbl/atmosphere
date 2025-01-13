@@ -7,10 +7,10 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import ru.syndicate.atmosphere.core.data.mapper.toDTO
-import ru.syndicate.atmosphere.core.domain.model.CurrentLocation
 import ru.syndicate.atmosphere.core.domain.DataError
 import ru.syndicate.atmosphere.core.domain.Result
 import ru.syndicate.atmosphere.core.domain.map
+import ru.syndicate.atmosphere.core.domain.model.CurrentLocation
 import ru.syndicate.atmosphere.feature.search.data.mapper.toCity
 import ru.syndicate.atmosphere.feature.search.data.network.RemoteSearchCityDataSource
 import ru.syndicate.atmosphere.feature.search.domain.model.City
