@@ -1,5 +1,9 @@
 package ru.syndicate.atmosphere.feature.search.presentation
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,6 +26,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -33,7 +38,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -41,11 +48,13 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import com.mohamedrejeb.calf.ui.progress.AdaptiveCircularProgressIndicator
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
+import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
 import ru.syndicate.atmosphere.feature.search.presentation.components.CityCard
 import ru.syndicate.atmosphere.feature.search.presentation.components.SearchBar
 import ru.syndicate.atmosphere.feature.search.presentation.theme.CardColor
 import ru.syndicate.atmosphere.feature.search.resources.Res
 import ru.syndicate.atmosphere.feature.search.resources.arrow_left_svg
+import ru.syndicate.atmosphere.feature.search.resources.arrow_svg
 
 class SearchScreen : Screen {
 
@@ -103,13 +112,16 @@ internal fun CityListScreenImpl(
             verticalArrangement = Arrangement.spacedBy(14.dp)
         ) {
 
-            Row(
+            Box(
                 modifier = Modifier
                     .widthIn(max = 800.dp)
                     .fillMaxWidth()
             ) {
+
                 Image(
-                    modifier = Modifier.clickable(
+                    modifier = Modifier
+                        .size(28.dp)
+                        .clickable(
                         onClick = onBackClick,
                         indication = null,
                         interactionSource = remember { MutableInteractionSource() }
@@ -117,6 +129,26 @@ internal fun CityListScreenImpl(
                     painter = painterResource(Res.drawable.arrow_left_svg),
                     contentDescription = null
                 )
+
+                Row(
+                    modifier = Modifier.align(Alignment.Center),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    Image(
+                        painter = painterResource(Res.drawable.arrow_svg),
+                        contentDescription = null
+                    )
+
+                    Text(
+                        text = "Search",
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 14.sp,
+                        color = LightWhite
+                    )
+                }
             }
 
             SearchBar(

@@ -42,12 +42,11 @@ internal fun TopPanel(
     ) {
 
         Image(
-            modifier = Modifier
-                .clickable(
-                    onClick = onSearchClick,
-                    indication = null,
-                    interactionSource = remember { MutableInteractionSource() },
-                ),
+            modifier = Modifier.clickable(
+                onClick = onSearchClick,
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ),
             painter = painterResource(Res.drawable.search_svg),
             contentDescription = null
         )

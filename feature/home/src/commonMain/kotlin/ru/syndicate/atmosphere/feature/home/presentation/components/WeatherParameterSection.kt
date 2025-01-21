@@ -1,8 +1,5 @@
 package ru.syndicate.atmosphere.feature.home.presentation.components
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.infiniteRepeatable
@@ -157,12 +154,7 @@ internal fun WeatherParameterSection(
 
         Spacer(modifier = Modifier.height(6.dp))
 
-        AnimatedVisibility(
-            modifier = Modifier.fillMaxWidth(),
-            visible = !state.value.isLoading,
-            enter = EnterTransition.None,
-            exit = ExitTransition.None
-        ) {
+        if (!state.value.isLoading) {
             RefreshButton(
                 modifier = Modifier
                     .wrapContentSize()
