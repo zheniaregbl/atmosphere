@@ -48,6 +48,7 @@ import dev.chrisbanes.haze.HazeTint
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import ru.syndicate.atmosphere.core.navigation.SharedScreen
 import ru.syndicate.atmosphere.core.presentation.theme.BackgroundColor
 import ru.syndicate.atmosphere.feature.home.presentation.components.DescriptionSection
 import ru.syndicate.atmosphere.feature.home.presentation.components.ForecastSection
@@ -55,7 +56,6 @@ import ru.syndicate.atmosphere.feature.home.presentation.components.NavigateBloc
 import ru.syndicate.atmosphere.feature.home.presentation.components.TopPanel
 import ru.syndicate.atmosphere.feature.home.presentation.components.WeatherImage
 import ru.syndicate.atmosphere.feature.home.presentation.components.WeatherParameterSection
-import ru.syndicate.atmosphere.navigation.SharedScreen
 
 class HomeScreen : Screen {
 

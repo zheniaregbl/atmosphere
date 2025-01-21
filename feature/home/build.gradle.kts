@@ -58,7 +58,6 @@ kotlin {
             api(libs.bundles.ktor)
 
             implementation(projects.core)
-            implementation(projects.navigation)
         }
     }
 }

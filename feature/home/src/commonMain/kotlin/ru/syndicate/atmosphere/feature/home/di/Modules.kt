@@ -10,7 +10,7 @@ import ru.syndicate.atmosphere.feature.home.data.repository.DefaultWeatherReposi
 import ru.syndicate.atmosphere.feature.home.domain.repository.WeatherRepository
 import ru.syndicate.atmosphere.feature.home.presentation.HomeViewModel
 
-val homeModule = module {
+val featureHomeModule = module {
     singleOf(::KtorRemoteWeatherDataSource).bind<RemoteWeatherDataSource>()
     singleOf(::DefaultWeatherRepository).bind<WeatherRepository>()
 

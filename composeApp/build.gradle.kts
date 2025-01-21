@@ -47,7 +47,6 @@ kotlin {
             implementation(libs.voyager.transitions)
 
             implementation(projects.core)
-            implementation(projects.navigation)
             implementation(projects.feature.home)
             implementation(projects.feature.search)
         }

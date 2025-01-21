@@ -5,7 +5,7 @@ import cafe.adriel.voyager.core.registry.ScreenRegistry
 import org.koin.android.ext.koin.androidContext
 import ru.syndicate.atmosphere.di.androidPlatformModules
 import ru.syndicate.atmosphere.di.initKoin
-import ru.syndicate.atmosphere.navigation.featureSearchModule
+import ru.syndicate.atmosphere.feature.search.di.featureSearchScreenModule
 
 class WeatherApplication : Application() {
 
@@ -13,7 +13,7 @@ class WeatherApplication : Application() {
         super.onCreate()
 
         ScreenRegistry {
-            featureSearchModule()
+            featureSearchScreenModule()
         }
 
         initKoin(

@@ -1,4 +1,4 @@
-package ru.syndicate.atmosphere.navigation
+package ru.syndicate.atmosphere.core.navigation
 
 import cafe.adriel.voyager.core.registry.ScreenProvider
 

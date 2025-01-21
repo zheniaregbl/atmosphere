@@ -42,6 +42,8 @@ kotlin {
             api(compose.ui)
             api(compose.components.resources)
             api(compose.components.uiToolingPreview)
+            
+            api(libs.voyager.navigator)
 
             api(libs.koin.compose)
             api(libs.koin.compose.viewmodel)
