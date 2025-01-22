@@ -64,6 +64,7 @@ class HomeScreen : Screen {
 
         val navigator = LocalNavigator.currentOrThrow
         val searchScreen = rememberScreen(SharedScreen.SearchScreen)
+        val settingsScreen = rememberScreen(SharedScreen.SettingsScreen)
 
         val viewModel = koinViewModel<HomeViewModel>()
         val state = viewModel.state.collectAsStateWithLifecycle()
@@ -77,7 +78,8 @@ class HomeScreen : Screen {
             state = state,
             currentTown = state.value.currentLocation.title,
             onAction = { viewModel.onAction(it) },
-            onSearchClick = { navigator.push(searchScreen) }
+            onSearchClick = { navigator.push(searchScreen) },
+            onSettingsClick = { navigator.push(settingsScreen) }
         )
     }
 }
@@ -88,7 +90,8 @@ internal fun HomeScreenImpl(
     state: State<HomeState>,
     currentTown: String,
     onAction: (HomeAction) -> Unit,
-    onSearchClick: () -> Unit
+    onSearchClick: () -> Unit,
+    onSettingsClick: () -> Unit
 ) {
 
     val hazeState = remember { HazeState() }
@@ -129,7 +132,7 @@ internal fun HomeScreenImpl(
                     .padding(horizontal = 20.dp),
                 topPanelTitle = topPanelTitle,
                 onSearchClick = onSearchClick,
-                onSettingsClick = { }
+                onSettingsClick = onSettingsClick
             )
 
             LazyColumn(

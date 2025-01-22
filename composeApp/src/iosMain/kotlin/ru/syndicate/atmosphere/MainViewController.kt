@@ -4,11 +4,17 @@ import androidx.compose.ui.window.ComposeUIViewController
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import ru.syndicate.atmosphere.di.initKoin
 import ru.syndicate.atmosphere.di.iosPlatformModules
-import ru.syndicate.atmosphere.navigation.featureSearchModule
+import ru.syndicate.atmosphere.feature.search.di.featureSearchScreenModule
+import ru.syndicate.atmosphere.feature.settings.di.featureSettingsScreenModule
 
 fun MainViewController() = ComposeUIViewController(
     configure = {
-        ScreenRegistry { featureSearchModule() }
+
+        ScreenRegistry {
+            featureSearchScreenModule()
+            featureSettingsScreenModule()
+        }
+
         initKoin(platformModules = iosPlatformModules)
     }
 ) { App() }

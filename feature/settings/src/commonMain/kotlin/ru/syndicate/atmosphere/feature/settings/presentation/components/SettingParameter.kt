@@ -1,4 +1,4 @@
-package ru.syndicate.atmosphere.feature.home.presentation.components
+package ru.syndicate.atmosphere.feature.settings.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -12,35 +12,40 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import atmosphere.feature.home.generated.resources.Res
-import atmosphere.feature.home.generated.resources.arrow_right_svg
 import org.jetbrains.compose.resources.painterResource
+import ru.syndicate.atmosphere.core.presentation.theme.SelectedBlue
+import ru.syndicate.atmosphere.feature.settings.presentation.theme.DescriptionColor
+import ru.syndicate.atmosphere.feature.settings.resources.Res
+import ru.syndicate.atmosphere.feature.settings.resources.arrow_right_svg
 
 @Composable
-internal fun NavigateBlock(
+internal fun SettingParameter(
     modifier: Modifier = Modifier,
     title: String,
     description: String,
-    onClick: (() -> Unit)? = null
+    value: String? = null,
+    onClick: () -> Unit
 ) {
 
     Row(
         modifier = modifier
             .clickable(
-                onClick = onClick ?: { },
+                onClick = onClick,
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() }
-            )
+            ),
+        verticalAlignment = Alignment.CenterVertically
     ) {
 
         Column(
             modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
 
             Text(
@@ -56,15 +61,25 @@ internal fun NavigateBlock(
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Normal,
                 fontSize = 14.sp,
-                color = Color.White
+                color = DescriptionColor
             )
         }
 
-        Spacer(modifier = Modifier.width(20.dp))
+        Spacer(modifier = Modifier.width(30.dp))
 
-        Image(
-            painter = painterResource(Res.drawable.arrow_right_svg),
-            contentDescription = null
-        )
+        if (value != null) {
+            Text(
+                text = value,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 16.sp,
+                color = SelectedBlue
+            )
+        } else {
+            Image(
+                painter = painterResource(Res.drawable.arrow_right_svg),
+                contentDescription = null
+            )
+        }
     }
 }

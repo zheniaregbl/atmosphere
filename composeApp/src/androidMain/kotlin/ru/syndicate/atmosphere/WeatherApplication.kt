@@ -6,6 +6,7 @@ import org.koin.android.ext.koin.androidContext
 import ru.syndicate.atmosphere.di.androidPlatformModules
 import ru.syndicate.atmosphere.di.initKoin
 import ru.syndicate.atmosphere.feature.search.di.featureSearchScreenModule
+import ru.syndicate.atmosphere.feature.settings.di.featureSettingsScreenModule
 
 class WeatherApplication : Application() {
 
@@ -14,6 +15,7 @@ class WeatherApplication : Application() {
 
         ScreenRegistry {
             featureSearchScreenModule()
+            featureSettingsScreenModule()
         }
 
         initKoin(

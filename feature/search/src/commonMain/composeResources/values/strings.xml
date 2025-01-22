@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
+    <!--Text for UI components-->
+    <string name="screen_title">Search</string>
     <string name="search_bar_hint">Enter city...</string>
 </resources>

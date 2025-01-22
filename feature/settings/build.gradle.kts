@@ -30,9 +30,25 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.core)
+            api(compose.components.resources)
+            api(libs.androidx.lifecycle.viewmodel)
+            api(libs.androidx.lifecycle.runtime.compose)
+
+            api(libs.voyager.navigator)
+
+            api(libs.koin.compose)
+            api(libs.koin.compose.viewmodel)
+            api(libs.koin.core)
+
+            api(projects.core)
         }
     }
+}
+
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "ru.syndicate.atmosphere.feature.settings.resources"
+    generateResClass = auto
 }
 
 android {

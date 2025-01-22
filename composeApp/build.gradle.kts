@@ -49,6 +49,7 @@ kotlin {
             implementation(projects.core)
             implementation(projects.feature.home)
             implementation(projects.feature.search)
+            implementation(projects.feature.settings)
         }
         androidMain.dependencies {
             implementation(compose.preview)

@@ -51,7 +51,7 @@ kotlin {
 
             api(libs.bundles.ktor)
 
-            implementation(projects.core)
+            api(projects.core)
         }
     }
 }
