@@ -69,8 +69,6 @@ class HomeScreen : Screen {
         val viewModel = koinViewModel<HomeViewModel>()
         val state = viewModel.state.collectAsStateWithLifecycle()
 
-        LaunchedEffect(Unit) { viewModel.onAction(HomeAction.UpdateWeatherInfo) }
-
         HomeScreenImpl(
             modifier = Modifier
                 .fillMaxSize()

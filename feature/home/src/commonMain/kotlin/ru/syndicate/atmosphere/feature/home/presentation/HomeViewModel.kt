@@ -2,6 +2,11 @@ package ru.syndicate.atmosphere.feature.home.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.skydoves.sandwich.ktor.statusCode
+import com.skydoves.sandwich.messageOrNull
+import com.skydoves.sandwich.onError
+import com.skydoves.sandwich.onException
+import com.skydoves.sandwich.onSuccess
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -9,8 +14,6 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import ru.syndicate.atmosphere.core.domain.onError
-import ru.syndicate.atmosphere.core.domain.onSuccess
 import ru.syndicate.atmosphere.feature.home.domain.repository.WeatherRepository
 
 internal class HomeViewModel(
@@ -19,14 +22,10 @@ internal class HomeViewModel(
 
     private val _state = MutableStateFlow(HomeState())
     val state = _state
-        .onStart {
-            viewModelScope.launch {
-                getHourlyWeather()
-            }
-        }
+        .onStart { getHourlyWeather() }
         .stateIn(
             viewModelScope,
-            SharingStarted.WhileSubscribed(5000L),
+            SharingStarted.WhileSubscribed(10_000L),
             _state.value
         )
 
@@ -47,7 +46,7 @@ internal class HomeViewModel(
         }
     }
 
-    private suspend fun getHourlyWeather() {
+    private fun getHourlyWeather() = viewModelScope.launch {
 
         _state.update { it.copy(isLoading = true) }
 
@@ -58,14 +57,20 @@ internal class HomeViewModel(
             _state.value.currentLocation.longitude,
             _state.value.currentLocation.timeZone
         )
-            .onSuccess { weatherInfo ->
+            .onSuccess {
                 _state.update { it.copy(
                     isLoading = false,
-                    weatherInfo = weatherInfo
+                    weatherInfo = data
+                ) }
+            }
+            .onException {
+                println("error: $messageOrNull")
+                _state.update { it.copy(
+                    isLoading = false
                 ) }
             }
             .onError {
-                println("error: ${it.name}")
+                println("error: ${statusCode.code}")
                 _state.update { it.copy(
                     isLoading = false
                 ) }

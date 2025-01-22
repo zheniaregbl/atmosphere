@@ -1,7 +1,6 @@
 package ru.syndicate.atmosphere.feature.home.data.network
 
-import ru.syndicate.atmosphere.core.domain.DataError
-import ru.syndicate.atmosphere.core.domain.Result
+import com.skydoves.sandwich.ApiResponse
 import ru.syndicate.atmosphere.feature.home.data.dto.HourlyWeatherResponseDTO
 
 internal interface RemoteWeatherDataSource {
@@ -10,5 +9,5 @@ internal interface RemoteWeatherDataSource {
         latitude: Double,
         longitude: Double,
         timeZone: String
-    ): Result<HourlyWeatherResponseDTO, DataError.Remote>
+    ): ApiResponse<HourlyWeatherResponseDTO>
 }
