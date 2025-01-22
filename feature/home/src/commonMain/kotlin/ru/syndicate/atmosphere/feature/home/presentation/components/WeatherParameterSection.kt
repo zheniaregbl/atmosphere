@@ -237,6 +237,7 @@ internal fun WeatherParameterSection(
                                     .weatherInfo
                                     .currentWeatherParameters
                                     .windSpeed
+                                    .roundToInt()
                                     .toString()
                                 WeatherParameter.Humidity -> screenState
                                     .weatherInfo

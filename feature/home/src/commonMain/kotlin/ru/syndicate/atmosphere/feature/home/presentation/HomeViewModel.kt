@@ -33,6 +33,10 @@ internal class HomeViewModel(
         viewModelScope.launch {
             weatherRepository.currentLocation
                 .collect { currentLocation ->
+                    if (currentLocation.latitude != _state.value.currentLocation.latitude
+                        || currentLocation.longitude != _state.value.currentLocation.longitude) {
+                        getHourlyWeather()
+                    }
                     _state.update { it.copy(currentLocation = currentLocation) }
                 }
         }
