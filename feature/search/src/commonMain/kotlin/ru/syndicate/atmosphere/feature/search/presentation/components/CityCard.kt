@@ -57,15 +57,29 @@ internal fun CityCard(
                 color = Color.White
             )
 
-            Text(
-                text = city.country,
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Normal,
-                fontSize = 16.sp,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1,
-                color = LightWhite
-            )
+            if (city.country.isNotBlank()) {
+                Text(
+                    text = city.country,
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 16.sp,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
+                    color = LightWhite
+                )
+            }
+
+            if (city.mainAdminArea.isNotBlank()) {
+                Text(
+                    text = city.mainAdminArea,
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 12.sp,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
+                    color = LightWhite
+                )
+            }
         }
 
         FlagImage(

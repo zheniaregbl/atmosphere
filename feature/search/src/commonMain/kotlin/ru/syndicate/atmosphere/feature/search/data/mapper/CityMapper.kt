@@ -10,6 +10,7 @@ internal fun SearchCityDTO.toCity() = City(
     country = country ?: "",
     flagUrl = "$CIRCLE_FLAGS/${countryCode.lowercase()}.svg",
     timeZone = timeZone ?: "",
+    mainAdminArea = mainAdminArea ?: "",
     latitude = latitude,
     longitude = longitude
 )
