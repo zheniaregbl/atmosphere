@@ -17,6 +17,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,6 +45,17 @@ internal fun SearchBar(
     onValueChange: (String) -> Unit,
     onImeSearch: () -> Unit
 ) {
+
+    val searchBarHints = remember {
+        listOf(
+            "Enter city...",
+            "Moscow",
+            "London",
+            "Berlin",
+            "Roma",
+            "Istanbul"
+        )
+    }
 
     CompositionLocalProvider(
         LocalTextSelectionColors provides TextSelectionColors(
@@ -95,12 +107,12 @@ internal fun SearchBar(
                     innerTextField()
 
                     if (value.isBlank()) {
-                        Text(
-                            text = stringResource(Res.string.search_bar_hint),
-                            style = MaterialTheme.typography.bodyMedium,
+                        TypewriterText(
+                            baseText = "",
                             fontWeight = FontWeight.Normal,
                             fontSize = 18.sp,
-                            color = HintColor
+                            color = HintColor,
+                            parts = searchBarHints
                         )
                     }
                 }
