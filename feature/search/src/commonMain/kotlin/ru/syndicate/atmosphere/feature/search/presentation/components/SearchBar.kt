@@ -14,7 +14,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
@@ -35,7 +34,6 @@ import ru.syndicate.atmosphere.core.presentation.theme.SelectedBlue
 import ru.syndicate.atmosphere.feature.search.presentation.theme.CardColor
 import ru.syndicate.atmosphere.feature.search.presentation.theme.HintColor
 import ru.syndicate.atmosphere.feature.search.resources.Res
-import ru.syndicate.atmosphere.feature.search.resources.search_bar_hint
 import ru.syndicate.atmosphere.feature.search.resources.search_svg
 
 @Composable

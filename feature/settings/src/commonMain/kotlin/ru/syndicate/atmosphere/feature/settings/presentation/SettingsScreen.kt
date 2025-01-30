@@ -10,6 +10,10 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -19,6 +23,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import org.jetbrains.compose.resources.stringResource
+import ru.syndicate.atmosphere.core.presentation.components.LanguageDialog
 import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
 import ru.syndicate.atmosphere.feature.settings.presentation.components.SettingParameter
 import ru.syndicate.atmosphere.feature.settings.presentation.components.TopPanel
@@ -51,6 +56,8 @@ internal fun SettingsScreenImpl(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit = { }
 ) {
+
+    var showLanguageDialog by remember { mutableStateOf(false) }
 
     Box(modifier = modifier) {
 
@@ -105,10 +112,17 @@ internal fun SettingsScreenImpl(
                         title = stringResource(Res.string.search_lang_title),
                         description = stringResource(Res.string.search_lang_desc),
                         value = stringResource(Res.string.lang_eng),
-                        onClick = { }
+                        onClick = { showLanguageDialog = true }
                     )
                 }
             }
         }
+
+        LanguageDialog(
+            showDialog = showLanguageDialog,
+            initialValue = "English",
+            onSelectedLanguage = { showLanguageDialog = false },
+            onDismissRequest = { showLanguageDialog = false }
+        )
     }
 }
