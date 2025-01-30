@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
+import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -77,14 +78,9 @@ internal fun DialogMenu(
 
                 AnimatedVisibility(
                     visible = animateIn && showDialog,
-                    enter = fadeIn(spring(stiffness = Spring.StiffnessHigh)) + scaleIn(
-                        initialScale = .8f,
-                        animationSpec = spring(
-                            dampingRatio = Spring.DampingRatioMediumBouncy,
-                            stiffness = Spring.StiffnessMediumLow
-                        )
-                    ),
-                    exit = slideOutVertically { it / 8 } + fadeOut() + scaleOut(targetScale = .95f)
+                    enter = fadeIn(spring(stiffness = Spring.StiffnessMedium))
+                            + slideInVertically { -it / 4 },
+                    exit = slideOutVertically { it / 4 } + fadeOut()
                 ) {
 
                     Box(
