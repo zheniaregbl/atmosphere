@@ -6,7 +6,6 @@ import ru.syndicate.atmosphere.core.domain.model.CurrentLocation
 import ru.syndicate.atmosphere.feature.home.domain.model.WeatherInfo
 
 internal interface WeatherRepository {
-    val currentLocation: Flow<CurrentLocation>
     suspend fun getHourlyWeather(
         latitude: Double,
         longitude: Double,

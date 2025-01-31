@@ -17,11 +17,13 @@ import kotlinx.coroutines.launch
 import ru.syndicate.atmosphere.core.domain.model.CurrentLocation
 import ru.syndicate.atmosphere.core.domain.onError
 import ru.syndicate.atmosphere.core.domain.onSuccess
+import ru.syndicate.atmosphere.core.domain.repository.SettingsRepository
 import ru.syndicate.atmosphere.feature.search.domain.model.City
 import ru.syndicate.atmosphere.feature.search.domain.repository.SearchCityRepository
 
 internal class CityListViewModel(
-    private val searchCityRepository: SearchCityRepository
+    private val searchCityRepository: SearchCityRepository,
+    private val settingsRepository: SettingsRepository
 ): ViewModel() {
 
     private var searchJob: Job? = null
@@ -96,7 +98,7 @@ internal class CityListViewModel(
     }
 
     private fun selectCity(city: City) = viewModelScope.launch {
-        searchCityRepository.saveSelectedCity(
+        settingsRepository.saveSelectedCity(
             CurrentLocation(
                 title = city.title,
                 timeZone = city.timeZone,

@@ -14,10 +14,12 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import ru.syndicate.atmosphere.core.domain.repository.SettingsRepository
 import ru.syndicate.atmosphere.feature.home.domain.repository.WeatherRepository
 
 internal class HomeViewModel(
-    private val weatherRepository: WeatherRepository
+    private val weatherRepository: WeatherRepository,
+    private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
@@ -31,7 +33,7 @@ internal class HomeViewModel(
 
     init {
         viewModelScope.launch {
-            weatherRepository.currentLocation
+            settingsRepository.currentLocation
                 .collect { currentLocation ->
                     if (currentLocation.latitude != _state.value.currentLocation.latitude
                         || currentLocation.longitude != _state.value.currentLocation.longitude) {
