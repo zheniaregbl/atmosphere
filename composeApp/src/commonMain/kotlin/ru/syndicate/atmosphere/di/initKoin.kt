@@ -6,6 +6,7 @@ import org.koin.dsl.KoinAppDeclaration
 import ru.syndicate.atmosphere.core.di.networkModule
 import ru.syndicate.atmosphere.feature.home.di.featureHomeModule
 import ru.syndicate.atmosphere.feature.search.di.featureSearchModule
+import ru.syndicate.atmosphere.feature.settings.di.featureSettingsModule
 
 fun initKoin(
     config: KoinAppDeclaration? = null,
@@ -13,7 +14,12 @@ fun initKoin(
 ) {
     startKoin {
         config?.invoke(this)
-        modules(networkModule, featureHomeModule, featureSearchModule)
+        modules(
+            networkModule,
+            featureHomeModule,
+            featureSearchModule,
+            featureSettingsModule
+        )
         modules(platformModules)
     }
 }

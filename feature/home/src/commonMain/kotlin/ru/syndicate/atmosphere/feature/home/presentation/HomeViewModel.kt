@@ -46,9 +46,7 @@ internal class HomeViewModel(
 
     fun onAction(action: HomeAction) {
         when (action) {
-            HomeAction.UpdateWeatherInfo -> viewModelScope.launch {
-                getHourlyWeather()
-            }
+            HomeAction.UpdateWeatherInfo -> getHourlyWeather()
         }
     }
 

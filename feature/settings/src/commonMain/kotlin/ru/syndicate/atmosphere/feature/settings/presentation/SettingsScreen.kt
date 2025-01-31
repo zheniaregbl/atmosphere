@@ -10,6 +10,9 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,12 +26,12 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 import ru.syndicate.atmosphere.core.presentation.components.LanguageDialog
 import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
 import ru.syndicate.atmosphere.feature.settings.presentation.components.SettingParameter
 import ru.syndicate.atmosphere.feature.settings.presentation.components.TopPanel
 import ru.syndicate.atmosphere.feature.settings.resources.Res
-import ru.syndicate.atmosphere.feature.settings.resources.lang_eng
 import ru.syndicate.atmosphere.feature.settings.resources.screen_title
 import ru.syndicate.atmosphere.feature.settings.resources.search_lang_desc
 import ru.syndicate.atmosphere.feature.settings.resources.search_lang_title
@@ -42,10 +45,15 @@ class SettingsScreen : Screen {
 
         val navigator = LocalNavigator.currentOrThrow
 
+        val viewModel = koinViewModel<SettingsViewModel>()
+        val state = viewModel.state.collectAsState()
+
         SettingsScreenImpl(
             modifier = Modifier
                 .fillMaxSize()
                 .statusBarsPadding(),
+            state = state,
+            onAction = { action -> viewModel.onAction(action) },
             onBackClick = { navigator.pop() }
         )
     }
@@ -54,14 +62,39 @@ class SettingsScreen : Screen {
 @Composable
 internal fun SettingsScreenImpl(
     modifier: Modifier = Modifier,
-    onBackClick: () -> Unit = { }
+    state: State<SettingsState>,
+    onAction: (SettingsAction) -> Unit,
+    onBackClick: () -> Unit
 ) {
 
     var showLanguageDialog by remember { mutableStateOf(false) }
 
+    val languages = listOf(
+        Pair("English", "en"),
+        Pair("Russian", "ru"),
+        Pair("German", "de"),
+        Pair("French", "fr"),
+        Pair("Spanish", "es"),
+        Pair("Italian", "it"),
+        Pair("Portuguese", "pt")
+    )
+    var searchLanguage by remember {
+        mutableStateOf(
+            languages
+                .find { it.second == state.value.searchLanguage }!!
+                .first
+        )
+    }
+
+    LaunchedEffect(state.value.searchLanguage) {
+        searchLanguage = languages
+            .find { it.second == state.value.searchLanguage }!!
+            .first
+    }
+
     Box(modifier = modifier) {
 
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(top = 16.dp)
@@ -111,7 +144,7 @@ internal fun SettingsScreenImpl(
                             .padding(vertical = 20.dp),
                         title = stringResource(Res.string.search_lang_title),
                         description = stringResource(Res.string.search_lang_desc),
-                        value = stringResource(Res.string.lang_eng),
+                        value = searchLanguage,
                         onClick = { showLanguageDialog = true }
                     )
                 }
@@ -120,8 +153,12 @@ internal fun SettingsScreenImpl(
 
         LanguageDialog(
             showDialog = showLanguageDialog,
-            initialValue = "English",
-            onSelectedLanguage = { showLanguageDialog = false },
+            initialValue = state.value.searchLanguage,
+            languages = languages,
+            onSelectedLanguage = {
+                onAction(SettingsAction.OnChangeSearchLanguage(it))
+                showLanguageDialog = false
+            },
             onDismissRequest = { showLanguageDialog = false }
         )
     }

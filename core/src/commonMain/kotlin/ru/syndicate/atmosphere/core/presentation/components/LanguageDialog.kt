@@ -28,7 +28,16 @@ import ru.syndicate.atmosphere.core.presentation.theme.SelectedBlue
 fun LanguageDialog(
     showDialog: Boolean,
     initialValue: String,
-    languages: List<String> = listOf("English", "Russian", "German", "French", "Spanish", "Italian", "Portuguese"),
+    languages: List<Pair<String, String>> =
+        listOf(
+            Pair("English", "en"),
+            Pair("Russian", "ru"),
+            Pair("German", "de"),
+            Pair("French", "fr"),
+            Pair("Spanish", "es"),
+            Pair("Italian", "it"),
+            Pair("Portuguese", "pt")
+        ),
     onSelectedLanguage: (String) -> Unit,
     onDismissRequest: () -> Unit = { }
 ) {
@@ -56,7 +65,7 @@ fun LanguageDialog(
 internal fun LanguageDialogUI(
     modifier: Modifier = Modifier,
     initialValue: String,
-    languages: List<String>,
+    languages: List<Pair<String, String>>,
     onSelectedLanguage: (String) -> Unit
 ) {
 
@@ -83,8 +92,8 @@ internal fun LanguageDialogUI(
                 modifier = Modifier.width(200.dp),
                 textModifier = Modifier.padding(10.dp),
                 state = languagePickerState,
-                items = languages,
-                startIndex = languages.indexOf(initialValue),
+                items = languages.map { it.first },
+                startIndex = languages.map { it.second }.indexOf(initialValue),
                 fontSize = 18.sp,
                 itemColor = Color.White,
                 borderColor = Color.White
@@ -99,7 +108,13 @@ internal fun LanguageDialogUI(
                 .clickable(
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() }
-                ) { onSelectedLanguage(languagePickerState.selectedItem) }
+                ) {
+                    onSelectedLanguage(
+                        languages
+                            .find { it.first == languagePickerState.selectedItem }!!
+                            .second
+                    )
+                }
                 .background(SelectedBlue.copy(alpha = .4f))
                 .padding(10.dp),
             contentAlignment = Alignment.Center

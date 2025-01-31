@@ -7,5 +7,5 @@ interface SettingsRepository {
     val currentLocation: Flow<CurrentLocation>
     val searchLanguage: Flow<String>
     suspend fun saveSelectedCity(location: CurrentLocation)
-    suspend fun saveSearchLanguage(language: String)
+    suspend fun changeSearchLanguage(language: String)
 }

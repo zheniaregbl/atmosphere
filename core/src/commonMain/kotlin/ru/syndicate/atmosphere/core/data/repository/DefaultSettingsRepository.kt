@@ -45,7 +45,7 @@ class DefaultSettingsRepository(
         dataStore.edit { it[PreferenceKeys.locationKey] = Json.encodeToString(location.toDTO()) }
     }
 
-    override suspend fun saveSearchLanguage(language: String) {
+    override suspend fun changeSearchLanguage(language: String) {
         dataStore.edit { it[PreferenceKeys.searchLanguageKey] = language }
     }
 }
