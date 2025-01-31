@@ -6,5 +6,8 @@ import ru.syndicate.atmosphere.core.domain.model.CurrentLocation
 import ru.syndicate.atmosphere.feature.search.domain.model.City
 
 internal interface SearchCityRepository {
-    suspend fun searchCity(text: String): Result<List<City>, DataError.Remote>
+    suspend fun searchCity(
+        text: String,
+        language: String
+    ): Result<List<City>, DataError.Remote>
 }

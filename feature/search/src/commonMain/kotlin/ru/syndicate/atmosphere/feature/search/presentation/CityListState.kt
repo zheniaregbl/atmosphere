@@ -62,6 +62,7 @@ internal fun CityListScreenState.DisplayResult(
 internal data class CityListState(
     val isLoading: Boolean = false,
     val searchCityText: String = "",
+    val searchLanguage: String = "en",
     val searchCityList: List<City> = emptyList(),
     val savedCity: CurrentLocation? = null
 ) {

@@ -12,12 +12,17 @@ internal class DefaultSearchCityRepository(
     private val remoteSearchCityDataSource: RemoteSearchCityDataSource,
 ): SearchCityRepository {
 
-    override suspend fun searchCity(text: String): Result<List<City>, DataError.Remote> {
+    override suspend fun searchCity(
+        text: String,
+        language: String
+    ): Result<List<City>, DataError.Remote> {
         return remoteSearchCityDataSource
-            .searchCity(text)
+            .searchCity(
+                name = text,
+                language = language
+            )
             .map { dto ->
-                dto
-                    .cityList?.map { it.toCity() } ?: emptyList()
+                dto.cityList?.map { it.toCity() } ?: emptyList()
             }
     }
 }

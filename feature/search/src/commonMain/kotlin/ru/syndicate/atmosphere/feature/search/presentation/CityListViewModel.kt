@@ -37,6 +37,15 @@ internal class CityListViewModel(
             _state.value
         )
 
+    init {
+        viewModelScope.launch {
+            settingsRepository.searchLanguage
+                .collect { language ->
+                    _state.update { it.copy(searchLanguage = language) }
+                }
+        }
+    }
+
     fun onAction(action: CityListAction) {
 
         when (action) {
@@ -82,7 +91,7 @@ internal class CityListViewModel(
         ) }
 
         searchCityRepository
-            .searchCity(text)
+            .searchCity(text, _state.value.searchLanguage)
             .onSuccess { searchCityList ->
                 _state.update { it.copy(
                     isLoading = false,
