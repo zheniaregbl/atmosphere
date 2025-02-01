@@ -2,7 +2,11 @@ package ru.syndicate.atmosphere.feature.search.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.skydoves.sandwich.onError
+import com.skydoves.sandwich.onException
+import com.skydoves.sandwich.onSuccess
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.debounce
@@ -15,8 +19,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.syndicate.atmosphere.core.domain.model.CurrentLocation
-import ru.syndicate.atmosphere.core.domain.onError
-import ru.syndicate.atmosphere.core.domain.onSuccess
 import ru.syndicate.atmosphere.core.domain.repository.SettingsRepository
 import ru.syndicate.atmosphere.feature.search.domain.model.City
 import ru.syndicate.atmosphere.feature.search.domain.repository.SearchCityRepository
@@ -24,7 +26,7 @@ import ru.syndicate.atmosphere.feature.search.domain.repository.SearchCityReposi
 internal class CityListViewModel(
     private val searchCityRepository: SearchCityRepository,
     private val settingsRepository: SettingsRepository
-): ViewModel() {
+) : ViewModel() {
 
     private var searchJob: Job? = null
 
@@ -51,9 +53,11 @@ internal class CityListViewModel(
         when (action) {
 
             is CityListAction.OnSearchCityChange -> {
-                _state.update { it.copy(
-                    searchCityText = action.cityName
-                ) }
+                _state.update {
+                    it.copy(
+                        searchCityText = action.cityName
+                    )
+                }
             }
 
             is CityListAction.OnCityClick -> selectCity(action.city)
@@ -68,17 +72,9 @@ internal class CityListViewModel(
             .distinctUntilChanged()
             .debounce(500L)
             .onEach { text ->
-
-                when {
-
-                    text.isBlank() -> {
-
-                    }
-
-                    text.length >= 2 -> {
-                        searchJob?.cancel()
-                        searchJob = searchCity(text)
-                    }
+                if (text.length >= 2) {
+                    searchJob?.cancel()
+                    searchJob = searchCity(text)
                 }
             }
             .launchIn(viewModelScope)
@@ -86,23 +82,38 @@ internal class CityListViewModel(
 
     private fun searchCity(text: String) = viewModelScope.launch {
 
-        _state.update { it.copy(
-            isLoading = true
-        ) }
+        _state.update {
+            it.copy(
+                isLoading = true
+            )
+        }
 
-        searchCityRepository
-            .searchCity(text, _state.value.searchLanguage)
-            .onSuccess { searchCityList ->
-                _state.update { it.copy(
-                    isLoading = false,
-                    searchCityList = searchCityList
-                ) }
+        delay(2000)
+
+        searchCityRepository.searchCity(text, _state.value.searchLanguage)
+            .onSuccess {
+                _state.update {
+                    it.copy(
+                        isLoading = false,
+                        searchCityList = data
+                    )
+                }
             }
             .onError {
-                _state.update { it.copy(
-                    searchCityList = emptyList(),
-                    isLoading = false
-                ) }
+                _state.update {
+                    it.copy(
+                        isLoading = false,
+                        searchCityList = emptyList()
+                    )
+                }
+            }
+            .onException {
+                _state.update {
+                    it.copy(
+                        isLoading = false,
+                        searchCityList = emptyList()
+                    )
+                }
             }
     }
 

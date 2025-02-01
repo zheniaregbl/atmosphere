@@ -1,8 +1,8 @@
 package ru.syndicate.atmosphere.feature.search.data.repository
 
-import ru.syndicate.atmosphere.core.domain.DataError
-import ru.syndicate.atmosphere.core.domain.Result
-import ru.syndicate.atmosphere.core.domain.map
+import com.skydoves.sandwich.ApiResponse
+import com.skydoves.sandwich.mapFailure
+import com.skydoves.sandwich.mapSuccess
 import ru.syndicate.atmosphere.feature.search.data.mapper.toCity
 import ru.syndicate.atmosphere.feature.search.data.network.RemoteSearchCityDataSource
 import ru.syndicate.atmosphere.feature.search.domain.model.City
@@ -15,14 +15,12 @@ internal class DefaultSearchCityRepository(
     override suspend fun searchCity(
         text: String,
         language: String
-    ): Result<List<City>, DataError.Remote> {
+    ): ApiResponse<List<City>> {
         return remoteSearchCityDataSource
             .searchCity(
                 name = text,
                 language = language
             )
-            .map { dto ->
-                dto.cityList?.map { it.toCity() } ?: emptyList()
-            }
+            .mapSuccess { this.cityList!!.map { it.toCity() } }
     }
 }

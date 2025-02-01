@@ -51,6 +51,9 @@ kotlin {
 
             api(libs.bundles.ktor)
 
+            api(libs.sandwich)
+            api(libs.sandwich.ktor)
+
             api(projects.core)
         }
     }
