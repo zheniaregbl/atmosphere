@@ -2,11 +2,11 @@ package ru.syndicate.atmosphere.feature.search.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.skydoves.sandwich.ktor.statusCode
 import com.skydoves.sandwich.onError
 import com.skydoves.sandwich.onException
 import com.skydoves.sandwich.onSuccess
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.debounce
@@ -90,26 +90,38 @@ internal class CityListViewModel(
 
         searchCityRepository.searchCity(text, _state.value.searchLanguage)
             .onSuccess {
-                _state.update {
-                    it.copy(
+                if (data.isNotEmpty()) {
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            searchCityList = data
+                        )
+                    }
+                } else {
+                    _state.update { it.copy(
                         isLoading = false,
-                        searchCityList = data
-                    )
+                        searchCityList = emptyList(),
+                        errorMessage = "Could not find a location with this name."
+                    ) }
                 }
             }
             .onError {
+                println(statusCode.code)
                 _state.update {
                     it.copy(
                         isLoading = false,
-                        searchCityList = emptyList()
+                        searchCityList = emptyList(),
+                        errorMessage = "The location could not be found due to problems with the request."
                     )
                 }
             }
             .onException {
+                println(message)
                 _state.update {
                     it.copy(
                         isLoading = false,
-                        searchCityList = emptyList()
+                        searchCityList = emptyList(),
+                        errorMessage = "Could not find a location with this name."
                     )
                 }
             }

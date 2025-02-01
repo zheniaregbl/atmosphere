@@ -20,6 +20,7 @@ internal sealed class CityListScreenState {
     data object Idle : CityListScreenState()
     data object Loading : CityListScreenState()
     data class Success(val cityList: List<City>) : CityListScreenState()
+    data class Error(val errorMessage: String) : CityListScreenState()
 }
 
 @Composable
@@ -34,7 +35,8 @@ internal fun CityListScreenState.DisplayResult(
     },
     onIdle: (@Composable () -> Unit)? = null,
     onLoading: @Composable () -> Unit,
-    onSuccess: @Composable (CityListScreenState.Success) -> Unit
+    onSuccess: @Composable (CityListScreenState.Success) -> Unit,
+    onError: @Composable (CityListScreenState.Error) -> Unit
 ) {
 
     AnimatedContent(
@@ -54,6 +56,8 @@ internal fun CityListScreenState.DisplayResult(
                 CityListScreenState.Loading -> onLoading.invoke()
 
                 is CityListScreenState.Success -> onSuccess.invoke(state)
+
+                is CityListScreenState.Error -> onError.invoke(state)
             }
         }
     }
@@ -61,6 +65,7 @@ internal fun CityListScreenState.DisplayResult(
 
 internal data class CityListState(
     val isLoading: Boolean = false,
+    val errorMessage: String? = null,
     val searchCityText: String = "",
     val searchLanguage: String = "en",
     val searchCityList: List<City> = emptyList(),
@@ -68,7 +73,11 @@ internal data class CityListState(
 ) {
 
     fun toUiState(): CityListScreenState {
-        return if (isLoading) CityListScreenState.Loading
-        else CityListScreenState.Success(searchCityList)
+        return when {
+            isLoading -> CityListScreenState.Loading
+            searchCityList.isNotEmpty() -> CityListScreenState.Success(searchCityList)
+            errorMessage != null -> CityListScreenState.Error(errorMessage)
+            else -> CityListScreenState.Idle
+        }
     }
 }
