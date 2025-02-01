@@ -88,8 +88,6 @@ internal class CityListViewModel(
             )
         }
 
-        delay(2000)
-
         searchCityRepository.searchCity(text, _state.value.searchLanguage)
             .onSuccess {
                 _state.update {

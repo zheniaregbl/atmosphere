@@ -1,7 +1,6 @@
 package ru.syndicate.atmosphere.feature.search.data.repository
 
 import com.skydoves.sandwich.ApiResponse
-import com.skydoves.sandwich.mapFailure
 import com.skydoves.sandwich.mapSuccess
 import ru.syndicate.atmosphere.feature.search.data.mapper.toCity
 import ru.syndicate.atmosphere.feature.search.data.network.RemoteSearchCityDataSource
