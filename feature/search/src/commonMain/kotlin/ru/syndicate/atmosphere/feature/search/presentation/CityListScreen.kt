@@ -1,7 +1,6 @@
 package ru.syndicate.atmosphere.feature.search.presentation
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,7 +17,6 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,7 +25,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -46,7 +43,6 @@ import org.koin.compose.viewmodel.koinViewModel
 import ru.syndicate.atmosphere.feature.search.presentation.components.CityCard
 import ru.syndicate.atmosphere.feature.search.presentation.components.SearchBar
 import ru.syndicate.atmosphere.feature.search.presentation.components.TopPanel
-import ru.syndicate.atmosphere.feature.search.presentation.theme.CardColor
 import ru.syndicate.atmosphere.feature.search.resources.Res
 import ru.syndicate.atmosphere.feature.search.resources.screen_title
 import ru.syndicate.atmosphere.feature.search.resources.searching_svg
@@ -146,10 +142,7 @@ internal fun CityListScreenImpl(
 
                         items(screenState.cityList) {
                             CityCard(
-                                modifier = Modifier
-                                    .clip(RoundedCornerShape(8.dp))
-                                    .fillMaxWidth()
-                                    .background(CardColor),
+                                modifier = Modifier.fillMaxWidth(),
                                 city = it,
                                 onClick = { onAction(CityListAction.OnCityClick(it)) }
                             )
@@ -172,10 +165,7 @@ internal fun CityListScreenImpl(
                 onError = { screenState ->
 
                     Column(
-                        modifier = Modifier
-                            .widthIn(max = 400.dp)
-                            .fillMaxWidth()
-                            .padding(bottom = 80.dp),
+                        modifier = Modifier.padding(bottom = 80.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
@@ -190,7 +180,7 @@ internal fun CityListScreenImpl(
                             text = screenState.errorMessage,
                             style = LocalTextStyle.current,
                             textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.SemiBold,
+                            fontWeight = FontWeight.Medium,
                             fontSize = 16.sp,
                             color = Color.White
                         )

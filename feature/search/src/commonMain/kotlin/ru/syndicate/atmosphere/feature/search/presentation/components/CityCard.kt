@@ -1,5 +1,6 @@
 package ru.syndicate.atmosphere.feature.search.presentation.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,7 +23,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
+import ru.syndicate.atmosphere.core.presentation.util.extension.scaleOnClick
 import ru.syndicate.atmosphere.feature.search.domain.model.City
+import ru.syndicate.atmosphere.feature.search.presentation.theme.CardColor
 
 @Composable
 internal fun CityCard(
@@ -32,6 +36,9 @@ internal fun CityCard(
 
     Row(
         modifier = modifier
+            .scaleOnClick(0.96f)
+            .clip(RoundedCornerShape(8.dp))
+            .background(CardColor)
             .clickable(
                 onClick = onClick,
                 indication = null,
@@ -44,7 +51,7 @@ internal fun CityCard(
 
         Column(
             modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
 
             Text(

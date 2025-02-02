@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,7 +25,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -42,14 +40,10 @@ import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeTint
-import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import ru.syndicate.atmosphere.core.navigation.SharedScreen
-import ru.syndicate.atmosphere.core.presentation.theme.BackgroundColor
 import ru.syndicate.atmosphere.feature.home.presentation.components.DescriptionSection
 import ru.syndicate.atmosphere.feature.home.presentation.components.ForecastSection
 import ru.syndicate.atmosphere.feature.home.presentation.components.NavigateBlock
@@ -182,41 +176,19 @@ internal fun HomeScreenImpl(
 
                 item {
                     NavigateBlock(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clip(RoundedCornerShape(8.dp))
-                            .hazeChild(
-                                state = hazeState,
-                                style = HazeDefaults
-                                    .style(
-                                        backgroundColor = BackgroundColor,
-                                        tint = HazeTint(color = Color.DarkGray.copy(alpha = .5f)),
-                                        blurRadius = 8.dp,
-                                    )
-                            )
-                            .padding(16.dp),
+                        modifier = Modifier.fillMaxWidth(),
                         title = stringResource(Res.string.detail_forecast_title),
-                        description = stringResource(Res.string.detail_forecast_desc)
+                        description = stringResource(Res.string.detail_forecast_desc),
+                        hazeState = hazeState
                     )
                 }
 
                 item {
                     NavigateBlock(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clip(RoundedCornerShape(8.dp))
-                            .hazeChild(
-                                state = hazeState,
-                                style = HazeDefaults
-                                    .style(
-                                        backgroundColor = BackgroundColor,
-                                        tint = HazeTint(color = Color.DarkGray.copy(alpha = .5f)),
-                                        blurRadius = 8.dp,
-                                    )
-                            )
-                            .padding(16.dp),
+                        modifier = Modifier.fillMaxWidth(),
                         title = stringResource(Res.string.some_day_forecast_title),
-                        description = stringResource(Res.string.some_day_forecast_desc)
+                        description = stringResource(Res.string.some_day_forecast_desc),
+                        hazeState = hazeState
                     )
                 }
 
