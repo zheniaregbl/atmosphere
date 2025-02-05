@@ -62,7 +62,8 @@ internal class CityListViewModel(
 
             is CityListAction.OnCityClick -> selectCity(action.city)
 
-            CityListAction.ClearData -> _state.update { CityListState() }
+            CityListAction.ClearData ->
+                _state.update { it.copy(searchCityList = emptyList()) }
         }
     }
 
@@ -81,6 +82,8 @@ internal class CityListViewModel(
     }
 
     private fun searchCity(text: String) = viewModelScope.launch {
+
+        println(_state.value.searchLanguage)
 
         _state.update {
             it.copy(

@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.syndicate.atmosphere.core.presentation.theme.BackgroundColor
 import ru.syndicate.atmosphere.core.presentation.theme.SelectedBlue
+import ru.syndicate.atmosphere.core.presentation.util.extension.scaleOnClick
 
 @Composable
 fun LanguageDialog(
@@ -104,6 +105,7 @@ internal fun LanguageDialogUI(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp)
+                .scaleOnClick(0.96f)
                 .clip(RoundedCornerShape(10.dp))
                 .clickable(
                     indication = null,
