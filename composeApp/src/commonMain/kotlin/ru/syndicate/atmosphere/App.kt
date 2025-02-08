@@ -12,7 +12,7 @@ import cafe.adriel.voyager.transitions.FadeTransition
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ru.syndicate.atmosphere.core.presentation.theme.AppTheme
 import ru.syndicate.atmosphere.core.presentation.theme.BackgroundColor
-import ru.syndicate.atmosphere.feature.home.presentation.HomeScreen
+import ru.syndicate.atmosphere.feature.splash.presentation.SplashScreen
 
 @Composable
 @Preview
@@ -26,11 +26,11 @@ fun App() {
                 .background(BackgroundColor)
         ) {
 
-            Navigator(HomeScreen()) { navigator ->
+            Navigator(SplashScreen()) { navigator ->
                 FadeTransition(
                     navigator = navigator,
                     animationSpec = tween(
-                        durationMillis = 200,
+                        durationMillis = 180,
                         easing = Ease,
                         delayMillis = 100
                     )

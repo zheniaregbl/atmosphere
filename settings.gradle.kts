@@ -30,6 +30,7 @@ dependencyResolutionManagement {
 
 include(":composeApp")
 include(":core")
+include(":feature:splash")
 include(":feature:home")
 include(":feature:search")
 include(":feature:settings")
