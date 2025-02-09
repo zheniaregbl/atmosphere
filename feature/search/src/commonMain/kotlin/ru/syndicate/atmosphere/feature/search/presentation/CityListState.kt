@@ -14,13 +14,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import ru.syndicate.atmosphere.core.domain.model.CurrentLocation
+import ru.syndicate.atmosphere.core.presentation.translation.Locales
 import ru.syndicate.atmosphere.feature.search.domain.model.City
 
 internal sealed class CityListScreenState {
     data object Idle : CityListScreenState()
     data object Loading : CityListScreenState()
     data class Success(val cityList: List<City>) : CityListScreenState()
-    data class Error(val errorMessage: String) : CityListScreenState()
+    data class Error(val errorMessageCode: Int) : CityListScreenState()
 }
 
 @Composable
@@ -65,9 +66,9 @@ internal fun CityListScreenState.DisplayResult(
 
 internal data class CityListState(
     val isLoading: Boolean = false,
-    val errorMessage: String? = null,
+    val errorMessageCode: Int? = null,
     val searchCityText: String = "",
-    val searchLanguage: String = "en",
+    val searchLanguage: String = Locales.EN,
     val searchCityList: List<City> = emptyList(),
     val savedCity: CurrentLocation? = null
 ) {
@@ -76,7 +77,7 @@ internal data class CityListState(
         return when {
             isLoading -> CityListScreenState.Loading
             searchCityList.isNotEmpty() -> CityListScreenState.Success(searchCityList)
-            errorMessage != null -> CityListScreenState.Error(errorMessage)
+            errorMessageCode != null -> CityListScreenState.Error(errorMessageCode)
             else -> CityListScreenState.Idle
         }
     }

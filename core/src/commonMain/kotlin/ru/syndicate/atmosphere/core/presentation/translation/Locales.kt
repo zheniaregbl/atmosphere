@@ -1,4 +1,4 @@
-package ru.syndicate.atmosphere.feature.settings.presentation.translation
+package ru.syndicate.atmosphere.core.presentation.translation
 
 object Locales {
     const val EN = "en"

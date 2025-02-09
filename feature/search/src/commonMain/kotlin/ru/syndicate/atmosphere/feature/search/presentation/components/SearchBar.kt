@@ -39,20 +39,10 @@ import ru.syndicate.atmosphere.feature.search.resources.search_svg
 internal fun SearchBar(
     modifier: Modifier = Modifier,
     value: String,
+    hintList: List<String>,
     onValueChange: (String) -> Unit,
     onImeSearch: () -> Unit
 ) {
-
-    val searchBarHints = remember {
-        listOf(
-            "Enter city...",
-            "Moscow",
-            "London",
-            "Berlin",
-            "Roma",
-            "Istanbul"
-        )
-    }
 
     CompositionLocalProvider(
         LocalTextSelectionColors provides TextSelectionColors(
@@ -109,7 +99,7 @@ internal fun SearchBar(
                             fontWeight = FontWeight.Normal,
                             fontSize = 18.sp,
                             color = HintColor,
-                            parts = searchBarHints
+                            parts = hintList
                         )
                     }
                 }

@@ -33,18 +33,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cafe.adriel.lyricist.ProvideStrings
+import cafe.adriel.lyricist.rememberStrings
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.mohamedrejeb.calf.ui.progress.AdaptiveCircularProgressIndicator
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import ru.syndicate.atmosphere.core.presentation.translation.Locales
 import ru.syndicate.atmosphere.feature.search.presentation.components.CityCard
 import ru.syndicate.atmosphere.feature.search.presentation.components.SearchBar
 import ru.syndicate.atmosphere.feature.search.presentation.components.TopPanel
+import ru.syndicate.atmosphere.feature.search.presentation.translation.util.TranslationUtil.LocalSearchStrings
+import ru.syndicate.atmosphere.feature.search.presentation.translation.util.TranslationUtil.translations
+import ru.syndicate.atmosphere.feature.search.presentation.util.ErrorMessageCode
 import ru.syndicate.atmosphere.feature.search.resources.Res
-import ru.syndicate.atmosphere.feature.search.resources.screen_title
 import ru.syndicate.atmosphere.feature.search.resources.searching_svg
 
 class SearchScreen : Screen {
@@ -68,9 +72,7 @@ class SearchScreen : Screen {
                 .fillMaxSize()
                 .statusBarsPadding(),
             state = state,
-            onAction = { action ->
-                viewModel.onAction(action)
-            },
+            onAction = { action -> viewModel.onAction(action) },
             onBackClick = { navigator.pop() }
         )
 
@@ -92,101 +94,126 @@ internal fun CityListScreenImpl(
 
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    Box(modifier = modifier) {
+    val lyricist = rememberStrings(
+        translations = translations,
+        defaultLanguageTag = Locales.EN,
+        currentLanguageTag = state.value.searchLanguage
+    )
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 16.dp)
-                .padding(horizontal = 20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(14.dp)
-        ) {
+    ProvideStrings(
+        lyricist = lyricist,
+        provider = LocalSearchStrings
+    ) {
 
-            TopPanel(
+        Box(modifier = modifier) {
+
+            Column(
                 modifier = Modifier
-                    .widthIn(max = 800.dp)
-                    .fillMaxWidth(),
-                topPanelTitle = stringResource(Res.string.screen_title),
-                onBackClick = onBackClick
-            )
+                    .fillMaxSize()
+                    .padding(top = 16.dp)
+                    .padding(horizontal = 20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(14.dp)
+            ) {
 
-            SearchBar(
-                modifier = Modifier
-                    .widthIn(max = 800.dp)
-                    .fillMaxWidth(),
-                value = state.value.searchCityText,
-                onValueChange = {
-                    onAction(CityListAction.OnSearchCityChange(it))
-                },
-                onImeSearch = { keyboardController?.hide() }
-            )
+                TopPanel(
+                    modifier = Modifier
+                        .widthIn(max = 800.dp)
+                        .fillMaxWidth(),
+                    topPanelTitle = LocalSearchStrings.current.screenTitle,
+                    onBackClick = onBackClick
+                )
 
-            state.value.toUiState().DisplayResult(
-                modifier = Modifier.fillMaxSize(),
-                onLoading = {
-                    AdaptiveCircularProgressIndicator(
-                        modifier = Modifier
-                            .padding(bottom = 80.dp)
-                            .size(50.dp),
-                        color = Color.White,
-                    )
-                },
-                onSuccess = { screenState ->
-                    LazyColumn(
-                        modifier = Modifier
-                            .widthIn(max = 800.dp)
-                            .fillMaxSize(),
-                        verticalArrangement = Arrangement.spacedBy(14.dp)
-                    ) {
+                SearchBar(
+                    modifier = Modifier
+                        .widthIn(max = 800.dp)
+                        .fillMaxWidth(),
+                    value = state.value.searchCityText,
+                    hintList = listOf(LocalSearchStrings.current.hintText) +
+                    LocalSearchStrings.current.cityList,
+                    onValueChange = {
+                        onAction(CityListAction.OnSearchCityChange(it))
+                    },
+                    onImeSearch = { keyboardController?.hide() }
+                )
 
-                        items(screenState.cityList) {
-                            CityCard(
-                                modifier = Modifier.fillMaxWidth(),
-                                city = it,
-                                onClick = { onAction(CityListAction.OnCityClick(it)) }
-                            )
+                state.value.toUiState().DisplayResult(
+                    modifier = Modifier.fillMaxSize(),
+                    onLoading = {
+                        AdaptiveCircularProgressIndicator(
+                            modifier = Modifier
+                                .padding(bottom = 80.dp)
+                                .size(50.dp),
+                            color = Color.White,
+                        )
+                    },
+                    onSuccess = { screenState ->
+                        LazyColumn(
+                            modifier = Modifier
+                                .widthIn(max = 800.dp)
+                                .fillMaxSize(),
+                            verticalArrangement = Arrangement.spacedBy(14.dp)
+                        ) {
+
+                            items(screenState.cityList) {
+                                CityCard(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    city = it,
+                                    onClick = { onAction(CityListAction.OnCityClick(it)) }
+                                )
+                            }
+
+                            item {
+                                Spacer(
+                                    modifier = Modifier
+                                        .height(50.dp)
+                                        .padding(
+                                            bottom = WindowInsets
+                                                .navigationBars
+                                                .asPaddingValues()
+                                                .calculateBottomPadding()
+                                        )
+                                )
+                            }
                         }
+                    },
+                    onError = { screenState ->
 
-                        item {
-                            Spacer(
-                                modifier = Modifier
-                                    .height(50.dp)
-                                    .padding(
-                                        bottom = WindowInsets
-                                            .navigationBars
-                                            .asPaddingValues()
-                                            .calculateBottomPadding()
-                                    )
+                        Column(
+                            modifier = Modifier.padding(bottom = 80.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(10.dp)
+                        ) {
+
+                            Image(
+                                painter = painterResource(Res.drawable.searching_svg),
+                                contentDescription = null,
+                                colorFilter = ColorFilter.tint(Color.White)
+                            )
+
+                            val errorMessage = when (screenState.errorMessageCode) {
+
+                                ErrorMessageCode.NOT_FOUND_LOCATION ->
+                                    LocalSearchStrings.current.errorMessageNotFoundLocation
+
+                                ErrorMessageCode.PROBLEM_WITH_REQUEST ->
+                                    LocalSearchStrings.current.errorMessageProblemRequest
+
+                                else -> ""
+                            }
+
+                            Text(
+                                text = errorMessage,
+                                style = LocalTextStyle.current,
+                                textAlign = TextAlign.Center,
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 16.sp,
+                                color = Color.White
                             )
                         }
                     }
-                },
-                onError = { screenState ->
-
-                    Column(
-                        modifier = Modifier.padding(bottom = 80.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(10.dp)
-                    ) {
-
-                        Image(
-                            painter = painterResource(Res.drawable.searching_svg),
-                            contentDescription = null,
-                            colorFilter = ColorFilter.tint(Color.White)
-                        )
-
-                        Text(
-                            text = screenState.errorMessage,
-                            style = LocalTextStyle.current,
-                            textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.Medium,
-                            fontSize = 16.sp,
-                            color = Color.White
-                        )
-                    }
-                }
-            )
+                )
+            }
         }
     }
 }

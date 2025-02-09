@@ -27,6 +27,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import org.koin.compose.viewmodel.koinViewModel
 import ru.syndicate.atmosphere.core.presentation.components.LanguageDialog
+import ru.syndicate.atmosphere.core.presentation.translation.Locales
 import ru.syndicate.atmosphere.feature.settings.presentation.components.SettingParameter
 import ru.syndicate.atmosphere.feature.settings.presentation.components.TopPanel
 import ru.syndicate.atmosphere.feature.settings.presentation.translation.util.TranslationUtil.LocalSettingsStrings
@@ -81,7 +82,7 @@ internal fun SettingsScreenImpl(
 
     val lyricist = rememberStrings(
         translations = translations,
-        defaultLanguageTag = "en",
+        defaultLanguageTag = Locales.EN,
         currentLanguageTag = state.value.searchLanguage
     )
 

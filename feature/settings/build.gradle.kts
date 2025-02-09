@@ -57,8 +57,9 @@ dependencies {
 }
 
 ksp {
+    arg("lyricist.packageName", "ru.syndicate.atmosphere.feature.settings")
+    arg("lyricist.moduleName", project.name)
     arg("lyricist.internalVisibility", "true")
-    arg("lyricist.generateStringsProperty", "true")
 }
 
 compose.resources {

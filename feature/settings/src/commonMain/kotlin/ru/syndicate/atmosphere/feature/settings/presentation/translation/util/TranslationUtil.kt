@@ -1,7 +1,7 @@
 package ru.syndicate.atmosphere.feature.settings.presentation.translation.util
 
 import androidx.compose.runtime.staticCompositionLocalOf
-import ru.syndicate.atmosphere.feature.settings.presentation.translation.Locales
+import ru.syndicate.atmosphere.core.presentation.translation.Locales
 import ru.syndicate.atmosphere.feature.settings.presentation.translation.string.DeStrings
 import ru.syndicate.atmosphere.feature.settings.presentation.translation.string.EnStrings
 import ru.syndicate.atmosphere.feature.settings.presentation.translation.string.EsStrings

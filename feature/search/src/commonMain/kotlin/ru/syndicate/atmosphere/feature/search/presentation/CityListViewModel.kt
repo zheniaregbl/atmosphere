@@ -22,6 +22,7 @@ import ru.syndicate.atmosphere.core.domain.model.CurrentLocation
 import ru.syndicate.atmosphere.core.domain.repository.SettingsRepository
 import ru.syndicate.atmosphere.feature.search.domain.model.City
 import ru.syndicate.atmosphere.feature.search.domain.repository.SearchCityRepository
+import ru.syndicate.atmosphere.feature.search.presentation.util.ErrorMessageCode
 
 internal class CityListViewModel(
     private val searchCityRepository: SearchCityRepository,
@@ -104,7 +105,7 @@ internal class CityListViewModel(
                     _state.update { it.copy(
                         isLoading = false,
                         searchCityList = emptyList(),
-                        errorMessage = "Could not find a location with this name."
+                        errorMessageCode = ErrorMessageCode.NOT_FOUND_LOCATION
                     ) }
                 }
             }
@@ -114,7 +115,7 @@ internal class CityListViewModel(
                     it.copy(
                         isLoading = false,
                         searchCityList = emptyList(),
-                        errorMessage = "The location could not be found due to problems with the request."
+                        errorMessageCode = ErrorMessageCode.PROBLEM_WITH_REQUEST
                     )
                 }
             }
@@ -124,7 +125,7 @@ internal class CityListViewModel(
                     it.copy(
                         isLoading = false,
                         searchCityList = emptyList(),
-                        errorMessage = "Could not find a location with this name."
+                        errorMessageCode = ErrorMessageCode.NOT_FOUND_LOCATION
                     )
                 }
             }
