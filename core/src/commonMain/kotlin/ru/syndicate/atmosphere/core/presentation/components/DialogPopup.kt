@@ -2,11 +2,14 @@ package ru.syndicate.atmosphere.core.presentation.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.TweenSpec
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,13 +28,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 
 @Composable
-internal fun DialogMenu(
+internal fun DialogPopup(
     showDialog: Boolean,
     onDismissRequest: () -> Unit,
     content: @Composable () -> Unit
@@ -60,6 +64,12 @@ internal fun DialogMenu(
                 var animateIn by remember { mutableStateOf(false) }
 
                 LaunchedEffect(Unit) { animateIn = true }
+
+                Scrim(
+                    visible = animateIn && showDialog,
+                    color = Color.Black.copy(alpha = 0.4f),
+                    onDismissRequest = onDismissRequest
+                )
 
                 AnimatedVisibility(
                     visible = animateIn && showDialog,
@@ -102,5 +112,27 @@ internal fun DialogMenu(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun Scrim(
+    visible: Boolean,
+    color: Color,
+    onDismissRequest: () -> Unit
+) {
+
+    val alpha by animateFloatAsState(
+        targetValue = if (visible) 1f else 0f,
+        animationSpec = TweenSpec(),
+        label = "Scrim"
+    )
+
+    Canvas(
+        modifier = Modifier
+            .fillMaxSize()
+            .pointerInput(Unit) { detectTapGestures { onDismissRequest() } }
+    ) {
+        drawRect(color = color, alpha = alpha)
     }
 }

@@ -43,7 +43,7 @@ fun LanguageDialog(
     onDismissRequest: () -> Unit = { }
 ) {
 
-    DialogMenu(
+    DialogPopup(
         showDialog = showDialog,
         onDismissRequest = onDismissRequest
     ) {
