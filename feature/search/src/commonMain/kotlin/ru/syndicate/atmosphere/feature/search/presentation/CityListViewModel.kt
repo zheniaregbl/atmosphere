@@ -64,7 +64,14 @@ internal class CityListViewModel(
             is CityListAction.OnCityClick -> selectCity(action.city)
 
             CityListAction.ClearData ->
-                _state.update { it.copy(searchCityList = emptyList()) }
+                _state.update {
+                    it.copy(
+                        errorMessageCode = null,
+                        searchCityText = "",
+                        searchCityList = emptyList(),
+                        savedCity = null
+                    )
+                }
         }
     }
 
