@@ -29,6 +29,8 @@ import ru.syndicate.atmosphere.core.presentation.util.extension.scaleOnClick
 fun LanguageDialog(
     showDialog: Boolean,
     initialValue: String,
+    title: String,
+    buttonText: String,
     languages: List<Pair<String, String>> =
         listOf(
             Pair("English", "en"),
@@ -55,6 +57,8 @@ fun LanguageDialog(
                     horizontal = 14.dp,
                     vertical = 18.dp
                 ),
+            title = title,
+            buttonText = buttonText,
             initialValue = initialValue,
             languages = languages,
             onSelectedLanguage = onSelectedLanguage
@@ -65,6 +69,8 @@ fun LanguageDialog(
 @Composable
 internal fun LanguageDialogUI(
     modifier: Modifier = Modifier,
+    title: String,
+    buttonText: String,
     initialValue: String,
     languages: List<Pair<String, String>>,
     onSelectedLanguage: (String) -> Unit
@@ -78,7 +84,7 @@ internal fun LanguageDialogUI(
     ) {
 
         Text(
-            text = "Change search language",
+            text = title,
             style = LocalTextStyle.current,
             fontWeight = FontWeight.SemiBold,
             fontSize = 20.sp,
@@ -123,7 +129,7 @@ internal fun LanguageDialogUI(
         ) {
 
             Text(
-                text = "Select",
+                text = buttonText,
                 style = LocalTextStyle.current,
                 fontWeight = FontWeight.Medium,
                 fontSize = 16.sp,

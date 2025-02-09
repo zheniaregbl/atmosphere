@@ -49,65 +49,57 @@ internal fun DialogPopup(
 
     if (showAnimatedDialog) {
 
-        Dialog(
-            onDismissRequest = onDismissRequest,
-            properties = DialogProperties(
-                usePlatformDefaultWidth = false
-            )
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
         ) {
 
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
+            var animateIn by remember { mutableStateOf(false) }
+
+            LaunchedEffect(Unit) { animateIn = true }
+
+            Scrim(
+                visible = animateIn && showDialog,
+                color = Color.Black.copy(alpha = 0.4f),
+                onDismissRequest = onDismissRequest
+            )
+
+            AnimatedVisibility(
+                visible = animateIn && showDialog,
+                enter = fadeIn(),
+                exit = fadeOut(),
             ) {
 
-                var animateIn by remember { mutableStateOf(false) }
-
-                LaunchedEffect(Unit) { animateIn = true }
-
-                Scrim(
-                    visible = animateIn && showDialog,
-                    color = Color.Black.copy(alpha = 0.4f),
-                    onDismissRequest = onDismissRequest
+                Box(
+                    modifier = Modifier
+                        .pointerInput(Unit) { detectTapGestures { onDismissRequest() } }
+                        .fillMaxSize()
                 )
+            }
 
-                AnimatedVisibility(
-                    visible = animateIn && showDialog,
-                    enter = fadeIn(),
-                    exit = fadeOut(),
+            AnimatedVisibility(
+                visible = animateIn && showDialog,
+                enter = fadeIn(spring(stiffness = Spring.StiffnessMedium))
+                        + slideInVertically { -it / 4 },
+                exit = slideOutVertically { it / 4 } + fadeOut()
+            ) {
+
+                Box(
+                    Modifier
+                        .pointerInput(Unit) { detectTapGestures { } }
+                        .widthIn(max = 400.dp)
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp)
+                        .heightIn(max = 400.dp)
+                        .clip(RoundedCornerShape(10.dp)),
+                    contentAlignment = Alignment.Center
                 ) {
-
-                    Box(
-                        modifier = Modifier
-                            .pointerInput(Unit) { detectTapGestures { onDismissRequest() } }
-                            .fillMaxSize()
-                    )
+                    content()
                 }
 
-                AnimatedVisibility(
-                    visible = animateIn && showDialog,
-                    enter = fadeIn(spring(stiffness = Spring.StiffnessMedium))
-                            + slideInVertically { -it / 4 },
-                    exit = slideOutVertically { it / 4 } + fadeOut()
-                ) {
-
-                    Box(
-                        Modifier
-                            .pointerInput(Unit) { detectTapGestures { } }
-                            .widthIn(max = 400.dp)
-                            .fillMaxWidth()
-                            .padding(horizontal = 20.dp)
-                            .heightIn(max = 400.dp)
-                            .clip(RoundedCornerShape(10.dp)),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        content()
-                    }
-
-                    DisposableEffect(Unit) {
-                        onDispose {
-                            showAnimatedDialog = false
-                        }
+                DisposableEffect(Unit) {
+                    onDispose {
+                        showAnimatedDialog = false
                     }
                 }
             }

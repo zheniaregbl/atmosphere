@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.jetbrains.kotlin.serialization)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -34,6 +35,8 @@ kotlin {
             api(libs.androidx.lifecycle.viewmodel)
             api(libs.androidx.lifecycle.runtime.compose)
 
+            api(libs.lyricist)
+
             api(libs.voyager.navigator)
 
             api(libs.koin.compose)
@@ -43,6 +46,19 @@ kotlin {
             api(projects.core)
         }
     }
+}
+
+dependencies {
+    add("kspCommonMainMetadata", libs.lyricist.processor)
+    add("kspAndroid", libs.lyricist.processor)
+    add("kspIosX64", libs.lyricist.processor)
+    add("kspIosArm64", libs.lyricist.processor)
+    add("kspIosSimulatorArm64", libs.lyricist.processor)
+}
+
+ksp {
+    arg("lyricist.internalVisibility", "true")
+    arg("lyricist.generateStringsProperty", "true")
 }
 
 compose.resources {

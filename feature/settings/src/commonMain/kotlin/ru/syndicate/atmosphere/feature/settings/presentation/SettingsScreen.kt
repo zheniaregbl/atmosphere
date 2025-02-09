@@ -19,24 +19,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.dp
+import cafe.adriel.lyricist.ProvideStrings
+import cafe.adriel.lyricist.rememberStrings
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import ru.syndicate.atmosphere.core.presentation.components.LanguageDialog
-import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
 import ru.syndicate.atmosphere.feature.settings.presentation.components.SettingParameter
 import ru.syndicate.atmosphere.feature.settings.presentation.components.TopPanel
-import ru.syndicate.atmosphere.feature.settings.resources.Res
-import ru.syndicate.atmosphere.feature.settings.resources.screen_title
-import ru.syndicate.atmosphere.feature.settings.resources.search_lang_desc
-import ru.syndicate.atmosphere.feature.settings.resources.search_lang_title
-import ru.syndicate.atmosphere.feature.settings.resources.weather_options_desc
-import ru.syndicate.atmosphere.feature.settings.resources.weather_options_title
+import ru.syndicate.atmosphere.feature.settings.presentation.translation.util.TranslationUtil.LocalSettingsStrings
+import ru.syndicate.atmosphere.feature.settings.presentation.translation.util.TranslationUtil.translations
 
 class SettingsScreen : Screen {
 
@@ -49,9 +43,7 @@ class SettingsScreen : Screen {
         val state = viewModel.state.collectAsState()
 
         SettingsScreenImpl(
-            modifier = Modifier
-                .fillMaxSize()
-                .statusBarsPadding(),
+            modifier = Modifier.fillMaxSize(),
             state = state,
             onAction = { action -> viewModel.onAction(action) },
             onBackClick = { navigator.pop() }
@@ -71,13 +63,14 @@ internal fun SettingsScreenImpl(
 
     val languages = listOf(
         Pair("English", "en"),
-        Pair("Russian", "ru"),
-        Pair("German", "de"),
-        Pair("French", "fr"),
-        Pair("Spanish", "es"),
-        Pair("Italian", "it"),
-        Pair("Portuguese", "pt")
+        Pair("Русский", "ru"),
+        Pair("Deutsch", "de"),
+        Pair("Français", "fr"),
+        Pair("Español", "es"),
+        Pair("Italiano", "it"),
+        Pair("Português", "pt")
     )
+
     var searchLanguage by remember {
         mutableStateOf(
             languages
@@ -86,67 +79,60 @@ internal fun SettingsScreenImpl(
         )
     }
 
+    val lyricist = rememberStrings(
+        translations = translations,
+        defaultLanguageTag = "en",
+        currentLanguageTag = state.value.searchLanguage
+    )
+
     LaunchedEffect(state.value.searchLanguage) {
         searchLanguage = languages
             .find { it.second == state.value.searchLanguage }!!
             .first
     }
 
-    Box(modifier = modifier) {
+    ProvideStrings(
+        lyricist = lyricist,
+        provider = LocalSettingsStrings
+    ) {
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 16.dp)
-                .padding(horizontal = 20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(20.dp)
-        ) {
+        Box(modifier = modifier.statusBarsPadding()) {
 
-            TopPanel(
+            Column(
                 modifier = Modifier
-                    .widthIn(max = 800.dp)
-                    .fillMaxWidth(),
-                topPanelTitle = stringResource(Res.string.screen_title),
-                onBackClick = onBackClick
-            )
-
-            LazyColumn(
-                modifier = Modifier
-                    .widthIn(max = 800.dp)
-                    .fillMaxWidth()
+                    .fillMaxSize()
+                    .padding(top = 16.dp)
+                    .padding(horizontal = 20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
 
-                item {
-                    SettingParameter(
-                        modifier = Modifier
-                            .widthIn(max = 800.dp)
-                            .fillMaxWidth()
-                            .drawBehind {
-                                drawLine(
-                                    start = Offset(x = 0f, y = size.height),
-                                    end = Offset(x = size.width, y = size.height),
-                                    color = LightWhite
-                                )
-                            }
-                            .padding(vertical = 14.dp),
-                        title = stringResource(Res.string.weather_options_title),
-                        description = stringResource(Res.string.weather_options_desc),
-                        onClick = { println("Click") }
-                    )
-                }
+                TopPanel(
+                    modifier = Modifier
+                        .widthIn(max = 800.dp)
+                        .fillMaxWidth(),
+                    topPanelTitle = LocalSettingsStrings.current.screenTitle,
+                    onBackClick = onBackClick
+                )
 
-                item {
-                    SettingParameter(
-                        modifier = Modifier
-                            .widthIn(max = 800.dp)
-                            .fillMaxWidth()
-                            .padding(vertical = 20.dp),
-                        title = stringResource(Res.string.search_lang_title),
-                        description = stringResource(Res.string.search_lang_desc),
-                        value = searchLanguage,
-                        onClick = { showLanguageDialog = true }
-                    )
+                LazyColumn(
+                    modifier = Modifier
+                        .widthIn(max = 800.dp)
+                        .fillMaxWidth()
+                ) {
+
+                    item {
+                        SettingParameter(
+                            modifier = Modifier
+                                .widthIn(max = 800.dp)
+                                .fillMaxWidth()
+                                .padding(vertical = 14.dp),
+                            title = LocalSettingsStrings.current.langSectionTitle,
+                            description = LocalSettingsStrings.current.langSectionDesc,
+                            value = searchLanguage,
+                            onClick = { showLanguageDialog = true }
+                        )
+                    }
                 }
             }
         }
@@ -154,6 +140,8 @@ internal fun SettingsScreenImpl(
         LanguageDialog(
             showDialog = showLanguageDialog,
             initialValue = state.value.searchLanguage,
+            title = LocalSettingsStrings.current.selectLangDialogTitle,
+            buttonText = LocalSettingsStrings.current.selectButtonText,
             languages = languages,
             onSelectedLanguage = {
                 onAction(SettingsAction.OnChangeSearchLanguage(it))

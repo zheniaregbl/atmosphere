@@ -2,8 +2,6 @@
 <resources>
     <!--Text for UI components-->
     <string name="screen_title">Settings</string>
-    <string name="weather_options_title">Current weather parameters</string>
-    <string name="weather_options_desc">The options that are displayed on the main screen for the current weather.</string>
     <string name="search_lang_title">Search language</string>
     <string name="search_lang_desc">The language that will be perceived when searching for a city.</string>
     <string name="lang_eng">English</string>
