@@ -42,9 +42,9 @@ internal class CityListViewModel(
 
     init {
         viewModelScope.launch {
-            settingsRepository.searchLanguage
+            settingsRepository.appLanguage
                 .collect { language ->
-                    _state.update { it.copy(searchLanguage = language) }
+                    _state.update { it.copy(appLanguage = language) }
                 }
         }
     }
@@ -91,7 +91,7 @@ internal class CityListViewModel(
 
     private fun searchCity(text: String) = viewModelScope.launch {
 
-        println(_state.value.searchLanguage)
+        println(_state.value.appLanguage)
 
         _state.update {
             it.copy(
@@ -99,7 +99,7 @@ internal class CityListViewModel(
             )
         }
 
-        searchCityRepository.searchCity(text, _state.value.searchLanguage)
+        searchCityRepository.searchCity(text, _state.value.appLanguage)
             .onSuccess {
                 if (data.isNotEmpty()) {
                     _state.update {

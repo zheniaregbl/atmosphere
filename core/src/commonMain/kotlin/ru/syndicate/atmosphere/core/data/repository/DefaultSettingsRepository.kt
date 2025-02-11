@@ -13,6 +13,7 @@ import ru.syndicate.atmosphere.core.data.mapper.toDTO
 import ru.syndicate.atmosphere.core.data.mapper.toModel
 import ru.syndicate.atmosphere.core.domain.model.CurrentLocation
 import ru.syndicate.atmosphere.core.domain.repository.SettingsRepository
+import ru.syndicate.atmosphere.core.presentation.translation.Locales
 
 class DefaultSettingsRepository(
     private val dataStore: DataStore<Preferences>
@@ -20,7 +21,7 @@ class DefaultSettingsRepository(
 
     private object PreferenceKeys {
         val locationKey = stringPreferencesKey("selected_location")
-        val searchLanguageKey = stringPreferencesKey("search_language")
+        val appLanguageKey = stringPreferencesKey("app_language")
     }
 
     override val currentLocation: Flow<CurrentLocation> = dataStore
@@ -34,11 +35,11 @@ class DefaultSettingsRepository(
             }
         }
 
-    override val searchLanguage: Flow<String> = dataStore
+    override val appLanguage: Flow<String> = dataStore
         .data
         .map {
-            if (it[PreferenceKeys.searchLanguageKey].isNullOrBlank()) "en"
-            else it[PreferenceKeys.searchLanguageKey]!!
+            if (it[PreferenceKeys.appLanguageKey].isNullOrBlank()) Locales.EN
+            else it[PreferenceKeys.appLanguageKey]!!
         }
 
     override suspend fun saveSelectedCity(location: CurrentLocation) {
@@ -46,6 +47,6 @@ class DefaultSettingsRepository(
     }
 
     override suspend fun changeSearchLanguage(language: String) {
-        dataStore.edit { it[PreferenceKeys.searchLanguageKey] = language }
+        dataStore.edit { it[PreferenceKeys.appLanguageKey] = language }
     }
 }

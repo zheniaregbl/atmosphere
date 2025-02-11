@@ -5,7 +5,7 @@ import ru.syndicate.atmosphere.core.domain.model.CurrentLocation
 
 interface SettingsRepository {
     val currentLocation: Flow<CurrentLocation>
-    val searchLanguage: Flow<String>
+    val appLanguage: Flow<String>
     suspend fun saveSelectedCity(location: CurrentLocation)
     suspend fun changeSearchLanguage(language: String)
 }

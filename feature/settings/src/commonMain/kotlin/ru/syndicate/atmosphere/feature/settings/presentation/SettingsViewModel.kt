@@ -17,9 +17,9 @@ internal class SettingsViewModel(
 
     init {
         viewModelScope.launch {
-            settingsRepository.searchLanguage
+            settingsRepository.appLanguage
                 .collect { language ->
-                    _state.update { it.copy(searchLanguage = language) }
+                    _state.update { it.copy(appLanguage = language) }
                 }
         }
     }

@@ -75,7 +75,7 @@ internal fun SettingsScreenImpl(
     var searchLanguage by remember {
         mutableStateOf(
             languages
-                .find { it.second == state.value.searchLanguage }!!
+                .find { it.second == state.value.appLanguage }!!
                 .first
         )
     }
@@ -83,12 +83,12 @@ internal fun SettingsScreenImpl(
     val lyricist = rememberStrings(
         translations = translations,
         defaultLanguageTag = Locales.EN,
-        currentLanguageTag = state.value.searchLanguage
+        currentLanguageTag = state.value.appLanguage
     )
 
-    LaunchedEffect(state.value.searchLanguage) {
+    LaunchedEffect(state.value.appLanguage) {
         searchLanguage = languages
-            .find { it.second == state.value.searchLanguage }!!
+            .find { it.second == state.value.appLanguage }!!
             .first
     }
 
@@ -140,7 +140,7 @@ internal fun SettingsScreenImpl(
 
         LanguageDialog(
             showDialog = showLanguageDialog,
-            initialValue = state.value.searchLanguage,
+            initialValue = state.value.appLanguage,
             title = LocalSettingsStrings.current.selectLangDialogTitle,
             buttonText = LocalSettingsStrings.current.selectButtonText,
             languages = languages,

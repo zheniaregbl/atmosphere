@@ -34,7 +34,7 @@ internal class HomeViewModel(
     init {
 
         viewModelScope.launch {
-            settingsRepository.searchLanguage
+            settingsRepository.appLanguage
                 .collect { language ->
                     _state.update { it.copy(appLanguage = language) }
                 }

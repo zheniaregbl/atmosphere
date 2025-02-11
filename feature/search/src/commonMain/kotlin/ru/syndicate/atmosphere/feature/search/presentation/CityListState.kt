@@ -68,7 +68,7 @@ internal data class CityListState(
     val isLoading: Boolean = false,
     val errorMessageCode: Int? = null,
     val searchCityText: String = "",
-    val searchLanguage: String = Locales.EN,
+    val appLanguage: String = Locales.EN,
     val searchCityList: List<City> = emptyList(),
     val savedCity: CurrentLocation? = null
 ) {

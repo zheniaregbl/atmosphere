@@ -97,7 +97,7 @@ internal fun CityListScreenImpl(
     val lyricist = rememberStrings(
         translations = translations,
         defaultLanguageTag = Locales.EN,
-        currentLanguageTag = state.value.searchLanguage
+        currentLanguageTag = state.value.appLanguage
     )
 
     ProvideStrings(
