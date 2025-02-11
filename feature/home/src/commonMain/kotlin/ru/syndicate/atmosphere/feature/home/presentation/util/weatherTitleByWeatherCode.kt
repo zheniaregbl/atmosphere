@@ -1,30 +1,34 @@
 package ru.syndicate.atmosphere.feature.home.presentation.util
 
+import androidx.compose.runtime.Composable
+import ru.syndicate.atmosphere.feature.home.presentation.translation.util.LocalHomeStrings
+
+@Composable
 internal fun weatherTitleByWeatherCode(weatherCode: Int) = when(weatherCode) {
-    0 -> "Clear sky"
-    1 -> "Mainly clear"
-    2 -> "Partly cloudy"
-    3 -> "Overcast"
-    in 45..48 -> "Fog"
-    51 -> "Light drizzle"
-    53 -> "Moderate drizzle"
-    55 -> "Heavy drizzle"
-    56 -> "Light freezing drizzle"
-    57 -> "Heavy freezing drizzle"
-    61 -> "Slight rain"
-    63 -> "Moderate rain"
-    65 -> "Heavy rain"
-    66 -> "Light freezing rain"
-    67 -> "Heavy freezing rain"
-    71 -> "Slight snow fall"
-    73 -> "Moderate snow fall"
-    75 -> "Heavy snow fall"
-    77 -> "Snow grains"
-    80 -> "Slight rain shower"
-    81 -> "Moderate rain shower"
-    82 -> "Violent rain shower"
-    85 -> "Slight snow shower"
-    86 -> "Heavy snow shower"
-    in 95..99 -> "Thunderstorm"
+    0 -> LocalHomeStrings.current.weatherText.clearSky.first
+    1 -> LocalHomeStrings.current.weatherText.mainlyClear.first
+    2 -> LocalHomeStrings.current.weatherText.partlyCloudy.first
+    3 -> LocalHomeStrings.current.weatherText.overcast.first
+    in 45..48 -> LocalHomeStrings.current.weatherText.fog.first
+    51 -> LocalHomeStrings.current.weatherText.lightDrizzle.first
+    53 -> LocalHomeStrings.current.weatherText.moderateDrizzle.first
+    55 -> LocalHomeStrings.current.weatherText.heavyDrizzle.first
+    56 -> LocalHomeStrings.current.weatherText.lightFreezingDrizzle.first
+    57 -> LocalHomeStrings.current.weatherText.heavyFreezingDrizzle.first
+    61 -> LocalHomeStrings.current.weatherText.slightRain.first
+    63 -> LocalHomeStrings.current.weatherText.moderateRain.first
+    65 -> LocalHomeStrings.current.weatherText.heavyRain.first
+    66 -> LocalHomeStrings.current.weatherText.lightFreezingDrizzle.first
+    67 -> LocalHomeStrings.current.weatherText.heavyFreezingDrizzle.first
+    71 -> LocalHomeStrings.current.weatherText.slightSnowFall.first
+    73 -> LocalHomeStrings.current.weatherText.moderateSnowFall.first
+    75 -> LocalHomeStrings.current.weatherText.heavySnowFall.first
+    77 -> LocalHomeStrings.current.weatherText.snowGrains.first
+    80 -> LocalHomeStrings.current.weatherText.slightRainShower.first
+    81 -> LocalHomeStrings.current.weatherText.moderateRainShower.first
+    82 -> LocalHomeStrings.current.weatherText.violentRainShower.first
+    85 -> LocalHomeStrings.current.weatherText.slightSnowShower.first
+    86 -> LocalHomeStrings.current.weatherText.heavySnowShower.first
+    in 95..99 -> LocalHomeStrings.current.weatherText.thunderstorm.first
     else -> ""
 }

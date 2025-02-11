@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.jetbrains.kotlin.serialization)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -36,6 +37,8 @@ kotlin {
 
             api(libs.kotlinx.datetime)
 
+            api(libs.lyricist)
+
             api(libs.calf.ui)
 
             api(libs.shimmer)
@@ -63,6 +66,20 @@ kotlin {
             api(projects.core)
         }
     }
+}
+
+dependencies {
+    add("kspCommonMainMetadata", libs.lyricist.processor)
+    add("kspAndroid", libs.lyricist.processor)
+    add("kspIosX64", libs.lyricist.processor)
+    add("kspIosArm64", libs.lyricist.processor)
+    add("kspIosSimulatorArm64", libs.lyricist.processor)
+}
+
+ksp {
+    arg("lyricist.packageName", "ru.syndicate.atmosphere.feature.home")
+    arg("lyricist.moduleName", project.name)
+    arg("lyricist.internalVisibility", "true")
 }
 
 android {

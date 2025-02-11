@@ -46,11 +46,11 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
 import ru.syndicate.atmosphere.core.presentation.theme.SelectedBlue
 import ru.syndicate.atmosphere.feature.home.presentation.DisplayResult
 import ru.syndicate.atmosphere.feature.home.presentation.HomeState
+import ru.syndicate.atmosphere.feature.home.presentation.translation.util.LocalHomeStrings
 import ru.syndicate.atmosphere.feature.home.presentation.util.iconByWeatherCode
 import kotlin.math.roundToInt
 
@@ -95,7 +95,7 @@ internal fun ForecastSection(
                     start = 10.dp,
                     top = 10.dp
                 ),
-            text = stringResource(Res.string.hourly_forecast_title),
+            text = LocalHomeStrings.current.hourlyForecast,
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Medium,
             fontSize = 20.sp,

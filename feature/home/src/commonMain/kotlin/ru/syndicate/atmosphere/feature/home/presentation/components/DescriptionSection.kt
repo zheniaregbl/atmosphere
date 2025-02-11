@@ -24,21 +24,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import atmosphere.feature.home.generated.resources.Res
-import atmosphere.feature.home.generated.resources.big_diff_temperature_text
-import atmosphere.feature.home.generated.resources.feel_like_title
-import atmosphere.feature.home.generated.resources.little_diff_temperature_text
-import atmosphere.feature.home.generated.resources.no_diff_temperature_text
 import atmosphere.feature.home.generated.resources.temperature_svg
-import atmosphere.feature.home.generated.resources.weather_desc_title
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeTint
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import ru.syndicate.atmosphere.core.presentation.theme.BackgroundColor
 import ru.syndicate.atmosphere.feature.home.presentation.HomeState
+import ru.syndicate.atmosphere.feature.home.presentation.translation.util.LocalHomeStrings
 import ru.syndicate.atmosphere.feature.home.presentation.util.descriptionByWeatherCode
 import ru.syndicate.atmosphere.feature.home.presentation.util.iconByWeatherCode
 import kotlin.math.abs
@@ -78,18 +73,18 @@ internal fun DescriptionSection(
                             )
                     )
                     .padding(16.dp),
-                title = stringResource(Res.string.feel_like_title),
+                title = LocalHomeStrings.current.feelingTempTitle,
                 icon = Res.drawable.temperature_svg,
                 value = "${feelTemperature.roundToInt()}°",
                 description = when {
 
                     abs(realTemperature - feelTemperature) < 5f ->
-                        stringResource(Res.string.little_diff_temperature_text)
+                        LocalHomeStrings.current.smallDiffTempText
 
                     abs(realTemperature - feelTemperature) > 5f ->
-                        stringResource(Res.string.big_diff_temperature_text)
+                        LocalHomeStrings.current.hugeDiffTempText
 
-                    else -> stringResource(Res.string.no_diff_temperature_text)
+                    else -> LocalHomeStrings.current.noDiffTempText
                 }
             )
 
@@ -110,7 +105,7 @@ internal fun DescriptionSection(
                             )
                     )
                     .padding(16.dp),
-                title = stringResource(Res.string.weather_desc_title),
+                title = LocalHomeStrings.current.weatherDescTitle,
                 icon = iconByWeatherCode(weatherCode),
                 description = descriptionByWeatherCode(weatherCode)
             )

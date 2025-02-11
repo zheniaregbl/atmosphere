@@ -21,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,26 +29,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import atmosphere.feature.home.generated.resources.Res
-import atmosphere.feature.home.generated.resources.detail_forecast_desc
-import atmosphere.feature.home.generated.resources.detail_forecast_title
-import atmosphere.feature.home.generated.resources.screen_title
-import atmosphere.feature.home.generated.resources.some_day_forecast_desc
-import atmosphere.feature.home.generated.resources.some_day_forecast_title
+import cafe.adriel.lyricist.ProvideStrings
+import cafe.adriel.lyricist.rememberStrings
 import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import dev.chrisbanes.haze.HazeState
-import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import ru.syndicate.atmosphere.core.navigation.SharedScreen
+import ru.syndicate.atmosphere.core.presentation.translation.Locales
 import ru.syndicate.atmosphere.feature.home.presentation.components.DescriptionSection
 import ru.syndicate.atmosphere.feature.home.presentation.components.ForecastSection
 import ru.syndicate.atmosphere.feature.home.presentation.components.NavigateBlock
 import ru.syndicate.atmosphere.feature.home.presentation.components.TopPanel
 import ru.syndicate.atmosphere.feature.home.presentation.components.WeatherImage
 import ru.syndicate.atmosphere.feature.home.presentation.components.WeatherParameterSection
+import ru.syndicate.atmosphere.feature.home.presentation.translation.util.LocalHomeStrings
+import ru.syndicate.atmosphere.feature.home.presentation.translation.util.TranslationUtil.translations
 
 class HomeScreen : Screen {
 
@@ -90,119 +87,125 @@ internal fun HomeScreenImpl(
 
     val lazyListState = rememberLazyListState()
 
-    val screenTitle = stringResource(Res.string.screen_title)
-    val topPanelTitle = remember { mutableStateOf(screenTitle) }
+    val lyricist = rememberStrings(
+        translations = translations,
+        defaultLanguageTag = Locales.EN,
+        currentLanguageTag = state.value.appLanguage
+    )
 
-    LaunchedEffect(lazyListState.firstVisibleItemIndex) {
-        if (lazyListState.firstVisibleItemIndex > 0)
-            topPanelTitle.value = currentTown
-        else topPanelTitle.value = screenTitle
+    LaunchedEffect(state.value.appLanguage) {
+        lyricist.languageTag = state.value.appLanguage
     }
 
-    Box(modifier = modifier) {
+    ProvideStrings(
+        lyricist = lyricist,
+        provider = LocalHomeStrings
+    ) {
 
-        WeatherImage(
-            modifier = Modifier
-                .height(380.dp)
-                .fillMaxWidth(),
-            hazeState = hazeState,
-            state = state
-        )
+        Box(modifier = modifier) {
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 10.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-
-            TopPanel(
+            WeatherImage(
                 modifier = Modifier
-                    .widthIn(max = 800.dp)
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
-                topPanelTitle = topPanelTitle,
-                onSearchClick = onSearchClick,
-                onSettingsClick = onSettingsClick
+                    .height(380.dp)
+                    .fillMaxWidth(),
+                hazeState = hazeState,
+                state = state
             )
 
-            LazyColumn(
+            Column(
                 modifier = Modifier
-                    .widthIn(max = 800.dp)
                     .fillMaxSize()
-                    .padding(horizontal = 20.dp),
-                state = lazyListState,
+                    .padding(top = 10.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
 
-                item {
-                    Text(
-                        text = currentTown,
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 30.sp,
-                        color = Color.White
-                    )
-                }
+                TopPanel(
+                    modifier = Modifier
+                        .widthIn(max = 800.dp)
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    onSearchClick = onSearchClick,
+                    onSettingsClick = onSettingsClick
+                )
 
-                item {
-                    WeatherParameterSection(
-                        modifier = Modifier.fillMaxWidth(),
-                        state = state,
-                        hazeState = hazeState,
-                        onRefreshClick = { onAction(HomeAction.UpdateWeatherInfo) }
-                    )
-                }
+                LazyColumn(
+                    modifier = Modifier
+                        .widthIn(max = 800.dp)
+                        .fillMaxSize()
+                        .padding(horizontal = 20.dp),
+                    state = lazyListState,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
 
-                item {
-                    ForecastSection(
-                        modifier = Modifier.fillMaxWidth(),
-                        state = state
-                    )
-                }
+                    item {
+                        Text(
+                            text = currentTown,
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.Medium,
+                            fontSize = 30.sp,
+                            color = Color.White
+                        )
+                    }
 
-                item {
-                    DescriptionSection(
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .height(IntrinsicSize.Min)
-                            .fillMaxWidth(),
-                        state = state,
-                        hazeState = hazeState
-                    )
-                }
+                    item {
+                        WeatherParameterSection(
+                            modifier = Modifier.fillMaxWidth(),
+                            state = state,
+                            hazeState = hazeState,
+                            onRefreshClick = { onAction(HomeAction.UpdateWeatherInfo) }
+                        )
+                    }
 
-                item {
-                    NavigateBlock(
-                        modifier = Modifier.fillMaxWidth(),
-                        title = stringResource(Res.string.detail_forecast_title),
-                        description = stringResource(Res.string.detail_forecast_desc),
-                        hazeState = hazeState
-                    )
-                }
+                    item {
+                        ForecastSection(
+                            modifier = Modifier.fillMaxWidth(),
+                            state = state
+                        )
+                    }
 
-                item {
-                    NavigateBlock(
-                        modifier = Modifier.fillMaxWidth(),
-                        title = stringResource(Res.string.some_day_forecast_title),
-                        description = stringResource(Res.string.some_day_forecast_desc),
-                        hazeState = hazeState
-                    )
-                }
+                    item {
+                        DescriptionSection(
+                            modifier = Modifier
+                                .padding(top = 10.dp)
+                                .height(IntrinsicSize.Min)
+                                .fillMaxWidth(),
+                            state = state,
+                            hazeState = hazeState
+                        )
+                    }
 
-                item {
-                    Spacer(
-                        modifier = Modifier
-                            .height(50.dp)
-                            .padding(
-                                bottom = WindowInsets
-                                    .navigationBars
-                                    .asPaddingValues()
-                                    .calculateBottomPadding()
-                            )
-                    )
+                    item {
+                        NavigateBlock(
+                            modifier = Modifier.fillMaxWidth(),
+                            title = LocalHomeStrings.current.detailForecastTitle,
+                            description = LocalHomeStrings.current.detailForecastDesc,
+                            hazeState = hazeState
+                        )
+                    }
+
+                    item {
+                        NavigateBlock(
+                            modifier = Modifier.fillMaxWidth(),
+                            title = LocalHomeStrings.current.someDayForecastTitle,
+                            description = LocalHomeStrings.current.someDayForecastDesc,
+                            hazeState = hazeState
+                        )
+                    }
+
+                    item {
+                        Spacer(
+                            modifier = Modifier
+                                .height(50.dp)
+                                .padding(
+                                    bottom = WindowInsets
+                                        .navigationBars
+                                        .asPaddingValues()
+                                        .calculateBottomPadding()
+                                )
+                        )
+                    }
                 }
             }
         }

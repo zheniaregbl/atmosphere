@@ -32,6 +32,14 @@ internal class HomeViewModel(
         )
 
     init {
+
+        viewModelScope.launch {
+            settingsRepository.searchLanguage
+                .collect { language ->
+                    _state.update { it.copy(appLanguage = language) }
+                }
+        }
+
         viewModelScope.launch {
             settingsRepository.currentLocation
                 .collect { currentLocation ->
@@ -46,7 +54,7 @@ internal class HomeViewModel(
 
     fun onAction(action: HomeAction) {
         when (action) {
-            HomeAction.UpdateWeatherInfo -> getHourlyWeather()
+            HomeAction.UpdateWeatherInfo -> viewModelScope.launch { getHourlyWeather() }
         }
     }
 

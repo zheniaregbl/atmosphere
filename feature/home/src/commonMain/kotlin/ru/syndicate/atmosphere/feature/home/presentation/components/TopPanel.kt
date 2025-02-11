@@ -1,9 +1,5 @@
 package ru.syndicate.atmosphere.feature.home.presentation.components
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -13,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,11 +21,11 @@ import atmosphere.feature.home.generated.resources.search_svg
 import atmosphere.feature.home.generated.resources.settings_svg
 import org.jetbrains.compose.resources.painterResource
 import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
+import ru.syndicate.atmosphere.feature.home.presentation.translation.util.LocalHomeStrings
 
 @Composable
 internal fun TopPanel(
     modifier: Modifier = Modifier,
-    topPanelTitle: MutableState<String>,
     onSearchClick: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
@@ -62,19 +57,13 @@ internal fun TopPanel(
                 contentDescription = null
             )
 
-            AnimatedContent(
-                targetState = topPanelTitle.value,
-                transitionSpec = { fadeIn() togetherWith fadeOut() }
-            ) { title ->
-
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 14.sp,
-                    color = LightWhite
-                )
-            }
+            Text(
+                text = LocalHomeStrings.current.screenTitle,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Normal,
+                fontSize = 14.sp,
+                color = LightWhite
+            )
         }
 
         Image(
