@@ -6,11 +6,10 @@ import ru.syndicate.atmosphere.core.presentation.translation.Locales
 @LyricistStrings(languageTag = Locales.RU)
 internal val RuStrings = Strings(
     screenTitle = "Главная",
+    windTitle = "Ветер",
+    windUnit = "м/с",
+    humidityTitle = "Влажность",
     hourlyForecast = "Почасовой прогноз",
-    weatherParameter = WeatherParameter(
-        wind = "Ветер",
-        humidity = "Влажность"
-    ),
     feelingTempTitle = "Ощущается как",
     hugeDiffTempText = "Температура на улице сильно отличается от показаний.",
     smallDiffTempText = "Температура на улице ощущается немного иначе, чем показания.",

@@ -47,34 +47,16 @@ import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeTint
 import dev.chrisbanes.haze.hazeChild
-import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import ru.syndicate.atmosphere.core.presentation.theme.BackgroundColor
 import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
 import ru.syndicate.atmosphere.core.presentation.util.extension.scaleOnClick
+import ru.syndicate.atmosphere.feature.home.domain.model.WeatherParameter
 import ru.syndicate.atmosphere.feature.home.presentation.DisplayResult
 import ru.syndicate.atmosphere.feature.home.presentation.HomeState
+import ru.syndicate.atmosphere.feature.home.presentation.translation.util.LocalHomeStrings
 import ru.syndicate.atmosphere.feature.home.presentation.util.weatherTitleByWeatherCode
 import kotlin.math.roundToInt
-
-internal sealed class WeatherParameter(
-    val title: String,
-    val unit: String,
-    val icon: DrawableResource
-) {
-
-    data object Wind : WeatherParameter(
-        title = "Wind",
-        unit = "m/s",
-        icon = Res.drawable.wind_svg
-    )
-
-    data object Humidity : WeatherParameter(
-        title = "Humidity",
-        unit = "%",
-        icon = Res.drawable.humidity_svg
-    )
-}
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -97,11 +79,6 @@ internal fun WeatherParameterSection(
                 repeatMode = RepeatMode.Restart,
             )
         )
-    )
-
-    val weatherParameterList = listOf(
-        WeatherParameter.Wind,
-        WeatherParameter.Humidity
     )
 
     Column(
@@ -218,37 +195,56 @@ internal fun WeatherParameterSection(
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
 
-                    weatherParameterList.forEach {
-
-                        ParameterView(
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(8.dp))
-                                .hazeChild(
-                                    state = hazeState,
-                                    style = HazeDefaults
-                                        .style(
-                                            backgroundColor = BackgroundColor,
-                                            tint = HazeTint(color = Color.DarkGray.copy(alpha = .5f)),
-                                            blurRadius = 8.dp,
-                                        )
-                                )
-                                .padding(14.dp),
-                            value = when (it) {
-                                WeatherParameter.Wind -> screenState
-                                    .weatherInfo
-                                    .currentWeatherParameters
-                                    .windSpeed
-                                    .roundToInt()
-                                    .toString()
-                                WeatherParameter.Humidity -> screenState
-                                    .weatherInfo
-                                    .currentWeatherParameters
-                                    .humidity
-                                    .toString()
-                            },
-                            weatherParameter = it
+                    ParameterView(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .hazeChild(
+                                state = hazeState,
+                                style = HazeDefaults
+                                    .style(
+                                        backgroundColor = BackgroundColor,
+                                        tint = HazeTint(color = Color.DarkGray.copy(alpha = .5f)),
+                                        blurRadius = 8.dp,
+                                    )
+                            )
+                            .padding(14.dp),
+                        value = screenState
+                            .weatherInfo
+                            .currentWeatherParameters
+                            .windSpeed
+                            .roundToInt()
+                            .toString(),
+                        weatherParameter = WeatherParameter(
+                            title = LocalHomeStrings.current.windTitle,
+                            unit = LocalHomeStrings.current.windUnit,
+                            icon = Res.drawable.wind_svg
                         )
-                    }
+                    )
+
+                    ParameterView(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .hazeChild(
+                                state = hazeState,
+                                style = HazeDefaults
+                                    .style(
+                                        backgroundColor = BackgroundColor,
+                                        tint = HazeTint(color = Color.DarkGray.copy(alpha = .5f)),
+                                        blurRadius = 8.dp,
+                                    )
+                            )
+                            .padding(14.dp),
+                        value = screenState
+                            .weatherInfo
+                            .currentWeatherParameters
+                            .humidity
+                            .toString(),
+                        weatherParameter = WeatherParameter(
+                            title = LocalHomeStrings.current.humidityTitle,
+                            unit = "%",
+                            icon = Res.drawable.humidity_svg
+                        )
+                    )
                 }
             }
         )

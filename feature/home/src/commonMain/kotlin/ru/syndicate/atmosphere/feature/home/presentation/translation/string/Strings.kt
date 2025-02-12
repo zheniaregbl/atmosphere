@@ -2,8 +2,10 @@ package ru.syndicate.atmosphere.feature.home.presentation.translation.string
 
 internal data class Strings(
     val screenTitle: String,
+    val windTitle: String,
+    val windUnit: String,
+    val humidityTitle: String,
     val hourlyForecast: String,
-    val weatherParameter: WeatherParameter,
     val feelingTempTitle: String,
     val hugeDiffTempText: String,
     val smallDiffTempText: String,
@@ -14,11 +16,6 @@ internal data class Strings(
     val someDayForecastTitle: String,
     val someDayForecastDesc: String,
     val weatherText: WeatherText
-)
-
-internal data class WeatherParameter(
-    val wind: String,
-    val humidity: String
 )
 
 internal data class WeatherText(
