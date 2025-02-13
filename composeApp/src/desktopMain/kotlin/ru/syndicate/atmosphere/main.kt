@@ -14,6 +14,7 @@ import ru.syndicate.atmosphere.di.initKoin
 import ru.syndicate.atmosphere.feature.home.di.featureHomeScreenModule
 import ru.syndicate.atmosphere.feature.search.di.featureSearchScreenModule
 import ru.syndicate.atmosphere.feature.settings.di.featureSettingsScreenModule
+import ru.syndicate.atmosphere.feature.weather_detail.di.featureWeatherDetailScreenModule
 
 fun main() {
 
@@ -21,6 +22,7 @@ fun main() {
         featureHomeScreenModule()
         featureSearchScreenModule()
         featureSettingsScreenModule()
+        featureWeatherDetailScreenModule()
     }
 
     initKoin(platformModules = desktopPlatformModules)

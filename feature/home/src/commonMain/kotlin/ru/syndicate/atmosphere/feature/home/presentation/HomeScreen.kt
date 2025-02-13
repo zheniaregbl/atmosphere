@@ -56,6 +56,7 @@ class HomeScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val searchScreen = rememberScreen(SharedScreen.SearchScreen)
         val settingsScreen = rememberScreen(SharedScreen.SettingsScreen)
+        val weatherDetailScreen = rememberScreen(SharedScreen.WeatherDetail)
 
         val viewModel = koinViewModel<HomeViewModel>()
         val state = viewModel.state.collectAsStateWithLifecycle()
@@ -66,7 +67,12 @@ class HomeScreen : Screen {
                 .statusBarsPadding(),
             state = state,
             currentTown = state.value.currentLocation.title,
-            onAction = { viewModel.onAction(it) },
+            onAction = {
+                when (it) {
+                    HomeAction.NavigateToDetail -> navigator.push(weatherDetailScreen)
+                    else -> viewModel.onAction(it)
+                }
+            },
             onSearchClick = { navigator.push(searchScreen) },
             onSettingsClick = { navigator.push(settingsScreen) }
         )
@@ -181,7 +187,8 @@ internal fun HomeScreenImpl(
                             modifier = Modifier.fillMaxWidth(),
                             title = LocalHomeStrings.current.detailForecastTitle,
                             description = LocalHomeStrings.current.detailForecastDesc,
-                            hazeState = hazeState
+                            hazeState = hazeState,
+                            onClick = { onAction(HomeAction.NavigateToDetail) }
                         )
                     }
 
