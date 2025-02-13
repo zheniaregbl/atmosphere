@@ -30,6 +30,10 @@ kotlin {
     jvm("desktop")
 
     sourceSets {
+
+        androidMain.dependencies {
+            implementation(libs.ui.tooling.preview)
+        }
         commonMain.dependencies {
             api(compose.components.resources)
             api(libs.androidx.lifecycle.viewmodel)
@@ -74,6 +78,7 @@ dependencies {
     add("kspIosX64", libs.lyricist.processor)
     add("kspIosArm64", libs.lyricist.processor)
     add("kspIosSimulatorArm64", libs.lyricist.processor)
+    debugImplementation(libs.androidx.ui.tooling)
 }
 
 ksp {
