@@ -4,12 +4,19 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.LocalTextStyle
@@ -31,9 +38,11 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import dev.chrisbanes.haze.HazeState
 import org.jetbrains.compose.resources.painterResource
+import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.ParameterCard
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.ParameterRow
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.TopPanel
+import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.WindCompass
 import ru.syndicate.atmosphere.feature.weather_detail.resources.Res
 import ru.syndicate.atmosphere.feature.weather_detail.resources.precipitation_svg
 import ru.syndicate.atmosphere.feature.weather_detail.resources.temperature_svg
@@ -55,6 +64,7 @@ internal class WeatherDetailScreen : Screen {
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun WeatherDetailScreenImpl(
     modifier: Modifier = Modifier,
@@ -199,10 +209,46 @@ internal fun WeatherDetailScreenImpl(
                             )
                         },
                         content = {
-                            ParameterRow(
-                                parameter = "Maximum speed",
-                                value = "2 m/s"
-                            )
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                                ) {
+
+                                    WindCompass(modifier = Modifier.size(130.dp))
+
+                                    Text(
+                                        text = "Currently",
+                                        style = LocalTextStyle.current,
+                                        fontWeight = FontWeight.Normal,
+                                        fontSize = 14.sp,
+                                        color = LightWhite
+                                    )
+                                }
+
+                                Spacer(Modifier.width(20.dp))
+
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                                ) {
+
+                                    WindCompass(modifier = Modifier.size(130.dp))
+
+                                    Text(
+                                        text = "Dominant",
+                                        style = LocalTextStyle.current,
+                                        fontWeight = FontWeight.Normal,
+                                        fontSize = 14.sp,
+                                        color = LightWhite
+                                    )
+                                }
+                            }
                         }
                     )
                 }
