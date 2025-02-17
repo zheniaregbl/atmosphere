@@ -4,11 +4,15 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.LocalTextStyle
@@ -181,27 +185,59 @@ internal fun WeatherDetailScreenImpl(
                 }
 
                 item {
-                    ParameterCard(
-                        modifier = Modifier.fillMaxWidth(),
-                        hazeState = hazeState,
-                        title = {
-                            Image(
-                                modifier = Modifier.size(20.dp),
-                                painter = painterResource(Res.drawable.wind_svg),
-                                contentDescription = null
-                            )
-                            Text(
-                                text = "Wind",
-                                style = LocalTextStyle.current,
-                                fontWeight = FontWeight.Medium,
-                                fontSize = 14.sp,
-                                color = Color.White
-                            )
-                        },
-                        content = {
-                            WindCompass(modifier = Modifier.size(130.dp))
-                        }
-                    )
+
+                    Row(modifier = Modifier.fillMaxWidth()) {
+
+                        ParameterCard(
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxHeight(),
+                            hazeState = hazeState,
+                            title = {
+                                Image(
+                                    modifier = Modifier.size(20.dp),
+                                    painter = painterResource(Res.drawable.wind_svg),
+                                    contentDescription = null
+                                )
+                                Text(
+                                    text = "Wind",
+                                    style = LocalTextStyle.current,
+                                    fontWeight = FontWeight.Medium,
+                                    fontSize = 14.sp,
+                                    color = Color.White
+                                )
+                            },
+                            content = {
+                                WindCompass(modifier = Modifier.size(130.dp))
+                            }
+                        )
+
+                        Spacer(modifier = Modifier.width(10.dp))
+
+                        ParameterCard(
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxHeight(),
+                            hazeState = hazeState,
+                            title = {
+                                Image(
+                                    modifier = Modifier.size(20.dp),
+                                    painter = painterResource(Res.drawable.wind_svg),
+                                    contentDescription = null
+                                )
+                                Text(
+                                    text = "Wind",
+                                    style = LocalTextStyle.current,
+                                    fontWeight = FontWeight.Medium,
+                                    fontSize = 14.sp,
+                                    color = Color.White
+                                )
+                            },
+                            content = {
+                                WindCompass(modifier = Modifier.size(130.dp))
+                            }
+                        )
+                    }
                 }
             }
         }
