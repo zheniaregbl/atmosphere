@@ -12,6 +12,6 @@ import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.Su
 private fun SunDiagramPreview() {
     SunDiagram(
         modifier = Modifier.size(140.dp),
-        percentage = 1f
+        percentage = 0.11f
     )
 }
