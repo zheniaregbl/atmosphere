@@ -4,11 +4,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,7 +14,6 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.LocalTextStyle
@@ -44,14 +41,11 @@ import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.Di
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.DiagramSectionMobile
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.ParameterCard
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.ParameterRow
-import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.SunDiagram
+import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.TemperatureChart
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.TopPanel
-import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.WindCompass
 import ru.syndicate.atmosphere.feature.weather_detail.resources.Res
 import ru.syndicate.atmosphere.feature.weather_detail.resources.precipitation_svg
-import ru.syndicate.atmosphere.feature.weather_detail.resources.sun_svg
 import ru.syndicate.atmosphere.feature.weather_detail.resources.temperature_svg
-import ru.syndicate.atmosphere.feature.weather_detail.resources.wind_svg
 
 internal class WeatherDetailScreen : Screen {
 
@@ -123,6 +117,10 @@ internal fun WeatherDetailScreenImpl(
                             )
                         },
                         content = {
+
+                            TemperatureChart(
+                                temperatures = listOf(15, 14, 13, 16, 18, 19, 20, 21, 22, 21, 20, 18, 17, 16, 15, 15, 15, 13, 12, 9, 10, 10, 9, 9)
+                            )
 
                             ParameterRow(
                                 parameter = "Maximum",

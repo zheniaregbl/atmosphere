@@ -33,6 +33,7 @@ kotlin {
 
         androidMain.dependencies {
             implementation(libs.ui.tooling.preview)
+            api(libs.vico.multiplatform)
         }
         commonMain.dependencies {
             api(compose.components.resources)
@@ -68,6 +69,9 @@ kotlin {
             api(libs.sandwich.ktor)
 
             api(projects.core)
+        }
+        iosMain.dependencies {
+            api(libs.vico.multiplatform)
         }
     }
 }
