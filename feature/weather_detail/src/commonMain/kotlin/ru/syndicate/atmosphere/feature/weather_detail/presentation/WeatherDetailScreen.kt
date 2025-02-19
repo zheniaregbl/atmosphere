@@ -6,9 +6,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -34,12 +38,18 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import dev.chrisbanes.haze.HazeState
 import org.jetbrains.compose.resources.painterResource
+import ru.syndicate.atmosphere.core.util.PlatformName
+import ru.syndicate.atmosphere.core.util.platformName
+import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.DiagramSectionDesktop
+import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.DiagramSectionMobile
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.ParameterCard
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.ParameterRow
+import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.SunDiagram
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.TopPanel
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.WindCompass
 import ru.syndicate.atmosphere.feature.weather_detail.resources.Res
 import ru.syndicate.atmosphere.feature.weather_detail.resources.precipitation_svg
+import ru.syndicate.atmosphere.feature.weather_detail.resources.sun_svg
 import ru.syndicate.atmosphere.feature.weather_detail.resources.temperature_svg
 import ru.syndicate.atmosphere.feature.weather_detail.resources.wind_svg
 
@@ -54,6 +64,7 @@ internal class WeatherDetailScreen : Screen {
             modifier = Modifier
                 .fillMaxSize()
                 .systemBarsPadding(),
+            platformName = platformName(),
             onBackClick = { navigator.pop() }
         )
     }
@@ -62,6 +73,7 @@ internal class WeatherDetailScreen : Screen {
 @Composable
 internal fun WeatherDetailScreenImpl(
     modifier: Modifier = Modifier,
+    platformName: String,
     onBackClick: () -> Unit
 ) {
 
@@ -185,59 +197,30 @@ internal fun WeatherDetailScreenImpl(
                 }
 
                 item {
-
-                    Row(modifier = Modifier.fillMaxWidth()) {
-
-                        ParameterCard(
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxHeight(),
-                            hazeState = hazeState,
-                            title = {
-                                Image(
-                                    modifier = Modifier.size(20.dp),
-                                    painter = painterResource(Res.drawable.wind_svg),
-                                    contentDescription = null
-                                )
-                                Text(
-                                    text = "Wind",
-                                    style = LocalTextStyle.current,
-                                    fontWeight = FontWeight.Medium,
-                                    fontSize = 14.sp,
-                                    color = Color.White
-                                )
-                            },
-                            content = {
-                                WindCompass(modifier = Modifier.size(130.dp))
-                            }
+                    if (platformName == PlatformName.ANDROID || platformName == PlatformName.IOS) {
+                        DiagramSectionMobile(
+                            modifier = Modifier.fillMaxWidth(),
+                            hazeState = hazeState
                         )
-
-                        Spacer(modifier = Modifier.width(10.dp))
-
-                        ParameterCard(
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxHeight(),
-                            hazeState = hazeState,
-                            title = {
-                                Image(
-                                    modifier = Modifier.size(20.dp),
-                                    painter = painterResource(Res.drawable.wind_svg),
-                                    contentDescription = null
-                                )
-                                Text(
-                                    text = "Wind",
-                                    style = LocalTextStyle.current,
-                                    fontWeight = FontWeight.Medium,
-                                    fontSize = 14.sp,
-                                    color = Color.White
-                                )
-                            },
-                            content = {
-                                WindCompass(modifier = Modifier.size(130.dp))
-                            }
+                    } else {
+                        DiagramSectionDesktop(
+                            modifier = Modifier.fillMaxWidth(),
+                            hazeState = hazeState
                         )
                     }
+                }
+
+                item {
+                    Spacer(
+                        modifier = Modifier
+                            .height(50.dp)
+                            .padding(
+                                bottom = WindowInsets
+                                    .navigationBars
+                                    .asPaddingValues()
+                                    .calculateBottomPadding()
+                            )
+                    )
                 }
             }
         }
