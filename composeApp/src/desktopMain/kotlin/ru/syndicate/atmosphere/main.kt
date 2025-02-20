@@ -6,6 +6,7 @@ import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import cafe.adriel.voyager.core.registry.ScreenRegistry
+import org.jetbrains.compose.reload.DevelopmentEntryPoint
 import org.jetbrains.compose.resources.painterResource
 import ru.syndicate.atmosphere.composeApp.resources.Res
 import ru.syndicate.atmosphere.composeApp.resources.app_icon_win_svg
@@ -39,7 +40,7 @@ fun main() {
             title = "Atmosphere",
             icon = painterResource(Res.drawable.app_icon_win_svg)
         ) {
-            App()
+            DevelopmentEntryPoint { App() }
         }
     }
 }

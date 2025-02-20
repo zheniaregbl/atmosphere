@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -7,6 +8,7 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.hot.reload)
 }
 
 kotlin {
@@ -74,6 +76,10 @@ kotlin {
             api(libs.vico.multiplatform)
         }
     }
+}
+
+composeCompiler {
+    featureFlags.add(ComposeFeatureFlag.OptimizeNonSkippingGroups)
 }
 
 dependencies {

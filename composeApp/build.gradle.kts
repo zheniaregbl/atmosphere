@@ -1,4 +1,6 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.compose.reload.ComposeHotRun
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -7,6 +9,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.jetbrains.kotlin.serialization)
+    alias(libs.plugins.hot.reload)
 }
 
 kotlin {
@@ -72,6 +75,10 @@ kotlin {
     }
 }
 
+composeCompiler {
+    featureFlags.add(ComposeFeatureFlag.OptimizeNonSkippingGroups)
+}
+
 android {
     namespace = "ru.syndicate.atmosphere"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
@@ -127,4 +134,8 @@ compose.desktop {
             }
         }
     }
+}
+
+tasks.register<ComposeHotRun>("runHot") {
+    mainClass.set("ru.syndicate.atmosphere.MainKt")
 }

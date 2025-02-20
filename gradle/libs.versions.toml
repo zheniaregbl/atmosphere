@@ -13,7 +13,7 @@ androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
 compose-multiplatform = "1.7.0"
 junit = "4.13.2"
-kotlin = "2.1.0"
+kotlin = "2.1.20-RC"
 kotlinx-coroutines = "1.10.1"
 compottie = "2.0.0-rc02"
 vico = "2.1.0-alpha.4"
@@ -29,7 +29,7 @@ kotlinx-datetime = "0.6.1"
 coil = "3.0.4"
 datastore = "1.1.1"
 sandwich = "2.0.10"
-ksp = "2.1.0-1.0.29"
+ksp = "2.1.20-RC-1.0.30"
 ui-tooling = "1.7.8"
 ui-tooling-preview = "1.7.0"
 
@@ -108,6 +108,7 @@ composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "k
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+hot-reload = { id = "org.jetbrains.compose.hot-reload", version = "1.0.0-dev-60" }
 
 [bundles]
 ktor = [
