@@ -7,6 +7,7 @@ import ru.syndicate.atmosphere.core.di.networkModule
 import ru.syndicate.atmosphere.feature.home.di.featureHomeModule
 import ru.syndicate.atmosphere.feature.search.di.featureSearchModule
 import ru.syndicate.atmosphere.feature.settings.di.featureSettingsModule
+import ru.syndicate.atmosphere.feature.weather_detail.di.featureWeatherDetailModule
 
 fun initKoin(
     config: KoinAppDeclaration? = null,
@@ -18,7 +19,8 @@ fun initKoin(
             networkModule,
             featureHomeModule,
             featureSearchModule,
-            featureSettingsModule
+            featureSettingsModule,
+            featureWeatherDetailModule
         )
         modules(platformModules)
     }

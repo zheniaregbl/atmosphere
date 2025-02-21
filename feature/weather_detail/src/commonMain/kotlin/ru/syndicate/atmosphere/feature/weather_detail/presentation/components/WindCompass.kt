@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.painterResource
+import ru.syndicate.atmosphere.feature.weather_detail.presentation.translation.util.LocalDetailsStrings
 import ru.syndicate.atmosphere.feature.weather_detail.resources.Res
 import ru.syndicate.atmosphere.feature.weather_detail.resources.arrow_left_svg
 
@@ -116,7 +117,7 @@ internal fun WindCompass(
             )
 
             Text(
-                text = "m/s",
+                text = LocalDetailsStrings.current.windUnit,
                 style = LocalTextStyle.current,
                 lineHeight = 16.sp,
                 fontWeight = FontWeight.Normal,
@@ -136,7 +137,7 @@ fun SideText(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(top = 10.dp),
-            text = "N",
+            text = LocalDetailsStrings.current.northSide[0].toString(),
             style = LocalTextStyle.current,
             textAlign = TextAlign.Center,
             lineHeight = 16.sp,
@@ -149,7 +150,7 @@ fun SideText(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .align(Alignment.CenterEnd)
                 .padding(end = 14.dp),
-            text = "E",
+            text = LocalDetailsStrings.current.eastSide[0].toString(),
             style = LocalTextStyle.current,
             textAlign = TextAlign.Center,
             lineHeight = 16.sp,
@@ -162,7 +163,7 @@ fun SideText(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 10.dp),
-            text = "S",
+            text = LocalDetailsStrings.current.southSide[0].toString(),
             style = LocalTextStyle.current,
             textAlign = TextAlign.Center,
             lineHeight = 16.sp,
@@ -175,7 +176,7 @@ fun SideText(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .align(Alignment.CenterStart)
                 .padding(start = 10.dp),
-            text = "W",
+            text = LocalDetailsStrings.current.westSide[0].toString(),
             style = LocalTextStyle.current,
             textAlign = TextAlign.Center,
             lineHeight = 16.sp,

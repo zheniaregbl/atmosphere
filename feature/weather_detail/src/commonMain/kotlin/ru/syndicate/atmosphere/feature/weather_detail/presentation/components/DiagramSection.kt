@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.chrisbanes.haze.HazeState
 import org.jetbrains.compose.resources.painterResource
+import ru.syndicate.atmosphere.feature.weather_detail.presentation.translation.util.LocalDetailsStrings
 import ru.syndicate.atmosphere.feature.weather_detail.resources.Res
 import ru.syndicate.atmosphere.feature.weather_detail.resources.sun_svg
 import ru.syndicate.atmosphere.feature.weather_detail.resources.wind_svg
@@ -47,7 +48,7 @@ internal fun DiagramSectionMobile(
                     contentDescription = null
                 )
                 Text(
-                    text = "Wind",
+                    text = LocalDetailsStrings.current.windSectionTitle,
                     style = LocalTextStyle.current,
                     fontWeight = FontWeight.Medium,
                     fontSize = 14.sp,
@@ -76,7 +77,7 @@ internal fun DiagramSectionMobile(
                     contentDescription = null
                 )
                 Text(
-                    text = "Sun",
+                    text = LocalDetailsStrings.current.sunSectionTitle,
                     style = LocalTextStyle.current,
                     fontWeight = FontWeight.Medium,
                     fontSize = 14.sp,
@@ -116,7 +117,7 @@ internal fun DiagramSectionDesktop(
                     contentDescription = null
                 )
                 Text(
-                    text = "Wind",
+                    text = LocalDetailsStrings.current.windSectionTitle,
                     style = LocalTextStyle.current,
                     fontWeight = FontWeight.Medium,
                     fontSize = 14.sp,
@@ -140,20 +141,23 @@ internal fun DiagramSectionDesktop(
                     ) {
 
                         ParameterRow(
-                            parameter = "Maximum wind speed",
-                            value = "2 m/s"
+                            parameter = LocalDetailsStrings.current.maximumWindSpeed,
+                            value = "2 ${LocalDetailsStrings.current.windUnit}"
                         )
 
                         ParameterRow(
-                            parameter = "Maximum wind gusts",
-                            value = "2 m/s"
+                            parameter = LocalDetailsStrings.current.maximumWindGusts,
+                            value = "2 ${LocalDetailsStrings.current.windUnit}"
                         )
 
                         ParameterRow(
-                            parameter = "Wind direction",
+                            parameter = LocalDetailsStrings.current.windDirection,
                             value = buildAnnotatedString {
+
+                                val direction =  LocalDetailsStrings.current.northSide
+
                                 withStyle(SpanStyle(color = Color.White)) {
-                                    append("North ")
+                                    append("$direction ")
                                 }
                                 withStyle(SpanStyle(color = Color.White.copy(alpha = .4f))) {
                                     append("(0°)")
@@ -180,7 +184,7 @@ internal fun DiagramSectionDesktop(
                     contentDescription = null
                 )
                 Text(
-                    text = "Sun",
+                    text = LocalDetailsStrings.current.sunSectionTitle,
                     style = LocalTextStyle.current,
                     fontWeight = FontWeight.Medium,
                     fontSize = 14.sp,
@@ -204,18 +208,18 @@ internal fun DiagramSectionDesktop(
                     ) {
 
                         ParameterRow(
-                            parameter = "Sunrise at",
+                            parameter = LocalDetailsStrings.current.sunriseText,
                             value = "6:23"
                         )
 
                         ParameterRow(
-                            parameter = "Sunset at",
+                            parameter = LocalDetailsStrings.current.sunsetText,
                             value = "23:23"
                         )
 
                         ParameterRow(
-                            parameter = "Daylight duration",
-                            value = "17 h"
+                            parameter = LocalDetailsStrings.current.daylightDuration,
+                            value = "17 ${LocalDetailsStrings.current.hourUnit}"
                         )
                     }
                 }

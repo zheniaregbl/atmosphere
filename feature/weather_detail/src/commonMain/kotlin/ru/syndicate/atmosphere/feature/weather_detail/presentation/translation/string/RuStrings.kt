@@ -1,0 +1,32 @@
+package ru.syndicate.atmosphere.feature.weather_detail.presentation.translation.string
+
+import cafe.adriel.lyricist.LyricistStrings
+import ru.syndicate.atmosphere.core.presentation.translation.Locales
+
+@LyricistStrings(languageTag = Locales.RU)
+internal val RuStrings = Strings(
+    screenTitle = "Детали",
+    tempSectionTitle = "Температура",
+    maximum = "Максимум",
+    minimum = "Минимум",
+    precipitationSectionTitle = "Осадки",
+    precipitationProbability = "Вероятность осадков",
+    precipitationHours = "Часы с осадками",
+    sumPrecipitation = "Сумма осадков",
+    hourUnit = "ч",
+    sumUnit = "мм",
+    timePrefix = "в",
+    windSectionTitle = "Ветер",
+    sunSectionTitle = "Солнце",
+    windUnit = "м/с",
+    northSide = "Север",
+    eastSide = "Восток",
+    southSide = "Юг",
+    westSide = "Запад",
+    maximumWindSpeed = "Максимальная скорость ветра",
+    maximumWindGusts = "Максимальные порывы ветра",
+    windDirection = "Направление ветра",
+    sunriseText = "Восход в",
+    sunsetText = "Закат в",
+    daylightDuration = "Продолжительность светового дня"
+)

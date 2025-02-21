@@ -1,11 +1,8 @@
 package ru.syndicate.atmosphere.feature.weather_detail.presentation.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -25,9 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.github.koalaplot.core.line.AreaBaseline
 import io.github.koalaplot.core.line.AreaPlot
-import io.github.koalaplot.core.line.LinePlot
 import io.github.koalaplot.core.style.AreaStyle
-import io.github.koalaplot.core.style.KoalaPlotTheme
 import io.github.koalaplot.core.style.LineStyle
 import io.github.koalaplot.core.util.ExperimentalKoalaPlotApi
 import io.github.koalaplot.core.xygraph.DefaultPoint
@@ -35,6 +30,7 @@ import io.github.koalaplot.core.xygraph.Point
 import io.github.koalaplot.core.xygraph.XYGraph
 import io.github.koalaplot.core.xygraph.rememberIntLinearAxisModel
 import ru.syndicate.atmosphere.core.presentation.theme.SelectedBlue
+import ru.syndicate.atmosphere.feature.weather_detail.presentation.translation.util.LocalDetailsStrings
 
 @OptIn(ExperimentalKoalaPlotApi::class)
 @Composable
@@ -94,7 +90,7 @@ private fun HoverableItem(point: Point<Int, Int>) {
     Column(
         modifier = Modifier
             .clip(RoundedCornerShape(4.dp))
-            .background(Color.White.copy(alpha = 0.8f))
+            .background(Color.White.copy(alpha = 0.85f))
             .padding(horizontal = 8.dp)
             .padding(bottom = 2.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -109,7 +105,7 @@ private fun HoverableItem(point: Point<Int, Int>) {
         )
 
         Text(
-            text = "at ${point.x}:00",
+            text = "${LocalDetailsStrings.current.timePrefix} ${point.x}:00",
             style = LocalTextStyle.current,
             fontWeight = FontWeight.Normal,
             lineHeight = 20.sp,
