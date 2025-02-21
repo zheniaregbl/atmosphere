@@ -33,6 +33,8 @@ kotlin {
 
     sourceSets {
 
+        val desktopMain by getting
+
         androidMain.dependencies {
             implementation(libs.ui.tooling.preview)
             api(libs.vico.multiplatform)
@@ -74,6 +76,9 @@ kotlin {
         }
         iosMain.dependencies {
             api(libs.vico.multiplatform)
+        }
+        desktopMain.dependencies {
+            api(libs.koalaplot)
         }
     }
 }
