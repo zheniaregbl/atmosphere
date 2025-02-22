@@ -16,7 +16,6 @@ junit = "4.13.2"
 kotlin = "2.1.20-RC"
 kotlinx-coroutines = "1.10.1"
 compottie = "2.0.0-rc02"
-vico = "2.1.0-alpha.4"
 koalaplot = "0.8.0"
 lyricist = "1.7.0"
 haze = "1.1.1"
@@ -69,8 +68,6 @@ coil-mp = { module = "io.coil-kt.coil3:coil", version.ref = "coil" }
 
 compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "compottie" }
 compottie-resources = { module = "io.github.alexzhirkevich:compottie-resources", version.ref = "compottie" }
-
-vico-multiplatform = { group = "com.patrykandpatrick.vico", name = "multiplatform", version.ref = "vico" }
 
 koalaplot = { group = "io.github.koalaplot", name = "koalaplot-core", version.ref = "koalaplot" }
 

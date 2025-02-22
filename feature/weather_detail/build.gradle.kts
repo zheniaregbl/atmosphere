@@ -37,7 +37,6 @@ kotlin {
 
         androidMain.dependencies {
             implementation(libs.ui.tooling.preview)
-            api(libs.vico.multiplatform)
         }
         commonMain.dependencies {
             api(compose.components.resources)
@@ -58,6 +57,8 @@ kotlin {
             api(libs.compottie)
             api(libs.compottie.resources)
 
+            api(libs.koalaplot)
+
             api(libs.voyager.navigator)
             api(libs.voyager.screenmodel)
 
@@ -73,12 +74,6 @@ kotlin {
             api(libs.sandwich.ktor)
 
             api(projects.core)
-        }
-        iosMain.dependencies {
-            api(libs.vico.multiplatform)
-        }
-        desktopMain.dependencies {
-            api(libs.koalaplot)
         }
     }
 }
