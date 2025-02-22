@@ -2,7 +2,6 @@ package ru.syndicate.atmosphere.feature.weather_detail.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
@@ -25,15 +24,17 @@ import io.github.koalaplot.core.xygraph.DefaultPoint
 import io.github.koalaplot.core.xygraph.Point
 import io.github.koalaplot.core.xygraph.XYGraph
 import io.github.koalaplot.core.xygraph.rememberIntLinearAxisModel
-import ru.syndicate.atmosphere.core.presentation.theme.SelectedBlue
 import ru.syndicate.atmosphere.core.util.PlatformName
 import ru.syndicate.atmosphere.core.util.platformName
 
 @OptIn(ExperimentalKoalaPlotApi::class)
 @Composable
 internal fun CommonChart(
+    modifier: Modifier = Modifier,
     values: List<Int>,
-    yAxisLabels: (Int) -> String,
+    yAxisLabels: (Int) -> String = { it.toString() },
+    xViewRange: ClosedRange<Double> = 0.0..100.0,
+    yViewRange: ClosedRange<Double> = 0.0..100.0,
     color: Color,
     hoverableItem: @Composable (Point<Int, Int>) -> Unit
 ) {
@@ -46,12 +47,19 @@ internal fun CommonChart(
         }
     }
 
-    val xAxisModel = rememberIntLinearAxisModel(values.indices)
+    val xAxisModel = if (platformName != PlatformName.DESKTOP) {
+        rememberIntLinearAxisModel(
+            range = values.indices,
+            allowPanning = true
+        ).apply { setViewRange(xViewRange) }
+    } else {
+        rememberIntLinearAxisModel(values.indices)
+    }
     val yAxisModel = if (platformName != PlatformName.DESKTOP) {
         rememberIntLinearAxisModel(
             range = values.min() - 1..values.max() + 1,
             allowPanning = true,
-        ).apply { setViewRange(0.0..20.0) }
+        ).apply { setViewRange(yViewRange) }
     } else {
         rememberIntLinearAxisModel(values.min() - 1..values.max() + 1)
     }
@@ -62,7 +70,7 @@ internal fun CommonChart(
         )
     ) {
         XYGraph(
-            modifier = Modifier.heightIn(max = 200.dp),
+            modifier = modifier,
             xAxisModel = xAxisModel,
             yAxisModel = yAxisModel,
             yAxisLabels = { yAxisLabels(it) },
@@ -96,7 +104,7 @@ private fun DotSymbol(modifier: Modifier, color: Color) {
     Box(
         modifier = modifier
             .clip(CircleShape)
-            .background(SelectedBlue)
+            .background(color)
             .padding(4.dp)
     )
 }

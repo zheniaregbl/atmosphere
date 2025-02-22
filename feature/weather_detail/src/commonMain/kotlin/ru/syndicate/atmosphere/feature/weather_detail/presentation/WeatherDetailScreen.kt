@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -21,6 +22,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,6 +51,7 @@ import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.Di
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.DiagramSectionMobile
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.ParameterCard
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.ParameterRow
+import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.PrecipitationChart
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.TemperatureChart
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.TopPanel
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.translation.util.LocalDetailsStrings
@@ -55,6 +59,7 @@ import ru.syndicate.atmosphere.feature.weather_detail.presentation.translation.u
 import ru.syndicate.atmosphere.feature.weather_detail.resources.Res
 import ru.syndicate.atmosphere.feature.weather_detail.resources.precipitation_svg
 import ru.syndicate.atmosphere.feature.weather_detail.resources.temperature_svg
+import kotlin.random.Random
 
 internal class WeatherDetailScreen : Screen {
 
@@ -148,6 +153,7 @@ internal fun WeatherDetailScreenImpl(
                             content = {
 
                                 TemperatureChart(
+                                    modifier = Modifier.heightIn(max = 200.dp),
                                     temperatures = listOf(15, 14, 13, 16, 18, 19, 20, 21, 22, 21, 20, 18, 17, 16, 15, 15, 15, 13, 12, 9, 10, 10, 9, 9)
                                 )
 
@@ -207,14 +213,28 @@ internal fun WeatherDetailScreenImpl(
                                 )
                             },
                             content = {
+
+                                val probabilities by remember {
+                                    mutableStateOf(
+                                        (0..23).map { Random.nextInt(0, 100) }
+                                    )
+                                }
+
+                                PrecipitationChart(
+                                    modifier = Modifier.heightIn(max = 300.dp),
+                                    probabilities = probabilities
+                                )
+
                                 ParameterRow(
                                     parameter = LocalDetailsStrings.current.precipitationProbability,
                                     value = "45 %"
                                 )
+
                                 ParameterRow(
                                     parameter = LocalDetailsStrings.current.precipitationHours,
                                     value = "2 ${LocalDetailsStrings.current.hourUnit}"
                                 )
+
                                 ParameterRow(
                                     parameter = LocalDetailsStrings.current.sumPrecipitation,
                                     value = "100 ${LocalDetailsStrings.current.sumUnit}"

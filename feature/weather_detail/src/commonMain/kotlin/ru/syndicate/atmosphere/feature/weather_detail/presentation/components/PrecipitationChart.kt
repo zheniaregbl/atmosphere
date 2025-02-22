@@ -15,20 +15,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.github.koalaplot.core.xygraph.Point
-import ru.syndicate.atmosphere.core.presentation.theme.SelectedBlue
+import ru.syndicate.atmosphere.feature.weather_detail.presentation.theme.PrecipitationColor
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.translation.util.LocalDetailsStrings
 
 @Composable
-internal fun TemperatureChart(
+internal fun PrecipitationChart(
     modifier: Modifier,
-    temperatures: List<Int>
+    probabilities: List<Int>
 ) {
 
     CommonChart(
         modifier = modifier,
-        values = temperatures,
-        yAxisLabels = { "$it°" },
-        color = SelectedBlue,
+        values = probabilities,
+        yAxisLabels = { "$it %" },
+        xViewRange = 0.0..10.0,
+        yViewRange = 0.0..75.0,
+        color = PrecipitationColor,
         hoverableItem = { HoverableItem(it) }
     )
 }
@@ -46,7 +48,7 @@ private fun HoverableItem(point: Point<Int, Int>) {
     ) {
 
         Text(
-            text = "${point.y}°",
+            text = "${point.y}%",
             style = LocalTextStyle.current,
             fontWeight = FontWeight.Medium,
             lineHeight = 20.sp,
