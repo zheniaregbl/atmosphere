@@ -15,9 +15,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
@@ -36,7 +33,6 @@ import ru.syndicate.atmosphere.feature.weather_detail.presentation.translation.u
 import ru.syndicate.atmosphere.feature.weather_detail.resources.Res
 import ru.syndicate.atmosphere.feature.weather_detail.resources.precipitation_svg
 import ru.syndicate.atmosphere.feature.weather_detail.resources.temperature_svg
-import kotlin.random.Random
 
 @Composable
 internal fun DetailsContent(

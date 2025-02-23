@@ -28,7 +28,7 @@ internal fun PrecipitationChart(
         modifier = modifier,
         values = probabilities,
         yRange = probabilities.min()..probabilities.max() + 1,
-        yAxisLabels = { "$it %" },
+        yAxisLabels = { "$it%" },
         xViewRange = 0.0..10.0,
         yViewRange = 0.0..75.0,
         color = PrecipitationColor,

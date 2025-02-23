@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import ru.syndicate.atmosphere.core.presentation.theme.AppTheme
 import ru.syndicate.atmosphere.core.presentation.theme.BackgroundColor
-import ru.syndicate.atmosphere.core.util.PlatformName
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.WeatherDetailScreenImpl
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.WeatherDetailState
 

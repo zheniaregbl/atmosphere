@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.runtime.Composable
@@ -45,7 +46,7 @@ internal class WeatherDetailScreen : Screen {
         WeatherDetailScreenImpl(
             modifier = Modifier
                 .fillMaxSize()
-                .systemBarsPadding(),
+                .statusBarsPadding(),
             state = state,
             onBackClick = { navigator.pop() }
         )

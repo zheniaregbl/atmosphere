@@ -220,17 +220,18 @@ internal fun DiagramSectionDesktop(
 
                         ParameterRow(
                             parameter = LocalDetailsStrings.current.sunriseText,
-                            value = "6:23"
+                            value = "${weatherDetail.sunInfo.sunrise}"
                         )
 
                         ParameterRow(
                             parameter = LocalDetailsStrings.current.sunsetText,
-                            value = "23:23"
+                            value = "${weatherDetail.sunInfo.sunset}"
                         )
 
                         ParameterRow(
                             parameter = LocalDetailsStrings.current.daylightDuration,
-                            value = "17 ${LocalDetailsStrings.current.hourUnit}"
+                            value = "${weatherDetail.sunInfo.daylightDuration}" +
+                                    " ${LocalDetailsStrings.current.hourUnit}"
                         )
                     }
                 }

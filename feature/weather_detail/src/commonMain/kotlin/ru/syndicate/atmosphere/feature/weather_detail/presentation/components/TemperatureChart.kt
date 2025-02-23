@@ -29,6 +29,8 @@ internal fun TemperatureChart(
         values = temperatures,
         yRange = temperatures.min() - 1..temperatures.max() + 1,
         yAxisLabels = { "$it°" },
+        xViewRange = 0.0..10.0,
+        yViewRange = temperatures.min() - 1.0..temperatures.max() + 1.0,
         color = SelectedBlue,
         hoverableItem = { HoverableItem(it) }
     )

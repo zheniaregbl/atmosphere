@@ -90,13 +90,13 @@ internal fun WindCompass(
 
         Box(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth(0.9f)
                 .padding(22.dp)
                 .align(Alignment.Center)
                 .rotate(90f + direction.toFloat())
         ) {
             Image(
-                modifier = Modifier.size(20.dp),
+                modifier = Modifier.size(18.dp),
                 painter = painterResource(Res.drawable.arrow_left_svg),
                 contentDescription = null
             )
@@ -110,7 +110,7 @@ internal fun WindCompass(
             Text(
                 text = speed.toString(),
                 style = LocalTextStyle.current,
-                lineHeight = 16.sp,
+                lineHeight = 14.sp,
                 fontWeight = FontWeight.Normal,
                 fontSize = 14.sp,
                 color = Color.White
@@ -119,9 +119,9 @@ internal fun WindCompass(
             Text(
                 text = LocalDetailsStrings.current.windUnit,
                 style = LocalTextStyle.current,
-                lineHeight = 16.sp,
+                lineHeight = 12.sp,
                 fontWeight = FontWeight.Normal,
-                fontSize = 14.sp,
+                fontSize = 10.sp,
                 color = Color.White
             )
         }
