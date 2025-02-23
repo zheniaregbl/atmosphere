@@ -52,6 +52,9 @@ kotlin {
             api(libs.datastore)
             api(libs.datastore.preferences)
 
+            api(libs.sandwich)
+            api(libs.sandwich.ktor)
+
             api(libs.bundles.ktor)
         }
         desktopMain.dependencies {

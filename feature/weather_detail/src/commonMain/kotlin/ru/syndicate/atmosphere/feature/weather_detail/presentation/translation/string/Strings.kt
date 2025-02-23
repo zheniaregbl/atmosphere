@@ -6,7 +6,6 @@ internal data class Strings(
     val maximum: String,
     val minimum: String,
     val precipitationSectionTitle: String,
-    val precipitationProbability: String,
     val precipitationHours: String,
     val sumPrecipitation: String,
     val hourUnit: String,

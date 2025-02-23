@@ -10,7 +10,6 @@ internal val EnStrings = Strings(
     maximum = "Maximum",
     minimum = "Minimum",
     precipitationSectionTitle = "Precipitation",
-    precipitationProbability = "Precipitation probability",
     precipitationHours = "Precipitation hours",
     sumPrecipitation = "Sum precipitation",
     hourUnit = "h",

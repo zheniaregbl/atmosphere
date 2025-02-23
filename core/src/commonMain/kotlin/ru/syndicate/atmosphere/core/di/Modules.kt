@@ -11,9 +11,14 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
+import ru.syndicate.atmosphere.core.data.network.RemoteWeatherDataSource
+import ru.syndicate.atmosphere.core.data.network.KtorRemoteWeatherDataSource
 
-val networkModule = module {
+val coreModule = module {
+
     single {
         HttpClient {
             install(ContentNegotiation) {
@@ -34,4 +39,6 @@ val networkModule = module {
             }
         }
     }
+
+    singleOf(::KtorRemoteWeatherDataSource).bind<RemoteWeatherDataSource>()
 }

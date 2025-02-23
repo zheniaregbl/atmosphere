@@ -10,7 +10,6 @@ internal val DeStrings = Strings(
     maximum = "Maximum",
     minimum = "Minimum",
     precipitationSectionTitle = "Niederschlag",
-    precipitationProbability = "Niederschlagswahrscheinlichkeit",
     precipitationHours = "Niederschlagsstunden",
     sumPrecipitation = "Niederschlagssumme",
     hourUnit = "h",

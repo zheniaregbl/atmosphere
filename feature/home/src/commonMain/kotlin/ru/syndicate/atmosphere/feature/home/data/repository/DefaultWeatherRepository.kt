@@ -2,9 +2,9 @@ package ru.syndicate.atmosphere.feature.home.data.repository
 
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.mapSuccess
+import ru.syndicate.atmosphere.core.data.network.RemoteWeatherDataSource
 import ru.syndicate.atmosphere.feature.home.data.mapper.toCurrentWeatherParameters
 import ru.syndicate.atmosphere.feature.home.data.mapper.toHourlyWeather
-import ru.syndicate.atmosphere.feature.home.data.network.RemoteWeatherDataSource
 import ru.syndicate.atmosphere.feature.home.domain.model.WeatherInfo
 import ru.syndicate.atmosphere.feature.home.domain.repository.WeatherRepository
 

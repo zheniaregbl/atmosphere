@@ -10,7 +10,6 @@ internal val FrStrings = Strings(
     maximum = "Maximum",
     minimum = "Minimum",
     precipitationSectionTitle = "Précipitation",
-    precipitationProbability = "Probabilité de précipitation",
     precipitationHours = "Heures de précipitation",
     sumPrecipitation = "Somme des précipitations",
     hourUnit = "h",

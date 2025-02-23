@@ -10,7 +10,6 @@ internal val ItStrings = Strings(
     maximum = "Massimo",
     minimum = "Minimo",
     precipitationSectionTitle = "Precipitazioni",
-    precipitationProbability = "Probabilità di precipitazione",
     precipitationHours = "Ore di precipitazione",
     sumPrecipitation = "Totale precipitazioni",
     hourUnit = "h",

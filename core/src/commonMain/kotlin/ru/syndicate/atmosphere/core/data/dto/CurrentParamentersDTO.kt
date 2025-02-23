@@ -1,10 +1,10 @@
-package ru.syndicate.atmosphere.feature.home.data.dto
+package ru.syndicate.atmosphere.core.data.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class CurrentParametersDTO(
+data class CurrentParametersDTO(
     @SerialName("temperature_2m") val temperature: Double,
     @SerialName("relative_humidity_2m") val humidity: Int,
     @SerialName("apparent_temperature") val apparentTemperature: Double,

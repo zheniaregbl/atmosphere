@@ -10,7 +10,6 @@ internal val RuStrings = Strings(
     maximum = "Максимум",
     minimum = "Минимум",
     precipitationSectionTitle = "Осадки",
-    precipitationProbability = "Вероятность осадков",
     precipitationHours = "Часы с осадками",
     sumPrecipitation = "Сумма осадков",
     hourUnit = "ч",

@@ -1,7 +1,7 @@
 package ru.syndicate.atmosphere.feature.home.data.mapper
 
-import ru.syndicate.atmosphere.feature.home.data.dto.CurrentParametersDTO
-import ru.syndicate.atmosphere.feature.home.data.dto.HourlyParametersDTO
+import ru.syndicate.atmosphere.core.data.dto.CurrentParametersDTO
+import ru.syndicate.atmosphere.core.data.dto.HourlyParametersDTO
 import ru.syndicate.atmosphere.feature.home.domain.model.CurrentWeatherParameters
 import ru.syndicate.atmosphere.feature.home.domain.model.HourlyWeather
 

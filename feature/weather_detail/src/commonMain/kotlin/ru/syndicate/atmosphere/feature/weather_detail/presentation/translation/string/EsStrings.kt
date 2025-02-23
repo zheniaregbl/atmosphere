@@ -10,7 +10,6 @@ internal val EsStrings = Strings(
     maximum = "Máximo",
     minimum = "Mínimo",
     precipitationSectionTitle = "Precipitación",
-    precipitationProbability = "Probabilidad de precipitación",
     precipitationHours = "Horas de precipitación",
     sumPrecipitation = "Suma de precipitación",
     hourUnit = "h",

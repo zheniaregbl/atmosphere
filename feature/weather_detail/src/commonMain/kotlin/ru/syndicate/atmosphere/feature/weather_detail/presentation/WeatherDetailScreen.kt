@@ -226,11 +226,6 @@ internal fun WeatherDetailScreenImpl(
                                 )
 
                                 ParameterRow(
-                                    parameter = LocalDetailsStrings.current.precipitationProbability,
-                                    value = "45 %"
-                                )
-
-                                ParameterRow(
                                     parameter = LocalDetailsStrings.current.precipitationHours,
                                     value = "2 ${LocalDetailsStrings.current.hourUnit}"
                                 )

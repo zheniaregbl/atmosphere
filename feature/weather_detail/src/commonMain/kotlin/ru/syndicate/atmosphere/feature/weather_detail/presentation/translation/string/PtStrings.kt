@@ -10,7 +10,6 @@ internal val PtStrings = Strings(
     maximum = "Máximo",
     minimum = "Mínimo",
     precipitationSectionTitle = "Precipitação",
-    precipitationProbability = "Probabilidade de precipitação",
     precipitationHours = "Horas de precipitação",
     sumPrecipitation = "Soma da precipitação",
     hourUnit = "h",

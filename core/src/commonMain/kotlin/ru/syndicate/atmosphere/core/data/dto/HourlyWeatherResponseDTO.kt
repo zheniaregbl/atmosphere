@@ -1,10 +1,10 @@
-package ru.syndicate.atmosphere.feature.home.data.dto
+package ru.syndicate.atmosphere.core.data.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class HourlyWeatherResponseDTO(
+data class HourlyWeatherResponseDTO(
     @SerialName("current") val currentParameters: CurrentParametersDTO,
     @SerialName("hourly") val hourlyParameters: HourlyParametersDTO
 )
