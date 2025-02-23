@@ -18,6 +18,6 @@ internal class DefaultWeatherRepository(
     ): ApiResponse<WeatherDetail> {
         return remoteWeatherDataSource
             .getDailyWeather(latitude, longitude, timeZone)
-            .mapSuccess { dailyParameters.toWeatherDetail() }
+            .mapSuccess { toWeatherDetail() }
     }
 }

@@ -32,6 +32,8 @@ import ru.syndicate.atmosphere.core.util.platformName
 internal fun CommonChart(
     modifier: Modifier = Modifier,
     values: List<Int>,
+    xRange: IntRange = values.indices,
+    yRange: IntRange = values.min()..values.max() + 1,
     yAxisLabels: (Int) -> String = { it.toString() },
     xViewRange: ClosedRange<Double> = 0.0..100.0,
     yViewRange: ClosedRange<Double> = 0.0..100.0,
@@ -49,19 +51,19 @@ internal fun CommonChart(
 
     val xAxisModel = if (platformName != PlatformName.DESKTOP) {
         rememberIntLinearAxisModel(
-            range = values.indices,
+            range = xRange,
             allowPanning = true
         ).apply { setViewRange(xViewRange) }
     } else {
-        rememberIntLinearAxisModel(values.indices)
+        rememberIntLinearAxisModel(xRange)
     }
     val yAxisModel = if (platformName != PlatformName.DESKTOP) {
         rememberIntLinearAxisModel(
-            range = values.min() - 1..values.max() + 1,
+            range = yRange,
             allowPanning = true,
         ).apply { setViewRange(yViewRange) }
     } else {
-        rememberIntLinearAxisModel(values.min() - 1..values.max() + 1)
+        rememberIntLinearAxisModel(yRange)
     }
 
     MaterialTheme(
@@ -83,7 +85,7 @@ internal fun CommonChart(
                 areaStyle = AreaStyle(
                     brush = Brush
                         .verticalGradient(
-                            listOf(color, color.copy(alpha = 0.1f))
+                            listOf(color, color.copy(alpha = 0.1f)),
                         ),
                     alpha = 0.5f,
                 ),
@@ -93,7 +95,7 @@ internal fun CommonChart(
                         color = color
                     )
                 },
-                areaBaseline = AreaBaseline.ConstantLine(0)
+                areaBaseline = AreaBaseline.ConstantLine(yRange.first)
             )
         }
     }

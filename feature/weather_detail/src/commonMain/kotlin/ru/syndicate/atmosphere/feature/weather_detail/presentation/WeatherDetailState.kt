@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import ru.syndicate.atmosphere.core.domain.model.CurrentLocation
 import ru.syndicate.atmosphere.core.presentation.translation.Locales
 import ru.syndicate.atmosphere.feature.weather_detail.domain.model.WeatherDetail
 
@@ -62,6 +63,7 @@ internal fun WeatherDetailScreenState.DisplayResult(
 internal data class WeatherDetailState(
     val isLoading: Boolean = false,
     val details: WeatherDetail? = null,
+    val currentLocation: CurrentLocation = CurrentLocation(),
     val appLanguage: String = Locales.EN
 ) {
 

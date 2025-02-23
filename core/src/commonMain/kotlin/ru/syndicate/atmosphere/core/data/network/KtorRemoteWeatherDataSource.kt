@@ -37,6 +37,7 @@ data class KtorRemoteWeatherDataSource(
         return httpClient.getApiResponse(BASE_URL) {
             parameter("latitude", latitude)
             parameter("longitude", longitude)
+            parameter("hourly", "temperature_2m,precipitation_probability")
             parameter("daily", "weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,daylight_duration,precipitation_sum,rain_sum,showers_sum,snowfall_sum,precipitation_hours,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant")
             parameter("wind_speed_unit", "ms")
             parameter("timezone", timeZone)

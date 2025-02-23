@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -25,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.chrisbanes.haze.HazeState
 import org.jetbrains.compose.resources.painterResource
+import ru.syndicate.atmosphere.feature.weather_detail.domain.model.WeatherDetail
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.translation.util.LocalDetailsStrings
 import ru.syndicate.atmosphere.feature.weather_detail.resources.Res
 import ru.syndicate.atmosphere.feature.weather_detail.resources.sun_svg
@@ -33,6 +33,7 @@ import ru.syndicate.atmosphere.feature.weather_detail.resources.wind_svg
 @Composable
 internal fun DiagramSectionMobile(
     modifier: Modifier = Modifier,
+    weatherDetail: WeatherDetail,
     hazeState: HazeState,
 ) {
 
@@ -60,7 +61,11 @@ internal fun DiagramSectionMobile(
                     modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ) {
-                    WindCompass(modifier = Modifier.size(130.dp))
+                    WindCompass(
+                        modifier = Modifier.size(130.dp),
+                        speed = weatherDetail.windInfo.maxSpeed,
+                        direction = weatherDetail.windInfo.direction
+                    )
                 }
             }
         )
@@ -99,6 +104,7 @@ internal fun DiagramSectionMobile(
 @Composable
 internal fun DiagramSectionDesktop(
     modifier: Modifier = Modifier,
+    weatherDetail: WeatherDetail,
     hazeState: HazeState,
 ) {
 
@@ -131,7 +137,11 @@ internal fun DiagramSectionDesktop(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
 
-                    WindCompass(modifier = Modifier.size(130.dp))
+                    WindCompass(
+                        modifier = Modifier.size(130.dp),
+                        speed = weatherDetail.windInfo.maxSpeed,
+                        direction = weatherDetail.windInfo.direction
+                    )
 
                     Spacer(modifier = Modifier.width(50.dp))
 
@@ -142,25 +152,26 @@ internal fun DiagramSectionDesktop(
 
                         ParameterRow(
                             parameter = LocalDetailsStrings.current.maximumWindSpeed,
-                            value = "2 ${LocalDetailsStrings.current.windUnit}"
+                            value = "${weatherDetail.windInfo.maxSpeed}" +
+                                    " ${LocalDetailsStrings.current.windUnit}"
                         )
 
                         ParameterRow(
                             parameter = LocalDetailsStrings.current.maximumWindGusts,
-                            value = "2 ${LocalDetailsStrings.current.windUnit}"
+                            value = "? ${LocalDetailsStrings.current.windUnit}"
                         )
 
                         ParameterRow(
                             parameter = LocalDetailsStrings.current.windDirection,
                             value = buildAnnotatedString {
 
-                                val direction =  LocalDetailsStrings.current.northSide
+                                val direction = LocalDetailsStrings.current.northSide
 
                                 withStyle(SpanStyle(color = Color.White)) {
                                     append("$direction ")
                                 }
                                 withStyle(SpanStyle(color = Color.White.copy(alpha = .4f))) {
-                                    append("(0°)")
+                                    append("(${weatherDetail.windInfo.direction}°)")
                                 }
                             },
                             valueTextStyle = TextStyle(

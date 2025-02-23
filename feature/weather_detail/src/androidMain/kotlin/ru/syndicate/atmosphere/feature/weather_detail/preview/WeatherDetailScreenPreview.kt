@@ -27,7 +27,6 @@ private fun WeatherDetailScreenPreview() {
                 .fillMaxSize()
                 .background(BackgroundColor),
             state = state,
-            platformName = PlatformName.ANDROID,
             onBackClick = { }
         )
     }
@@ -45,7 +44,6 @@ private fun DesktopWeatherDetailScreenPreview() {
                 .fillMaxSize()
                 .background(BackgroundColor),
             state = state,
-            platformName = PlatformName.DESKTOP,
             onBackClick = {}
         )
     }
