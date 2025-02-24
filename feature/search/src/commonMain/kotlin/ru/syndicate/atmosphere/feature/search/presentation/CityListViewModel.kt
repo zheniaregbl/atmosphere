@@ -91,8 +91,6 @@ internal class CityListViewModel(
 
     private fun searchCity(text: String) = viewModelScope.launch {
 
-        println(_state.value.appLanguage)
-
         _state.update {
             it.copy(
                 isLoading = true

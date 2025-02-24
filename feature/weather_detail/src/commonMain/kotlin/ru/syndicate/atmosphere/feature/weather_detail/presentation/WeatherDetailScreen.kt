@@ -101,7 +101,9 @@ internal fun WeatherDetailScreenImpl(
                     onIdle = { },
                     onLoading = {
                         AdaptiveCircularProgressIndicator(
-                            modifier = Modifier.size(50.dp),
+                            modifier = Modifier
+                                .padding(bottom = 80.dp)
+                                .size(50.dp),
                             color = Color.White,
                         )
                     },

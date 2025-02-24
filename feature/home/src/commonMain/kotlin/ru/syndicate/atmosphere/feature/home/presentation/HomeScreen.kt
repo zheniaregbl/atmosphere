@@ -48,7 +48,7 @@ import ru.syndicate.atmosphere.feature.home.presentation.components.WeatherParam
 import ru.syndicate.atmosphere.feature.home.presentation.translation.util.LocalHomeStrings
 import ru.syndicate.atmosphere.feature.home.presentation.translation.util.TranslationUtil.translations
 
-class HomeScreen : Screen {
+internal class HomeScreen : Screen {
 
     @Composable
     override fun Content() {

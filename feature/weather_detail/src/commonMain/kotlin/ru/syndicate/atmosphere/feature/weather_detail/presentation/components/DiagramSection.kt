@@ -158,17 +158,15 @@ internal fun DiagramSectionDesktop(
 
                         ParameterRow(
                             parameter = LocalDetailsStrings.current.maximumWindGusts,
-                            value = "? ${LocalDetailsStrings.current.windUnit}"
+                            value = "${weatherDetail.windInfo.maxGusts}" +
+                                    " ${LocalDetailsStrings.current.windUnit}"
                         )
 
                         ParameterRow(
                             parameter = LocalDetailsStrings.current.windDirection,
                             value = buildAnnotatedString {
-
-                                val direction = LocalDetailsStrings.current.northSide
-
                                 withStyle(SpanStyle(color = Color.White)) {
-                                    append("$direction ")
+                                    append("${getDirectionByDegrees(weatherDetail.windInfo.direction)} ")
                                 }
                                 withStyle(SpanStyle(color = Color.White.copy(alpha = .4f))) {
                                     append("(${weatherDetail.windInfo.direction}°)")
@@ -238,4 +236,13 @@ internal fun DiagramSectionDesktop(
             }
         )
     }
+}
+
+@Composable
+private fun getDirectionByDegrees(degrees: Int) = when (degrees) {
+    in 0..45 -> LocalDetailsStrings.current.northSide
+    in 46..135 -> LocalDetailsStrings.current.eastSide
+    in 136..225 -> LocalDetailsStrings.current.southSide
+    in 226..315 -> LocalDetailsStrings.current.westSide
+    else -> LocalDetailsStrings.current.northSide
 }

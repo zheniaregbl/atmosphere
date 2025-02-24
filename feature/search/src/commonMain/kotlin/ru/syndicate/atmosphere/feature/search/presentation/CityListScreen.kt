@@ -51,7 +51,7 @@ import ru.syndicate.atmosphere.feature.search.presentation.util.ErrorMessageCode
 import ru.syndicate.atmosphere.feature.search.resources.Res
 import ru.syndicate.atmosphere.feature.search.resources.searching_svg
 
-class SearchScreen : Screen {
+internal class SearchScreen : Screen {
 
     @Composable
     override fun Content() {

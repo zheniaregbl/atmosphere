@@ -24,6 +24,7 @@ internal fun DailyWeatherResponseDTO.toWeatherDetail(): WeatherDetail {
         ),
         windInfo = WindInfo(
             maxSpeed = this.dailyParameters.maxWindSpeed.first().toInt(),
+            maxGusts = this.dailyParameters.maxWindGusts.first().toInt(),
             direction = this.dailyParameters.windDirection.first()
         ),
         sunInfo = SunInfo(
