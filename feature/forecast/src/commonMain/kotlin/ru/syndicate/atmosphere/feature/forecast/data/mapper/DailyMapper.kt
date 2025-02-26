@@ -9,6 +9,7 @@ internal fun DailyParametersDTO.toDailyForecast() =
         DailyForecast(
             date = LocalDate.parse(time),
             maxTemperature = this.maxTemperature[index].toInt(),
-            minTemperature = this.minTemperature[index].toInt()
+            minTemperature = this.minTemperature[index].toInt(),
+            weatherCode = this.weatherCode[index]
         )
     }.takeLast(7)

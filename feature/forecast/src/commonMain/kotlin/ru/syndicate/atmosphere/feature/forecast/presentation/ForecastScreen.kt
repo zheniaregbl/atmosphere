@@ -17,19 +17,25 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cafe.adriel.lyricist.ProvideStrings
+import cafe.adriel.lyricist.rememberStrings
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.mohamedrejeb.calf.ui.progress.AdaptiveCircularProgressIndicator
 import org.koin.compose.viewmodel.koinViewModel
+import ru.syndicate.atmosphere.core.presentation.translation.Locales
 import ru.syndicate.atmosphere.feature.forecast.presentation.components.ForecastCard
 import ru.syndicate.atmosphere.feature.forecast.presentation.components.TopPanel
+import ru.syndicate.atmosphere.feature.forecast.presentation.translation.util.LocalForecastStrings
+import ru.syndicate.atmosphere.feature.forecast.presentation.translation.util.TranslationUtil.translations
 
 internal class ForecastScreen : Screen {
 
@@ -58,67 +64,84 @@ internal fun ForecastScreenImpl(
     onBackClick: () -> Unit
 ) {
 
-    Box(modifier = modifier) {
+    val lyricist = rememberStrings(
+        translations = translations,
+        defaultLanguageTag = Locales.EN,
+        currentLanguageTag = state.value.appLanguage
+    )
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 16.dp)
-                .padding(horizontal = 20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(20.dp)
-        ) {
+    LaunchedEffect(state.value.appLanguage) {
+        lyricist.languageTag = state.value.appLanguage
+    }
 
-            TopPanel(
+    ProvideStrings(
+        lyricist = lyricist,
+        provider = LocalForecastStrings
+    ) {
+
+        Box(modifier = modifier) {
+
+            Column(
                 modifier = Modifier
-                    .widthIn(max = 800.dp)
-                    .fillMaxWidth(),
-                topPanelTitle = "Forecast",
-                onBackClick = onBackClick
-            )
+                    .fillMaxSize()
+                    .padding(top = 16.dp)
+                    .padding(horizontal = 20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(20.dp)
+            ) {
 
-            state.value.toUiState().DisplayResult(
-                modifier = Modifier.fillMaxSize(),
-                onIdle = { },
-                onLoading = {
-                    AdaptiveCircularProgressIndicator(
-                        modifier = Modifier
-                            .padding(bottom = 80.dp)
-                            .size(50.dp),
-                        color = Color.White,
-                    )
-                },
-                onSuccess = { screenState ->
+                TopPanel(
+                    modifier = Modifier
+                        .widthIn(max = 800.dp)
+                        .fillMaxWidth(),
+                    topPanelTitle = LocalForecastStrings.current.screenTitle,
+                    onBackClick = onBackClick
+                )
 
-                    LazyColumn(
-                        modifier = Modifier
-                            .widthIn(max = 800.dp)
-                            .fillMaxSize(),
-                        verticalArrangement = Arrangement.spacedBy(10.dp)
-                    ) {
+                state.value.toUiState().DisplayResult(
+                    modifier = Modifier.fillMaxSize(),
+                    onIdle = { },
+                    onLoading = {
+                        AdaptiveCircularProgressIndicator(
+                            modifier = Modifier
+                                .padding(bottom = 80.dp)
+                                .size(50.dp),
+                            color = Color.White,
+                        )
+                    },
+                    onSuccess = { screenState ->
 
-                        items(screenState.forecasts) {
-                            ForecastCard(
-                                modifier = Modifier.fillMaxWidth(),
-                                dailyForecast = it
-                            )
-                        }
+                        LazyColumn(
+                            modifier = Modifier
+                                .widthIn(max = 800.dp)
+                                .fillMaxSize(),
+                            verticalArrangement = Arrangement.spacedBy(10.dp)
+                        ) {
 
-                        item {
-                            Spacer(
-                                modifier = Modifier
-                                    .height(50.dp)
-                                    .padding(
-                                        bottom = WindowInsets
-                                            .navigationBars
-                                            .asPaddingValues()
-                                            .calculateBottomPadding()
-                                    )
-                            )
+                            items(screenState.forecasts) {
+                                ForecastCard(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    dailyForecast = it
+                                )
+                            }
+
+                            item {
+                                Spacer(
+                                    modifier = Modifier
+                                        .height(50.dp)
+                                        .padding(
+                                            bottom = WindowInsets
+                                                .navigationBars
+                                                .asPaddingValues()
+                                                .calculateBottomPadding()
+                                        )
+                                )
+                            }
                         }
                     }
-                }
-            )
+                )
+            }
         }
     }
+
 }

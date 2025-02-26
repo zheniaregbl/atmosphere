@@ -23,6 +23,8 @@ import org.jetbrains.compose.resources.painterResource
 import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
 import ru.syndicate.atmosphere.feature.forecast.domain.model.DailyForecast
 import ru.syndicate.atmosphere.feature.forecast.presentation.theme.CardColor
+import ru.syndicate.atmosphere.feature.forecast.presentation.util.iconByWeatherCode
+import ru.syndicate.atmosphere.feature.forecast.presentation.util.localize
 
 @Composable
 internal fun ForecastCard(
@@ -45,7 +47,7 @@ internal fun ForecastCard(
 
             Image(
                 modifier = Modifier.size(28.dp),
-                painter = painterResource(Res.drawable.light_cloudy_svg),
+                painter = painterResource(iconByWeatherCode(dailyForecast.weatherCode)),
                 contentDescription = null
             )
 
@@ -60,16 +62,14 @@ internal fun ForecastCard(
                 )
 
                 Text(
-                    text = "${dailyForecast.date.dayOfWeek}, ${dailyForecast.date.dayOfMonth} " +
-                            "${dailyForecast.date.month}",
+                    text = "${dailyForecast.date.dayOfWeek.localize()}, ${dailyForecast.date.dayOfMonth} " +
+                            dailyForecast.date.month.localize(),
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Normal,
                     fontSize = 12.sp,
                     color = LightWhite
                 )
             }
-
-
         }
     }
 }

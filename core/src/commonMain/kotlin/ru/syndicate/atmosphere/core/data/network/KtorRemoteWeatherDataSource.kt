@@ -6,7 +6,6 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.parameter
 import ru.syndicate.atmosphere.core.data.dto.DailyDetailWeatherResponseDTO
 import ru.syndicate.atmosphere.core.data.dto.DailyForecastWeatherResponseDTO
-import ru.syndicate.atmosphere.core.data.dto.DailyParametersDTO
 import ru.syndicate.atmosphere.core.data.dto.HourlyWeatherResponseDTO
 
 private const val BASE_URL = "https://api.open-meteo.com/v1/forecast"
