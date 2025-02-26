@@ -4,6 +4,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.dsl.KoinAppDeclaration
 import ru.syndicate.atmosphere.core.di.coreModule
+import ru.syndicate.atmosphere.feature.forecast.di.featureForecastModule
 import ru.syndicate.atmosphere.feature.home.di.featureHomeModule
 import ru.syndicate.atmosphere.feature.search.di.featureSearchModule
 import ru.syndicate.atmosphere.feature.settings.di.featureSettingsModule
@@ -20,7 +21,8 @@ fun initKoin(
             featureHomeModule,
             featureSearchModule,
             featureSettingsModule,
-            featureWeatherDetailModule
+            featureWeatherDetailModule,
+            featureForecastModule
         )
         modules(platformModules)
     }

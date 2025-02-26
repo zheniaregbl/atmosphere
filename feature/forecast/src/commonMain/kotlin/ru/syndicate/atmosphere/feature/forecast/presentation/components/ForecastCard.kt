@@ -21,7 +21,7 @@ import atmosphere.feature.forecast.generated.resources.Res
 import atmosphere.feature.forecast.generated.resources.light_cloudy_svg
 import org.jetbrains.compose.resources.painterResource
 import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
-import ru.syndicate.atmosphere.feature.forecast.domain.DailyForecast
+import ru.syndicate.atmosphere.feature.forecast.domain.model.DailyForecast
 import ru.syndicate.atmosphere.feature.forecast.presentation.theme.CardColor
 
 @Composable

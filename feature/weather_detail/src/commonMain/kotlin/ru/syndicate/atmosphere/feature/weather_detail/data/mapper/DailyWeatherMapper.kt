@@ -1,14 +1,14 @@
 package ru.syndicate.atmosphere.feature.weather_detail.data.mapper
 
 import kotlinx.datetime.LocalDateTime
-import ru.syndicate.atmosphere.core.data.dto.DailyWeatherResponseDTO
+import ru.syndicate.atmosphere.core.data.dto.DailyDetailWeatherResponseDTO
 import ru.syndicate.atmosphere.feature.weather_detail.domain.model.PrecipitationInfo
 import ru.syndicate.atmosphere.feature.weather_detail.domain.model.SunInfo
 import ru.syndicate.atmosphere.feature.weather_detail.domain.model.TemperatureInfo
 import ru.syndicate.atmosphere.feature.weather_detail.domain.model.WeatherDetail
 import ru.syndicate.atmosphere.feature.weather_detail.domain.model.WindInfo
 
-internal fun DailyWeatherResponseDTO.toWeatherDetail(): WeatherDetail {
+internal fun DailyDetailWeatherResponseDTO.toWeatherDetail(): WeatherDetail {
     return WeatherDetail(
         temperatureInfo = TemperatureInfo(
             maxTemperature = this.dailyParameters.maxTemperature.first().toInt(),

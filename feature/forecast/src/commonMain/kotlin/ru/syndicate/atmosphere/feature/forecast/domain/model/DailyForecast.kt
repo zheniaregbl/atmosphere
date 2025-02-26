@@ -1,4 +1,4 @@
-package ru.syndicate.atmosphere.feature.forecast.domain
+package ru.syndicate.atmosphere.feature.forecast.domain.model
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
