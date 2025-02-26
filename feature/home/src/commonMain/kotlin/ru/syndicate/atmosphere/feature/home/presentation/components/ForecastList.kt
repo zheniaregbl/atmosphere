@@ -76,7 +76,13 @@ internal fun ForecastList(
 
     LaunchedEffect(state.value) {
         if (state.value.weatherInfo.hourlyWeather.temperatures.isNotEmpty()) {
-            currentHourIndex = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).hour
+            currentHourIndex = Clock
+                .System
+                .now()
+                .toLocalDateTime(
+                    TimeZone.of(state.value.currentLocation.timeZone)
+                )
+                .hour
             forecastListState.scrollToItem(currentHourIndex)
         }
     }
