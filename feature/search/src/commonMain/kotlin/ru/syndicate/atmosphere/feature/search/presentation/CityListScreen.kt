@@ -20,7 +20,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
@@ -75,12 +74,6 @@ internal class SearchScreen : Screen {
             onAction = { action -> viewModel.onAction(action) },
             onBackClick = { navigator.pop() }
         )
-
-        DisposableEffect(Unit) {
-            onDispose {
-                viewModel.onAction(CityListAction.ClearData)
-            }
-        }
     }
 }
 

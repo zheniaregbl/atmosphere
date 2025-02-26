@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.annotation.ExperimentalVoyagerApi
+import cafe.adriel.voyager.jetpack.ProvideNavigatorLifecycleKMPSupport
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.transitions.FadeTransition
@@ -29,20 +30,23 @@ fun App() {
                 .background(BackgroundColor)
         ) {
 
-            Navigator(
-                screen = SplashScreen(),
-                disposeBehavior = NavigatorDisposeBehavior(disposeSteps = false)
-            ) { navigator ->
+            ProvideNavigatorLifecycleKMPSupport {
 
-                FadeTransition(
-                    navigator = navigator,
-                    animationSpec = tween(
-                        durationMillis = 180,
-                        easing = Ease,
-                        delayMillis = 100
-                    ),
-                    disposeScreenAfterTransitionEnd = true
-                )
+                Navigator(
+                    screen = SplashScreen(),
+                    disposeBehavior = NavigatorDisposeBehavior(disposeSteps = false)
+                ) { navigator ->
+
+                    FadeTransition(
+                        navigator = navigator,
+                        animationSpec = tween(
+                            durationMillis = 180,
+                            easing = Ease,
+                            delayMillis = 100
+                        ),
+                        disposeScreenAfterTransitionEnd = true
+                    )
+                }
             }
         }
     }
