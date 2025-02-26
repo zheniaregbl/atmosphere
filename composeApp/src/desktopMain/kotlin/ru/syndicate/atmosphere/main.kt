@@ -12,6 +12,7 @@ import ru.syndicate.atmosphere.composeApp.resources.Res
 import ru.syndicate.atmosphere.composeApp.resources.app_icon_win_svg
 import ru.syndicate.atmosphere.di.desktopPlatformModules
 import ru.syndicate.atmosphere.di.initKoin
+import ru.syndicate.atmosphere.feature.forecast.di.featureForecastScreenModule
 import ru.syndicate.atmosphere.feature.home.di.featureHomeScreenModule
 import ru.syndicate.atmosphere.feature.search.di.featureSearchScreenModule
 import ru.syndicate.atmosphere.feature.settings.di.featureSettingsScreenModule
@@ -24,6 +25,7 @@ fun main() {
         featureSearchScreenModule()
         featureSettingsScreenModule()
         featureWeatherDetailScreenModule()
+        featureForecastScreenModule()
     }
 
     initKoin(platformModules = desktopPlatformModules)

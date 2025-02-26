@@ -7,4 +7,5 @@ sealed class SharedScreen : ScreenProvider {
     data object SearchScreen : SharedScreen()
     data object SettingsScreen : SharedScreen()
     data object WeatherDetail : SharedScreen()
+    data object ForecastScreen : SharedScreen()
 }

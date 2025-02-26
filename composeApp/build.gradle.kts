@@ -55,6 +55,7 @@ kotlin {
             implementation(projects.feature.search)
             implementation(projects.feature.settings)
             implementation(projects.feature.weatherDetail)
+            implementation(projects.feature.forecast)
         }
         androidMain.dependencies {
             implementation(compose.preview)
