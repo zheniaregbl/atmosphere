@@ -10,13 +10,9 @@ import ru.syndicate.atmosphere.feature.forecast.presentation.ForecastScreen
 import ru.syndicate.atmosphere.feature.forecast.presentation.ForecastViewModel
 import ru.syndicate.atmosphere.feature.forecast.data.repository.DefaultWeatherRepository
 import ru.syndicate.atmosphere.feature.forecast.domain.repository.WeatherRepository
-import ru.syndicate.atmosphere.core.data.repository.DefaultSettingsRepository
-import ru.syndicate.atmosphere.core.domain.repository.SettingsRepository
 
 val featureForecastModule = module {
     singleOf(::DefaultWeatherRepository).bind<WeatherRepository>()
-    singleOf(::DefaultSettingsRepository).bind<SettingsRepository>()
-
     viewModelOf(::ForecastViewModel)
 }
 

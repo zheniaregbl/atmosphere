@@ -16,6 +16,8 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 import ru.syndicate.atmosphere.core.data.network.RemoteWeatherDataSource
 import ru.syndicate.atmosphere.core.data.network.KtorRemoteWeatherDataSource
+import ru.syndicate.atmosphere.core.data.repository.DefaultSettingsRepository
+import ru.syndicate.atmosphere.core.domain.repository.SettingsRepository
 
 val coreModule = module {
 
@@ -40,5 +42,6 @@ val coreModule = module {
         }
     }
 
+    singleOf(::DefaultSettingsRepository).bind<SettingsRepository>()
     singleOf(::KtorRemoteWeatherDataSource).bind<RemoteWeatherDataSource>()
 }
