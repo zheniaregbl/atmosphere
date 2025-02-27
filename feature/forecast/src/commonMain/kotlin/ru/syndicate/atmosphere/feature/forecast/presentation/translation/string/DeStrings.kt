@@ -6,6 +6,17 @@ import ru.syndicate.atmosphere.core.presentation.translation.Locales
 @LyricistStrings(languageTag = Locales.DE)
 internal val DeStrings = Strings(
     screenTitle = "Vorhersage",
+    temperatureSectionTitle = "Temperatur",
+    maximum = "Maximum",
+    minimum = "Minimum",
+    precipitationSectionTitle = "Luftfeuchtigkeit",
+    precipitationProbability = "Niederschlagswahrscheinlichkeit",
+    windSectionTitle = "Wind",
+    windUnit = "m/s",
+    speed = "Geschwindigkeit",
+    sunSectionTitle = "Sonne",
+    sunrise = "Sonnenaufgang",
+    sunset = "Sonnenuntergang",
     monthTitle = MonthTitle(
         january = "Januar",
         february = "Februar",

@@ -14,6 +14,7 @@ data class DailyParametersDTO(
     @SerialName("sunrise") val sunriseTime: List<String>,
     @SerialName("sunset") val sunsetTime: List<String>,
     @SerialName("daylight_duration") val daylightDuration: List<Double>,
+    @SerialName("precipitation_probability_max") val precipitationProbability: List<Int>,
     @SerialName("precipitation_sum") val precipitationSum: List<Double>,
     @SerialName("precipitation_hours") val precipitationHours: List<Double>,
     @SerialName("wind_speed_10m_max") val maxWindSpeed: List<Double>,

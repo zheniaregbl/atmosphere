@@ -2,6 +2,17 @@ package ru.syndicate.atmosphere.feature.forecast.presentation.translation.string
 
 internal data class Strings(
     val screenTitle: String,
+    val temperatureSectionTitle: String,
+    val maximum: String,
+    val minimum: String,
+    val precipitationSectionTitle: String,
+    val precipitationProbability: String,
+    val windSectionTitle: String,
+    val speed: String,
+    val sunSectionTitle: String,
+    val sunrise: String,
+    val sunset: String,
+    val windUnit: String,
     val monthTitle: MonthTitle,
     val weekDayTitle: WeekDayTitle
 )
