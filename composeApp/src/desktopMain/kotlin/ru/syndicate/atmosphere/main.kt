@@ -14,6 +14,7 @@ import ru.syndicate.atmosphere.di.desktopPlatformModules
 import ru.syndicate.atmosphere.di.initKoin
 import ru.syndicate.atmosphere.feature.forecast.di.featureForecastScreenModule
 import ru.syndicate.atmosphere.feature.home.di.featureHomeScreenModule
+import ru.syndicate.atmosphere.feature.onboarding.di.featureOnboardingScreenModule
 import ru.syndicate.atmosphere.feature.search.di.featureSearchScreenModule
 import ru.syndicate.atmosphere.feature.settings.di.featureSettingsScreenModule
 import ru.syndicate.atmosphere.feature.weather_detail.di.featureWeatherDetailScreenModule
@@ -21,6 +22,7 @@ import ru.syndicate.atmosphere.feature.weather_detail.di.featureWeatherDetailScr
 fun main() {
 
     ScreenRegistry {
+        featureOnboardingScreenModule()
         featureHomeScreenModule()
         featureSearchScreenModule()
         featureSettingsScreenModule()

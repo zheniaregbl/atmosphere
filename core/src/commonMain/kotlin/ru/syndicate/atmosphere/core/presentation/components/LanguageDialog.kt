@@ -107,34 +107,18 @@ internal fun LanguageDialogUI(
             )
         }
 
-        Box(
+        ConfirmButton(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp)
-                .scaleOnClick(0.96f)
-                .clip(RoundedCornerShape(10.dp))
-                .clickable(
-                    indication = null,
-                    interactionSource = remember { MutableInteractionSource() }
-                ) {
-                    onSelectedLanguage(
-                        languages
-                            .find { it.first == languagePickerState.selectedItem }!!
-                            .second
-                    )
-                }
-                .background(SelectedBlue.copy(alpha = .4f))
-                .padding(10.dp),
-            contentAlignment = Alignment.Center
-        ) {
-
-            Text(
-                text = buttonText,
-                style = LocalTextStyle.current,
-                fontWeight = FontWeight.Medium,
-                fontSize = 16.sp,
-                color = SelectedBlue
-            )
-        }
+                .padding(horizontal = 20.dp),
+            text = buttonText,
+            onClick = {
+                onSelectedLanguage(
+                    languages
+                        .find { it.first == languagePickerState.selectedItem }!!
+                        .second
+                )
+            }
+        )
     }
 }

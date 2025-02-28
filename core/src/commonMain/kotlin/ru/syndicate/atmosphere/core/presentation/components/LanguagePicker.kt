@@ -36,7 +36,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
 @Composable
-internal fun LanguagePicker(
+fun LanguagePicker(
     modifier: Modifier = Modifier,
     textModifier: Modifier = Modifier,
     state: PickerState = rememberPickerState(),

@@ -52,6 +52,7 @@ kotlin {
 
             implementation(projects.core)
             implementation(projects.feature.splash)
+            implementation(projects.feature.onboarding)
             implementation(projects.feature.home)
             implementation(projects.feature.search)
             implementation(projects.feature.settings)
