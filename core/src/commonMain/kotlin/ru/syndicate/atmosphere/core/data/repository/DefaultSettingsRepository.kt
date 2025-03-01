@@ -14,15 +14,24 @@ import ru.syndicate.atmosphere.core.data.mapper.toModel
 import ru.syndicate.atmosphere.core.domain.model.CurrentLocation
 import ru.syndicate.atmosphere.core.domain.repository.SettingsRepository
 import ru.syndicate.atmosphere.core.presentation.translation.Locales
+import ru.syndicate.atmosphere.core.presentation.util.LaunchAppType
 
 class DefaultSettingsRepository(
     private val dataStore: DataStore<Preferences>
 ): SettingsRepository {
 
     private object PreferenceKeys {
+        val launchAppTypeKey = stringPreferencesKey("launch_app_type")
         val locationKey = stringPreferencesKey("selected_location")
         val appLanguageKey = stringPreferencesKey("app_language")
     }
+
+    override val launchAppType: Flow<String> = dataStore
+        .data
+        .map {
+            if (it[PreferenceKeys.launchAppTypeKey].isNullOrBlank()) LaunchAppType.FIRST_LAUNCH
+            else it[PreferenceKeys.launchAppTypeKey]!!
+        }
 
     override val currentLocation: Flow<CurrentLocation> = dataStore
         .data
@@ -41,6 +50,10 @@ class DefaultSettingsRepository(
             if (it[PreferenceKeys.appLanguageKey].isNullOrBlank()) Locales.EN
             else it[PreferenceKeys.appLanguageKey]!!
         }
+
+    override suspend fun changeAppLaunchAppType(type: String) {
+        dataStore.edit { it[PreferenceKeys.launchAppTypeKey] = type }
+    }
 
     override suspend fun saveSelectedCity(location: CurrentLocation) {
         dataStore.edit { it[PreferenceKeys.locationKey] = Json.encodeToString(location.toDTO()) }

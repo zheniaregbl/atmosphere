@@ -18,7 +18,8 @@ private fun OnboardingScreenPreview() {
             modifier = Modifier
                 .fillMaxSize()
                 .background(BackgroundColor)
-                .statusBarsPadding()
+                .statusBarsPadding(),
+            onAction = { }
         )
     }
 }

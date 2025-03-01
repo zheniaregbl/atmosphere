@@ -26,22 +26,25 @@ import ru.syndicate.atmosphere.feature.search.resources.arrow_svg
 internal fun TopPanel(
     modifier: Modifier = Modifier,
     topPanelTitle: String,
+    isInitSelect: Boolean = false,
     onBackClick: () -> Unit
 ) {
 
     Box(modifier = modifier) {
 
-        Image(
-            modifier = Modifier
-                .size(28.dp)
-                .clickable(
-                    onClick = onBackClick,
-                    indication = null,
-                    interactionSource = remember { MutableInteractionSource() }
-                ),
-            painter = painterResource(Res.drawable.arrow_left_svg),
-            contentDescription = null
-        )
+        if (!isInitSelect) {
+            Image(
+                modifier = Modifier
+                    .size(28.dp)
+                    .clickable(
+                        onClick = onBackClick,
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() }
+                    ),
+                painter = painterResource(Res.drawable.arrow_left_svg),
+                contentDescription = null
+            )
+        }
 
         Row(
             modifier = Modifier.align(Alignment.Center),

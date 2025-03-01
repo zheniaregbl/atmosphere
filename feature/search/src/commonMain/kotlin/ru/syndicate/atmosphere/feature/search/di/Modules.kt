@@ -21,5 +21,5 @@ val featureSearchModule = module {
 }
 
 val featureSearchScreenModule = screenModule {
-    register<SharedScreen.SearchScreen> { SearchScreen() }
+    register<SharedScreen.SearchScreen> { provider -> SearchScreen(provider.isInitSelect) }
 }

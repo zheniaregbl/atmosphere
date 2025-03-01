@@ -34,12 +34,14 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.lyricist.ProvideStrings
 import cafe.adriel.lyricist.rememberStrings
+import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.mohamedrejeb.calf.ui.progress.AdaptiveCircularProgressIndicator
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
+import ru.syndicate.atmosphere.core.navigation.SharedScreen
 import ru.syndicate.atmosphere.core.presentation.translation.Locales
 import ru.syndicate.atmosphere.feature.search.presentation.components.CityCard
 import ru.syndicate.atmosphere.feature.search.presentation.components.SearchBar
@@ -50,19 +52,21 @@ import ru.syndicate.atmosphere.feature.search.presentation.util.ErrorMessageCode
 import ru.syndicate.atmosphere.feature.search.resources.Res
 import ru.syndicate.atmosphere.feature.search.resources.searching_svg
 
-internal class SearchScreen : Screen {
+internal class SearchScreen(private val isInitSelect: Boolean) : Screen {
 
     @Composable
     override fun Content() {
 
         val navigator = LocalNavigator.currentOrThrow
+        val homeScreen = rememberScreen(SharedScreen.HomeScreen)
 
         val viewModel = koinViewModel<CityListViewModel>()
         val state = viewModel.state.collectAsStateWithLifecycle()
 
         LaunchedEffect(state.value.savedCity) {
             if (state.value.savedCity != null) {
-                navigator.pop()
+                if (isInitSelect) navigator.replace(homeScreen)
+                else navigator.pop()
             }
         }
 
@@ -71,6 +75,7 @@ internal class SearchScreen : Screen {
                 .fillMaxSize()
                 .statusBarsPadding(),
             state = state,
+            isInitSelect = isInitSelect,
             onAction = { action -> viewModel.onAction(action) },
             onBackClick = { navigator.pop() }
         )
@@ -81,6 +86,7 @@ internal class SearchScreen : Screen {
 internal fun CityListScreenImpl(
     modifier: Modifier = Modifier,
     state: State<CityListState>,
+    isInitSelect: Boolean = false,
     onAction: (CityListAction) -> Unit,
     onBackClick: () -> Unit
 ) {
@@ -114,6 +120,7 @@ internal fun CityListScreenImpl(
                         .widthIn(max = 800.dp)
                         .fillMaxWidth(),
                     topPanelTitle = LocalSearchStrings.current.screenTitle,
+                    isInitSelect = isInitSelect,
                     onBackClick = onBackClick
                 )
 
@@ -124,9 +131,7 @@ internal fun CityListScreenImpl(
                     value = state.value.searchCityText,
                     hintList = listOf(LocalSearchStrings.current.hintText) +
                     LocalSearchStrings.current.cityList,
-                    onValueChange = {
-                        onAction(CityListAction.OnSearchCityChange(it))
-                    },
+                    onValueChange = { onAction(CityListAction.OnSearchCityChange(it)) },
                     onImeSearch = { keyboardController?.hide() }
                 )
 

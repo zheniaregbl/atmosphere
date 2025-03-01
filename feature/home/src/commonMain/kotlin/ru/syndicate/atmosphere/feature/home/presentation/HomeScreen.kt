@@ -54,7 +54,7 @@ internal class HomeScreen : Screen {
     override fun Content() {
 
         val navigator = LocalNavigator.currentOrThrow
-        val searchScreen = rememberScreen(SharedScreen.SearchScreen)
+        val searchScreen = rememberScreen(SharedScreen.SearchScreen(isInitSelect = false))
         val settingsScreen = rememberScreen(SharedScreen.SettingsScreen)
         val weatherDetailScreen = rememberScreen(SharedScreen.WeatherDetail)
         val forecastScreen = rememberScreen(SharedScreen.ForecastScreen)

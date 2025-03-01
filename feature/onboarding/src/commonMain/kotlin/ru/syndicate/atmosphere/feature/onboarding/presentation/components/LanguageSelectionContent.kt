@@ -11,17 +11,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.syndicate.atmosphere.core.presentation.components.ConfirmButton
 import ru.syndicate.atmosphere.core.presentation.components.LanguagePicker
 import ru.syndicate.atmosphere.core.presentation.components.rememberPickerState
 import ru.syndicate.atmosphere.core.presentation.translation.Locales
+import ru.syndicate.atmosphere.feature.onboarding.presentation.translation.util.LocalOnboardingStrings
 
 @Composable
 internal fun LanguageSelectionContent(
     modifier: Modifier = Modifier,
-    onSelected: () -> Unit
+    onSelected: (String) -> Unit
 ) {
 
     val languagePickerState = rememberPickerState()
@@ -38,7 +41,7 @@ internal fun LanguageSelectionContent(
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(50.dp)
+        verticalArrangement = Arrangement.spacedBy(60.dp)
     ) {
 
         Column(
@@ -47,16 +50,18 @@ internal fun LanguageSelectionContent(
         ) {
 
             Text(
-                text = "Select app language",
+                text = LocalOnboardingStrings.current.languageSelectionTitle,
                 style = LocalTextStyle.current,
+                textAlign = TextAlign.Center,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 18.sp,
                 color = Color.White
             )
 
             Text(
-                text = "Select the application language to continue.",
+                text = LocalOnboardingStrings.current.languageSelectionDesc,
                 style = LocalTextStyle.current,
+                textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Normal,
                 fontSize = 16.sp,
                 color = Color.White
@@ -76,8 +81,14 @@ internal fun LanguageSelectionContent(
 
         ConfirmButton(
             modifier = Modifier.width(300.dp),
-            text = "Continue",
-            onClick = onSelected
+            text = LocalOnboardingStrings.current.continueButtonText,
+            onClick = {
+                onSelected(
+                    languages
+                        .find { it.first == languagePickerState.selectedItem }!!
+                        .second
+                )
+            }
         )
     }
 }

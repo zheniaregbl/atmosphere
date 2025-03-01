@@ -6,8 +6,10 @@ import org.koin.dsl.KoinAppDeclaration
 import ru.syndicate.atmosphere.core.di.coreModule
 import ru.syndicate.atmosphere.feature.forecast.di.featureForecastModule
 import ru.syndicate.atmosphere.feature.home.di.featureHomeModule
+import ru.syndicate.atmosphere.feature.onboarding.di.featureOnboardingModule
 import ru.syndicate.atmosphere.feature.search.di.featureSearchModule
 import ru.syndicate.atmosphere.feature.settings.di.featureSettingsModule
+import ru.syndicate.atmosphere.feature.splash.di.featureSplashModule
 import ru.syndicate.atmosphere.feature.weather_detail.di.featureWeatherDetailModule
 
 fun initKoin(
@@ -18,6 +20,8 @@ fun initKoin(
         config?.invoke(this)
         modules(
             coreModule,
+            featureSplashModule,
+            featureOnboardingModule,
             featureHomeModule,
             featureSearchModule,
             featureSettingsModule,

@@ -13,6 +13,8 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,7 +30,9 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.viewmodel.koinViewModel
 import ru.syndicate.atmosphere.core.navigation.SharedScreen
+import ru.syndicate.atmosphere.core.presentation.util.LaunchAppType
 import ru.syndicate.atmosphere.feature.splash.resources.Res
 import ru.syndicate.atmosphere.feature.splash.resources.fog_svg
 import ru.syndicate.atmosphere.feature.splash.resources.open_meteo_svg
@@ -39,13 +43,24 @@ class SplashScreen : Screen {
     override fun Content() {
 
         val navigator = LocalNavigator.currentOrThrow
+        val onboardingScreen = rememberScreen(SharedScreen.OnboardingScreen)
+        val searchScreen = rememberScreen(SharedScreen.SearchScreen(isInitSelect = true))
         val homeScreen = rememberScreen(SharedScreen.HomeScreen)
+
+        val viewModel = koinViewModel<LaunchViewModel>()
+        val launchAppType by viewModel.launchAppType.collectAsState()
 
         SplashScreenImpl(
             modifier = Modifier
                 .fillMaxSize()
                 .systemBarsPadding(),
-            onLaunch = { navigator.replace(homeScreen) }
+            onLaunch = {
+                when (launchAppType) {
+                    LaunchAppType.FIRST_LAUNCH -> navigator.replace(onboardingScreen)
+                    LaunchAppType.INIT_LOCATION -> navigator.replace(searchScreen)
+                    LaunchAppType.READY -> navigator.replace(homeScreen)
+                }
+            }
         )
     }
 }

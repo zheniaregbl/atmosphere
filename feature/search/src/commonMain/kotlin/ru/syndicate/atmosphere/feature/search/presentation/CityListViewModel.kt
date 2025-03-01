@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.syndicate.atmosphere.core.domain.model.CurrentLocation
 import ru.syndicate.atmosphere.core.domain.repository.SettingsRepository
+import ru.syndicate.atmosphere.core.presentation.util.LaunchAppType
 import ru.syndicate.atmosphere.feature.search.domain.model.City
 import ru.syndicate.atmosphere.feature.search.domain.repository.SearchCityRepository
 import ru.syndicate.atmosphere.feature.search.presentation.util.ErrorMessageCode
@@ -40,12 +41,20 @@ internal class CityListViewModel(
             _state.value
         )
 
+    private val _launchAppType = MutableStateFlow(LaunchAppType.FIRST_LAUNCH)
+
     init {
+
         viewModelScope.launch {
             settingsRepository.appLanguage
                 .collect { language ->
                     _state.update { it.copy(appLanguage = language) }
                 }
+        }
+
+        viewModelScope.launch {
+            settingsRepository.launchAppType
+                .collect { type -> _launchAppType.update { type } }
         }
     }
 
@@ -127,6 +136,11 @@ internal class CityListViewModel(
     }
 
     private fun selectCity(city: City) = viewModelScope.launch {
+
+        if (_launchAppType.value == LaunchAppType.INIT_LOCATION) {
+            settingsRepository.changeAppLaunchAppType(LaunchAppType.READY)
+        }
+
         settingsRepository.saveSelectedCity(
             CurrentLocation(
                 title = city.title,
@@ -135,6 +149,7 @@ internal class CityListViewModel(
                 longitude = city.longitude
             )
         )
+
         _state.update { it.copy(savedCity = CurrentLocation()) }
     }
 }
