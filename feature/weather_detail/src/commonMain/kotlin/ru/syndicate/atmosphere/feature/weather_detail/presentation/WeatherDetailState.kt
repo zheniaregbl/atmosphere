@@ -21,6 +21,7 @@ internal sealed class WeatherDetailScreenState {
     data object Idle : WeatherDetailScreenState()
     data object Loading : WeatherDetailScreenState()
     data class Success(val details: WeatherDetail) : WeatherDetailScreenState()
+    data object Error : WeatherDetailScreenState()
 }
 
 @Composable
@@ -35,7 +36,8 @@ internal fun WeatherDetailScreenState.DisplayResult(
     },
     onIdle: (@Composable () -> Unit)? = null,
     onLoading: @Composable () -> Unit,
-    onSuccess: @Composable (WeatherDetailScreenState.Success) -> Unit
+    onSuccess: @Composable (WeatherDetailScreenState.Success) -> Unit,
+    onError: @Composable () -> Unit
 ) {
 
     AnimatedContent(
@@ -55,6 +57,8 @@ internal fun WeatherDetailScreenState.DisplayResult(
                 WeatherDetailScreenState.Loading -> onLoading.invoke()
 
                 is WeatherDetailScreenState.Success -> onSuccess.invoke(state)
+
+                WeatherDetailScreenState.Error -> onError.invoke()
             }
         }
     }
@@ -62,6 +66,7 @@ internal fun WeatherDetailScreenState.DisplayResult(
 
 internal data class WeatherDetailState(
     val isLoading: Boolean = false,
+    private val showErrorContent: Boolean = false,
     val details: WeatherDetail? = null,
     val currentLocation: CurrentLocation = CurrentLocation(),
     val appLanguage: String = Locales.EN
@@ -70,6 +75,7 @@ internal data class WeatherDetailState(
     fun toUiState(): WeatherDetailScreenState {
         return when {
             isLoading -> WeatherDetailScreenState.Loading
+            showErrorContent -> WeatherDetailScreenState.Error
             details != null -> WeatherDetailScreenState.Success(details)
             else -> WeatherDetailScreenState.Idle
         }

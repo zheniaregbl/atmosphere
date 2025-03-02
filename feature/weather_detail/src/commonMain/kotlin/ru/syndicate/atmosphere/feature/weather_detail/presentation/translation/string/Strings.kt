@@ -23,5 +23,12 @@ internal data class Strings(
     val windDirection: String,
     val sunriseText: String,
     val sunsetText: String,
-    val daylightDuration: String
+    val daylightDuration: String,
+    val errorContentStrings: ErrorContentStrings
+)
+
+internal data class ErrorContentStrings(
+    val title: String,
+    val text: String,
+    val repeatText: String
 )

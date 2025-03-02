@@ -27,5 +27,10 @@ internal val EsStrings = Strings(
     windDirection = "Dirección del viento",
     sunriseText = "Amanece a las",
     sunsetText = "Atardece a las",
-    daylightDuration = "Duración del día"
+    daylightDuration = "Duración del día",
+    errorContentStrings = ErrorContentStrings(
+        title = "Error de solicitud",
+        text = "Se produjo un error al recuperar la información detallada del clima.",
+        repeatText = "Reintentar"
+    )
 )

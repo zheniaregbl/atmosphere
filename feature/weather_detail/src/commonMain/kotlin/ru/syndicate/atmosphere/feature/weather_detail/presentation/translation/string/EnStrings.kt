@@ -27,5 +27,10 @@ internal val EnStrings = Strings(
     windDirection = "Wind direction",
     sunriseText = "Sunrise at",
     sunsetText = "Sunset at",
-    daylightDuration = "Daylight duration"
+    daylightDuration = "Daylight duration",
+    errorContentStrings = ErrorContentStrings(
+        title = "Request Error",
+        text = "An error occurred while retrieving detailed weather information.",
+        repeatText = "Repeat"
+    )
 )

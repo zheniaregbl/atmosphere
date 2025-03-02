@@ -27,5 +27,10 @@ internal val PtStrings = Strings(
     windDirection = "Direção do vento",
     sunriseText = "Nascer do sol às",
     sunsetText = "Pôr do sol às",
-    daylightDuration = "Duração do dia"
+    daylightDuration = "Duração do dia",
+    errorContentStrings = ErrorContentStrings(
+        title = "Erro na solicitação",
+        text = "Ocorreu um erro ao recuperar as informações detalhadas sobre o clima.",
+        repeatText = "Repetir"
+    )
 )

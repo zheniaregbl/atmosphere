@@ -28,6 +28,7 @@ import dev.chrisbanes.haze.HazeState
 import org.koin.compose.viewmodel.koinViewModel
 import ru.syndicate.atmosphere.core.presentation.translation.Locales
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.DetailsContent
+import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.ErrorContent
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.TopPanel
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.translation.util.LocalDetailsStrings
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.translation.util.TranslationUtil.translations
@@ -47,6 +48,7 @@ internal class WeatherDetailScreen : Screen {
                 .fillMaxSize()
                 .statusBarsPadding(),
             state = state,
+            onAction = { viewModel.onAction(it) },
             onBackClick = { navigator.pop() }
         )
     }
@@ -56,6 +58,7 @@ internal class WeatherDetailScreen : Screen {
 internal fun WeatherDetailScreenImpl(
     modifier: Modifier = Modifier,
     state: State<WeatherDetailState>,
+    onAction: (WeatherDetailAction) -> Unit,
     onBackClick: () -> Unit
 ) {
 
@@ -113,6 +116,15 @@ internal fun WeatherDetailScreenImpl(
                                 .fillMaxWidth(),
                             weatherDetail = screenState.details,
                             hazeState = hazeState
+                        )
+                    },
+                    onError = {
+                        ErrorContent(
+                            modifier = Modifier
+                                .widthIn(max = 400.dp)
+                                .fillMaxWidth()
+                                .padding(bottom = 60.dp),
+                            onRepeat = { onAction(WeatherDetailAction.OnUpdate) }
                         )
                     }
                 )

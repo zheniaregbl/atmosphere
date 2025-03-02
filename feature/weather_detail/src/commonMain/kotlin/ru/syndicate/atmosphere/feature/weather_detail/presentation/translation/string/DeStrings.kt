@@ -27,5 +27,10 @@ internal val DeStrings = Strings(
     windDirection = "Windrichtung",
     sunriseText = "Sonnenaufgang um",
     sunsetText = "Sonnenuntergang um",
-    daylightDuration = "Tageslichtdauer"
+    daylightDuration = "Tageslichtdauer",
+    errorContentStrings = ErrorContentStrings(
+        title = "Anfragefehler",
+        text = "Beim Abrufen der detaillierten Wetterinformationen ist ein Fehler aufgetreten.",
+        repeatText = "Wiederholen"
+    )
 )

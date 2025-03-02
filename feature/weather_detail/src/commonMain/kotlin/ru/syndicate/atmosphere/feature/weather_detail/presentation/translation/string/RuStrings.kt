@@ -27,5 +27,10 @@ internal val RuStrings = Strings(
     windDirection = "Направление ветра",
     sunriseText = "Восход в",
     sunsetText = "Закат в",
-    daylightDuration = "Продолжительность светового дня"
+    daylightDuration = "Продолжительность светового дня",
+    errorContentStrings = ErrorContentStrings(
+        title = "Ошибка запроса",
+        text = "Произошла ошибка при получении подробной информации о погоде.",
+        repeatText = "Повторить"
+    )
 )

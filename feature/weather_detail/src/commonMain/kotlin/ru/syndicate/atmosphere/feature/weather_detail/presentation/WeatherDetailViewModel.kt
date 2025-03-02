@@ -2,8 +2,6 @@ package ru.syndicate.atmosphere.feature.weather_detail.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.skydoves.sandwich.ktor.statusCode
-import com.skydoves.sandwich.messageOrNull
 import com.skydoves.sandwich.onError
 import com.skydoves.sandwich.onException
 import com.skydoves.sandwich.onSuccess
@@ -48,9 +46,18 @@ internal class WeatherDetailViewModel(
         }
     }
 
+    fun onAction(action: WeatherDetailAction) {
+        when (action) {
+            WeatherDetailAction.OnUpdate -> getDailyWeather()
+        }
+    }
+
     private fun getDailyWeather() = viewModelScope.launch {
 
-        _state.update { it.copy(isLoading = true) }
+        _state.update { it.copy(
+            isLoading = true,
+            showErrorContent = false
+        ) }
 
         delay(1000)
 
@@ -66,15 +73,15 @@ internal class WeatherDetailViewModel(
                 ) }
             }
             .onException {
-                println("error: $messageOrNull")
                 _state.update { it.copy(
-                    isLoading = false
+                    isLoading = false,
+                    showErrorContent = true
                 ) }
             }
             .onError {
-                println("error: ${statusCode.code}")
                 _state.update { it.copy(
-                    isLoading = false
+                    isLoading = false,
+                    showErrorContent = true
                 ) }
             }
     }

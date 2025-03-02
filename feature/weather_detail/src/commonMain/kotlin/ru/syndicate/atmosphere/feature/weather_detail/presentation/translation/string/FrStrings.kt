@@ -27,5 +27,10 @@ internal val FrStrings = Strings(
     windDirection = "Direction du vent",
     sunriseText = "Lever du soleil à",
     sunsetText = "Coucher du soleil à",
-    daylightDuration = "Durée du jour"
+    daylightDuration = "Durée du jour",
+    errorContentStrings = ErrorContentStrings(
+        title = "Erreur de requête",
+        text = "Une erreur s'est produite lors de la récupération des informations détaillées sur la météo.",
+        repeatText = "Réessayer"
+    )
 )
