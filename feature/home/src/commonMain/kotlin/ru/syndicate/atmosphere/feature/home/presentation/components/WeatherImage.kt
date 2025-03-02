@@ -45,8 +45,8 @@ internal fun WeatherImage(
                             state
                                 .value
                                 .weatherInfo
-                                .currentWeatherParameters
-                                .weatherCode
+                                ?.currentWeatherParameters
+                                ?.weatherCode ?: 0
                         )
                     )
             }

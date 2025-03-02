@@ -2,7 +2,6 @@ package ru.syndicate.atmosphere.core.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 import ru.syndicate.atmosphere.core.domain.model.CurrentLocation
-import ru.syndicate.atmosphere.core.presentation.util.LaunchAppType
 
 interface SettingsRepository {
     val launchAppType: Flow<String>

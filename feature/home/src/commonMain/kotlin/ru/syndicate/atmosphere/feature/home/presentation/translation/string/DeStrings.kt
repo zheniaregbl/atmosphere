@@ -6,6 +6,11 @@ import ru.syndicate.atmosphere.core.presentation.translation.Locales
 @LyricistStrings(languageTag = Locales.DE)
 internal val DeStrings = Strings(
     screenTitle = "Startseite",
+    errorStrings = ErrorStrings(
+        dialogTitle = "Anfragefehler",
+        exception = "Ein lokaler Fehler ist beim Versuch, das Wetter abzurufen, aufgetreten.",
+        error = "Ein Fehler ist beim Versuch, das Wetter abzurufen, aufgetreten."
+    ),
     windTitle = "Wind",
     windUnit = "m/s",
     humidityTitle = "Luftfeuchtigkeit",

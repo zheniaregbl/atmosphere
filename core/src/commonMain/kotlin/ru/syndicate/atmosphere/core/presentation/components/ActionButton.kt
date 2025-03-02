@@ -16,13 +16,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ru.syndicate.atmosphere.core.presentation.theme.GrayColor
+import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
 import ru.syndicate.atmosphere.core.presentation.theme.SelectedBlue
 import ru.syndicate.atmosphere.core.presentation.util.extension.scaleOnClick
 
 @Composable
-fun ConfirmButton(
+fun ActionButton(
     modifier: Modifier = Modifier,
     text: String,
+    isConfirm: Boolean = false,
     onClick: () -> Unit
 ) {
 
@@ -35,7 +38,10 @@ fun ConfirmButton(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() }
             )
-            .background(SelectedBlue.copy(alpha = .4f))
+            .background(
+                if (isConfirm) SelectedBlue.copy(alpha = .4f)
+                else GrayColor
+            )
             .padding(10.dp),
         contentAlignment = Alignment.Center
     ) {
@@ -45,7 +51,8 @@ fun ConfirmButton(
             style = LocalTextStyle.current,
             fontWeight = FontWeight.Medium,
             fontSize = 16.sp,
-            color = SelectedBlue
+            color = if (isConfirm) SelectedBlue
+            else LightWhite
         )
     }
 }

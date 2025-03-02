@@ -2,8 +2,6 @@ package ru.syndicate.atmosphere.feature.home.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.skydoves.sandwich.ktor.statusCode
-import com.skydoves.sandwich.messageOrNull
 import com.skydoves.sandwich.onError
 import com.skydoves.sandwich.onException
 import com.skydoves.sandwich.onSuccess
@@ -16,6 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.syndicate.atmosphere.core.domain.repository.SettingsRepository
 import ru.syndicate.atmosphere.feature.home.domain.repository.WeatherRepository
+import ru.syndicate.atmosphere.feature.home.presentation.util.ErrorMessageCode
 
 internal class HomeViewModel(
     private val weatherRepository: WeatherRepository,
@@ -27,7 +26,7 @@ internal class HomeViewModel(
         .onStart { getHourlyWeather() }
         .stateIn(
             viewModelScope,
-            SharingStarted.WhileSubscribed(10_000L),
+            SharingStarted.WhileSubscribed(30_000L),
             _state.value
         )
 
@@ -55,6 +54,7 @@ internal class HomeViewModel(
     fun onAction(action: HomeAction) {
         when (action) {
             HomeAction.UpdateWeatherInfo -> viewModelScope.launch { getHourlyWeather() }
+            HomeAction.OnCloseErrorDialog -> _state.update { it.copy(showErrorDialog = false) }
             else -> Unit
         }
     }
@@ -77,15 +77,17 @@ internal class HomeViewModel(
                 ) }
             }
             .onException {
-                println("error: $messageOrNull")
                 _state.update { it.copy(
-                    isLoading = false
+                    isLoading = false,
+                    errorMessageCode = ErrorMessageCode.REQUEST_EXCEPTION,
+                    showErrorDialog = true
                 ) }
             }
             .onError {
-                println("error: ${statusCode.code}")
                 _state.update { it.copy(
-                    isLoading = false
+                    isLoading = false,
+                    errorMessageCode = ErrorMessageCode.REQUEST_ERROR,
+                    showErrorDialog = true
                 ) }
             }
     }

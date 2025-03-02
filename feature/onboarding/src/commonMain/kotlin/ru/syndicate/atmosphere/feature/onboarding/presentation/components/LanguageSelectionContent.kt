@@ -11,11 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ru.syndicate.atmosphere.core.presentation.components.ConfirmButton
+import ru.syndicate.atmosphere.core.presentation.components.ActionButton
 import ru.syndicate.atmosphere.core.presentation.components.LanguagePicker
 import ru.syndicate.atmosphere.core.presentation.components.rememberPickerState
 import ru.syndicate.atmosphere.core.presentation.translation.Locales
@@ -79,9 +78,10 @@ internal fun LanguageSelectionContent(
             borderColor = Color.White
         )
 
-        ConfirmButton(
+        ActionButton(
             modifier = Modifier.width(300.dp),
             text = LocalOnboardingStrings.current.continueButtonText,
+            isConfirm = true,
             onClick = {
                 onSelected(
                     languages

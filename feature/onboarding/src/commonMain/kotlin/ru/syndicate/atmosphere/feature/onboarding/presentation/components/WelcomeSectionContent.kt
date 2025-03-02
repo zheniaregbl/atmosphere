@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ru.syndicate.atmosphere.core.presentation.components.ConfirmButton
+import ru.syndicate.atmosphere.core.presentation.components.ActionButton
 
 @Composable
 internal fun WelcomeSectionContent(
@@ -68,9 +68,10 @@ internal fun WelcomeSectionContent(
             )
         }
 
-        ConfirmButton(
+        ActionButton(
             modifier = Modifier.width(300.dp),
             text = "Continue",
+            isConfirm = true,
             onClick = onClick
         )
     }

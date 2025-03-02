@@ -88,8 +88,31 @@ internal fun WeatherParameterSection(
 
         state.value.toUiState().DisplayResult(
             modifier = Modifier.fillMaxWidth(),
-            onIdle = {},
-            onError = {},
+            onError = {
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+
+                    Text(
+                        text = "-",
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 22.sp,
+                        color = Color.White
+                    )
+
+                    Text(
+                        modifier = Modifier.padding(vertical = 14.dp),
+                        text = "-",
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 74.sp,
+                        color = Color.White
+                    )
+                }
+            },
             onLoading = {
                 AdaptiveCircularProgressIndicator(
                     modifier = Modifier

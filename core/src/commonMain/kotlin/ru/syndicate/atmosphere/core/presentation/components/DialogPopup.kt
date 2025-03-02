@@ -58,7 +58,7 @@ internal fun DialogPopup(
 
             Scrim(
                 visible = animateIn && showDialog,
-                color = Color.Black.copy(alpha = 0.4f),
+                color = Color.Black.copy(alpha = 0.6f),
                 onDismissRequest = onDismissRequest
             )
 

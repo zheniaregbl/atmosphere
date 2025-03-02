@@ -45,6 +45,7 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import ru.syndicate.atmosphere.core.presentation.theme.SelectedBlue
 import ru.syndicate.atmosphere.feature.home.presentation.DisplayResult
+import ru.syndicate.atmosphere.feature.home.presentation.HomeScreenState
 import ru.syndicate.atmosphere.feature.home.presentation.HomeState
 import ru.syndicate.atmosphere.feature.home.presentation.translation.util.LocalHomeStrings
 import ru.syndicate.atmosphere.feature.home.presentation.util.iconByWeatherCode
@@ -53,9 +54,9 @@ import kotlin.math.roundToInt
 @Composable
 internal fun ForecastList(
     modifier: Modifier = Modifier,
+    state: State<HomeState>,
     forecastListState: LazyListState = rememberLazyListState(),
-    userScrollEnabled: Boolean = true,
-    state: State<HomeState>
+    userScrollEnabled: Boolean = true
 ) {
 
     var currentHourIndex by remember { mutableStateOf(0) }
@@ -75,15 +76,17 @@ internal fun ForecastList(
     )
 
     LaunchedEffect(state.value) {
-        if (state.value.weatherInfo.hourlyWeather.temperatures.isNotEmpty()) {
-            currentHourIndex = Clock
-                .System
-                .now()
-                .toLocalDateTime(
-                    TimeZone.of(state.value.currentLocation.timeZone)
-                )
-                .hour
-            forecastListState.scrollToItem(currentHourIndex)
+        if (state.value.toUiState() is HomeScreenState.Success) {
+            if (state.value.weatherInfo!!.hourlyWeather.temperatures.isNotEmpty()) {
+                currentHourIndex = Clock
+                    .System
+                    .now()
+                    .toLocalDateTime(
+                        TimeZone.of(state.value.currentLocation.timeZone)
+                    )
+                    .hour
+                forecastListState.scrollToItem(currentHourIndex)
+            }
         }
     }
 
@@ -148,7 +151,7 @@ internal fun ForecastList(
                                 else "$index:00",
                                 temperature = "${temperature.roundToInt()}°",
                                 weatherIcon = iconByWeatherCode(
-                                    state.value.weatherInfo.hourlyWeather.weatherCodes[index]
+                                    screenState.weatherInfo.hourlyWeather.weatherCodes[index]
                                 ),
                                 isCurrentHour = index == currentHourIndex
                             )

@@ -1,21 +1,17 @@
 package ru.syndicate.atmosphere.feature.home.presentation.components
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.EnterTransition
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,7 +28,7 @@ import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import ru.syndicate.atmosphere.core.presentation.theme.BackgroundColor
-import ru.syndicate.atmosphere.feature.home.presentation.HomeState
+import ru.syndicate.atmosphere.feature.home.domain.model.WeatherInfo
 import ru.syndicate.atmosphere.feature.home.presentation.translation.util.LocalHomeStrings
 import ru.syndicate.atmosphere.feature.home.presentation.util.descriptionByWeatherCode
 import ru.syndicate.atmosphere.feature.home.presentation.util.iconByWeatherCode
@@ -42,74 +38,67 @@ import kotlin.math.roundToInt
 @Composable
 internal fun DescriptionSection(
     modifier: Modifier = Modifier,
-    state: State<HomeState>,
+    weatherInfo: WeatherInfo,
     hazeState: HazeState
 ) {
 
-    AnimatedVisibility(
-        modifier = modifier,
-        visible = state.value.weatherInfo.currentWeatherParameters.weatherCode > -1,
-        enter = EnterTransition.None
-    ) {
+    Row(modifier = modifier) {
 
-        Row(modifier = Modifier.fillMaxSize()) {
+        val realTemperature = weatherInfo.currentWeatherParameters.temperature
+        val feelTemperature = weatherInfo.currentWeatherParameters.apparentTemperature
+        val weatherCode = weatherInfo.currentWeatherParameters.weatherCode
 
-            val realTemperature = state.value.weatherInfo.currentWeatherParameters.temperature
-            val feelTemperature = state.value.weatherInfo.currentWeatherParameters.apparentTemperature
-            val weatherCode = state.value.weatherInfo.currentWeatherParameters.weatherCode
+        DescriptionCard(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight()
+                .clip(RoundedCornerShape(8.dp))
+                .hazeChild(
+                    state = hazeState,
+                    style = HazeDefaults
+                        .style(
+                            backgroundColor = BackgroundColor,
+                            tint = HazeTint(color = Color.DarkGray.copy(alpha = .5f)),
+                            blurRadius = 8.dp,
+                        )
+                )
+                .padding(16.dp),
+            title = LocalHomeStrings.current.feelingTempTitle,
+            icon = Res.drawable.temperature_svg,
+            value = "${feelTemperature.roundToInt()}°",
+            description = when {
 
-            DescriptionCard(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-                    .clip(RoundedCornerShape(8.dp))
-                    .hazeChild(
-                        state = hazeState,
-                        style = HazeDefaults
-                            .style(
-                                backgroundColor = BackgroundColor,
-                                tint = HazeTint(color = Color.DarkGray.copy(alpha = .5f)),
-                                blurRadius = 8.dp,
-                            )
-                    )
-                    .padding(16.dp),
-                title = LocalHomeStrings.current.feelingTempTitle,
-                icon = Res.drawable.temperature_svg,
-                value = "${feelTemperature.roundToInt()}°",
-                description = when {
+                abs(realTemperature - feelTemperature) < 5f ->
+                    LocalHomeStrings.current.smallDiffTempText
 
-                    abs(realTemperature - feelTemperature) < 5f ->
-                        LocalHomeStrings.current.smallDiffTempText
+                abs(realTemperature - feelTemperature) > 5f ->
+                    LocalHomeStrings.current.hugeDiffTempText
 
-                    abs(realTemperature - feelTemperature) > 5f ->
-                        LocalHomeStrings.current.hugeDiffTempText
+                else -> LocalHomeStrings.current.noDiffTempText
+            }
+        )
 
-                    else -> LocalHomeStrings.current.noDiffTempText
-                }
-            )
+        Spacer(modifier = Modifier.width(10.dp))
 
-            Spacer(modifier = Modifier.width(10.dp))
-
-            DescriptionCard(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-                    .clip(RoundedCornerShape(8.dp))
-                    .hazeChild(
-                        state = hazeState,
-                        style = HazeDefaults
-                            .style(
-                                backgroundColor = BackgroundColor,
-                                tint = HazeTint(color = Color.DarkGray.copy(alpha = .5f)),
-                                blurRadius = 8.dp,
-                            )
-                    )
-                    .padding(16.dp),
-                title = LocalHomeStrings.current.weatherDescTitle,
-                icon = iconByWeatherCode(weatherCode),
-                description = descriptionByWeatherCode(weatherCode)
-            )
-        }
+        DescriptionCard(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight()
+                .clip(RoundedCornerShape(8.dp))
+                .hazeChild(
+                    state = hazeState,
+                    style = HazeDefaults
+                        .style(
+                            backgroundColor = BackgroundColor,
+                            tint = HazeTint(color = Color.DarkGray.copy(alpha = .5f)),
+                            blurRadius = 8.dp,
+                        )
+                )
+                .padding(16.dp),
+            title = LocalHomeStrings.current.weatherDescTitle,
+            icon = iconByWeatherCode(weatherCode),
+            description = descriptionByWeatherCode(weatherCode)
+        )
     }
 }
 

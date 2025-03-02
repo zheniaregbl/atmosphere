@@ -19,7 +19,7 @@ import ru.syndicate.atmosphere.feature.home.domain.model.WeatherInfo
 internal sealed class HomeScreenState {
     data object Idle : HomeScreenState()
     data object Loading : HomeScreenState()
-    data class Error(val errorMessage: String) : HomeScreenState()
+    data class Error(val errorMessageCode: Int) : HomeScreenState()
     data class Success(val weatherInfo: WeatherInfo) : HomeScreenState()
 }
 
@@ -65,13 +65,19 @@ internal fun HomeScreenState.DisplayResult(
 
 internal data class HomeState(
     val isLoading: Boolean = false,
-    val weatherInfo: WeatherInfo = WeatherInfo(),
+    val errorMessageCode: Int? = null,
+    val showErrorDialog: Boolean = false,
+    val weatherInfo: WeatherInfo? = null,
     val currentLocation: CurrentLocation = CurrentLocation(),
     val appLanguage: String = Locales.EN
 ) {
 
     fun toUiState(): HomeScreenState {
-        return if (isLoading) HomeScreenState.Loading
-        else HomeScreenState.Success(weatherInfo)
+        return when {
+            isLoading -> HomeScreenState.Loading
+            errorMessageCode != null -> HomeScreenState.Error(errorMessageCode)
+            weatherInfo != null -> HomeScreenState.Success(weatherInfo)
+            else -> HomeScreenState.Idle
+        }
     }
 }

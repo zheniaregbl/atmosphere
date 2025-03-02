@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.syndicate.atmosphere.core.domain.repository.SettingsRepository
-import ru.syndicate.atmosphere.core.presentation.translation.Locales
 import ru.syndicate.atmosphere.core.presentation.util.LaunchAppType
 import ru.syndicate.atmosphere.feature.onboarding.presentation.translation.OnboardingState
 

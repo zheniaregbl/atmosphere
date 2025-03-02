@@ -2,6 +2,7 @@ package ru.syndicate.atmosphere.feature.home.presentation.translation.string
 
 internal data class Strings(
     val screenTitle: String,
+    val errorStrings: ErrorStrings,
     val windTitle: String,
     val windUnit: String,
     val humidityTitle: String,
@@ -44,4 +45,10 @@ internal data class WeatherText(
     val slightSnowShower: Pair<String, String>,
     val heavySnowShower: Pair<String, String>,
     val thunderstorm: Pair<String, String>
+)
+
+internal data class ErrorStrings(
+    val dialogTitle: String,
+    val exception: String,
+    val error: String
 )

@@ -6,6 +6,11 @@ import ru.syndicate.atmosphere.core.presentation.translation.Locales
 @LyricistStrings(languageTag = Locales.FR)
 internal val FrStrings = Strings(
     screenTitle = "Accueil",
+    errorStrings = ErrorStrings(
+        dialogTitle = "Erreur de requête",
+        exception = "Une erreur locale s'est produite lors de la tentative d'obtention de la météo.",
+        error = "Une erreur s'est produite lors de la tentative d'obtention de la météo."
+    ),
     windTitle = "Vent",
     windUnit = "m/s",
     humidityTitle = "Humidité",

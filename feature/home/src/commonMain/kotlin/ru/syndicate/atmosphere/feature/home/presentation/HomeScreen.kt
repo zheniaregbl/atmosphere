@@ -38,6 +38,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import dev.chrisbanes.haze.HazeState
 import org.koin.compose.viewmodel.koinViewModel
 import ru.syndicate.atmosphere.core.navigation.SharedScreen
+import ru.syndicate.atmosphere.core.presentation.components.ErrorDialog
 import ru.syndicate.atmosphere.core.presentation.translation.Locales
 import ru.syndicate.atmosphere.feature.home.presentation.components.DescriptionSection
 import ru.syndicate.atmosphere.feature.home.presentation.components.ForecastSection
@@ -47,6 +48,7 @@ import ru.syndicate.atmosphere.feature.home.presentation.components.WeatherImage
 import ru.syndicate.atmosphere.feature.home.presentation.components.WeatherParameterSection
 import ru.syndicate.atmosphere.feature.home.presentation.translation.util.LocalHomeStrings
 import ru.syndicate.atmosphere.feature.home.presentation.translation.util.TranslationUtil.translations
+import ru.syndicate.atmosphere.feature.home.presentation.util.ErrorMessageCode
 
 internal class HomeScreen : Screen {
 
@@ -174,13 +176,20 @@ internal fun HomeScreenImpl(
                     }
 
                     item {
-                        DescriptionSection(
-                            modifier = Modifier
-                                .padding(top = 10.dp)
-                                .height(IntrinsicSize.Min)
-                                .fillMaxWidth(),
-                            state = state,
-                            hazeState = hazeState
+                        state.value.toUiState().DisplayResult(
+                            modifier = Modifier.fillMaxWidth(),
+                            onLoading = { },
+                            onSuccess = { screenState ->
+                                DescriptionSection(
+                                    modifier = Modifier
+                                        .padding(top = 10.dp)
+                                        .height(IntrinsicSize.Min)
+                                        .fillMaxWidth(),
+                                    weatherInfo = screenState.weatherInfo,
+                                    hazeState = hazeState
+                                )
+                            },
+                            onError = {}
                         )
                     }
 
@@ -219,5 +228,16 @@ internal fun HomeScreenImpl(
                 }
             }
         }
+
+        ErrorDialog(
+            showDialog = state.value.showErrorDialog,
+            title = LocalHomeStrings.current.errorStrings.dialogTitle,
+            description = when (state.value.errorMessageCode) {
+                ErrorMessageCode.REQUEST_ERROR -> LocalHomeStrings.current.errorStrings.error
+                ErrorMessageCode.REQUEST_EXCEPTION -> LocalHomeStrings.current.errorStrings.exception
+                else -> ""
+            },
+            onDismissRequest = { onAction(HomeAction.OnCloseErrorDialog) }
+        )
     }
 }
