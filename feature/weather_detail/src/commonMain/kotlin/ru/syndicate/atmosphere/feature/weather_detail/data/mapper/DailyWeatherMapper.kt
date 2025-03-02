@@ -7,14 +7,15 @@ import ru.syndicate.atmosphere.feature.weather_detail.domain.model.SunInfo
 import ru.syndicate.atmosphere.feature.weather_detail.domain.model.TemperatureInfo
 import ru.syndicate.atmosphere.feature.weather_detail.domain.model.WeatherDetail
 import ru.syndicate.atmosphere.feature.weather_detail.domain.model.WindInfo
+import kotlin.math.roundToInt
 
 internal fun DailyDetailWeatherResponseDTO.toWeatherDetail(): WeatherDetail {
     return WeatherDetail(
         temperatureInfo = TemperatureInfo(
-            maxTemperature = this.dailyParameters.maxTemperature.first().toInt(),
-            maxApparentTemperature = this.dailyParameters.apparentMaxTemperature.first().toInt(),
-            minTemperature = this.dailyParameters.minTemperature.first().toInt(),
-            minApparentTemperature = this.dailyParameters.apparentMinTemperature.first().toInt(),
+            maxTemperature = this.dailyParameters.maxTemperature.first().roundToInt(),
+            maxApparentTemperature = this.dailyParameters.apparentMaxTemperature.first().roundToInt(),
+            minTemperature = this.dailyParameters.minTemperature.first().roundToInt(),
+            minApparentTemperature = this.dailyParameters.apparentMinTemperature.first().roundToInt(),
             temperatures = this.hourlyDayParameters.temperatures.map { it.toInt() }
         ),
         precipitationInfo = PrecipitationInfo(
