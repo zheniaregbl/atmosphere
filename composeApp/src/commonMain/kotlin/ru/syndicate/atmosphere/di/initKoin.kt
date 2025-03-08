@@ -11,6 +11,7 @@ import ru.syndicate.atmosphere.feature.search.di.featureSearchModule
 import ru.syndicate.atmosphere.feature.settings.di.featureSettingsModule
 import ru.syndicate.atmosphere.feature.splash.di.featureSplashModule
 import ru.syndicate.atmosphere.feature.weather_detail.di.featureWeatherDetailModule
+import ru.syndicate.atmosphere.widget.di.widgetModule
 
 fun initKoin(
     config: KoinAppDeclaration? = null,
@@ -19,6 +20,7 @@ fun initKoin(
     startKoin {
         config?.invoke(this)
         modules(
+            widgetModule,
             coreModule,
             featureSplashModule,
             featureOnboardingModule,

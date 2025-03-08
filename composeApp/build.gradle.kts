@@ -51,6 +51,7 @@ kotlin {
             implementation(libs.voyager.lifecycle.kmp)
 
             implementation(projects.core)
+            implementation(projects.widget)
             implementation(projects.feature.splash)
             implementation(projects.feature.onboarding)
             implementation(projects.feature.home)

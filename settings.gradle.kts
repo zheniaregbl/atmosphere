@@ -35,6 +35,7 @@ dependencyResolutionManagement {
 
 include(":composeApp")
 include(":core")
+include(":widget")
 include(":feature:splash")
 include(":feature:onboarding")
 include(":feature:home")
