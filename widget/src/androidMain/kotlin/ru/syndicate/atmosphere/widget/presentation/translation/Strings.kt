@@ -1,11 +1,11 @@
 package ru.syndicate.atmosphere.widget.presentation.translation
 
-data class Strings(
+internal data class Strings(
     val refreshText: String,
     val weekDayTitle: WeekDayTitle
 )
 
-data class WeekDayTitle(
+internal data class WeekDayTitle(
     val monday: String,
     val tuesday: String,
     val wednesday: String,

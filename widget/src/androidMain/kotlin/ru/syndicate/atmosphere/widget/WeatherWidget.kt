@@ -14,7 +14,7 @@ import ru.syndicate.atmosphere.core.presentation.translation.Locales
 import ru.syndicate.atmosphere.widget.presentation.WeatherWidgetUI
 import ru.syndicate.atmosphere.widget.presentation.util.getWeekDayByLanguage
 
-class WeatherWidget : GlanceAppWidget() {
+internal class WeatherWidget : GlanceAppWidget() {
 
     override suspend fun provideGlance(context: Context, id: GlanceId) = provideContent {
 

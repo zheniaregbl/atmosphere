@@ -11,7 +11,7 @@ import ru.syndicate.atmosphere.widget.domain.model.WeatherWidgetInfo
 import ru.syndicate.atmosphere.widget.domain.repository.WidgetWeatherRepository
 import kotlin.math.roundToInt
 
-class DefaultWidgetWeatherRepository(
+internal class DefaultWidgetWeatherRepository(
     private val remoteWeatherDataSource: RemoteWeatherDataSource,
     private val settingsRepository: SettingsRepository
 ): WidgetWeatherRepository {
