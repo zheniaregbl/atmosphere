@@ -3,5 +3,4 @@
     android:initialLayout="@layout/glance_default_loading_layout"
     android:minHeight="80dp"
     android:minWidth="140dp"
-    android:updatePeriodMillis="3600000"
     android:widgetCategory="home_screen" />

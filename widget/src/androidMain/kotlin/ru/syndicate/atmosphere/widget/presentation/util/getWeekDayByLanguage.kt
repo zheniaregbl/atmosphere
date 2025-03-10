@@ -1,7 +1,6 @@
 package ru.syndicate.atmosphere.widget.presentation.util
 
 import kotlinx.datetime.DayOfWeek
-import kotlinx.datetime.isoDayNumber
 import ru.syndicate.atmosphere.core.presentation.translation.Locales
 import ru.syndicate.atmosphere.widget.presentation.translation.DeStrings
 import ru.syndicate.atmosphere.widget.presentation.translation.EnStrings

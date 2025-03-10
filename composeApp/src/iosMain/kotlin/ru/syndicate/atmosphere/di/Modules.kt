@@ -4,11 +4,11 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import org.koin.dsl.module
 import ru.syndicate.atmosphere.core.datastore.createDataStore
+import ru.syndicate.atmosphere.widget.domain.WidgetManager
 
 val iosModule = module {
-    single<DataStore<Preferences>> {
-        createDataStore()
-    }
+    single<DataStore<Preferences>> { createDataStore() }
+    single<WidgetManager> { WidgetManager() }
 }
 
 val iosPlatformModules = listOf(iosModule)

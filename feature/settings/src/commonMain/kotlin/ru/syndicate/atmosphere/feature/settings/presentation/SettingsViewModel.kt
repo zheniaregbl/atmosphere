@@ -7,9 +7,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.syndicate.atmosphere.core.domain.repository.SettingsRepository
+import ru.syndicate.atmosphere.widget.domain.WidgetManager
 
 internal class SettingsViewModel(
-    private val settingsRepository: SettingsRepository
+    private val settingsRepository: SettingsRepository,
+    private val widgetManager: WidgetManager
 ): ViewModel() {
 
     private val _state = MutableStateFlow(SettingsState())
@@ -20,6 +22,7 @@ internal class SettingsViewModel(
             settingsRepository.appLanguage
                 .collect { language ->
                     _state.update { it.copy(appLanguage = language) }
+                    widgetManager.updateWidget()
                 }
         }
     }

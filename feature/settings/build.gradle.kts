@@ -48,6 +48,7 @@ kotlin {
             api(libs.koin.core)
 
             api(projects.core)
+            api(projects.widget)
         }
     }
 }

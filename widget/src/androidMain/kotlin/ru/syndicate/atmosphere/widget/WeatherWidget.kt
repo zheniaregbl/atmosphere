@@ -9,8 +9,6 @@ import androidx.glance.currentState
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.fillMaxSize
-import androidx.glance.state.GlanceStateDefinition
-import androidx.glance.state.PreferencesGlanceStateDefinition
 import kotlinx.datetime.LocalDateTime
 import ru.syndicate.atmosphere.core.presentation.translation.Locales
 import ru.syndicate.atmosphere.widget.presentation.WeatherWidgetUI
