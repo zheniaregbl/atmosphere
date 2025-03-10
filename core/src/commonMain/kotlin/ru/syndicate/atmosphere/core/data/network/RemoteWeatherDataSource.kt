@@ -4,6 +4,7 @@ import com.skydoves.sandwich.ApiResponse
 import ru.syndicate.atmosphere.core.data.dto.DailyDetailWeatherResponseDTO
 import ru.syndicate.atmosphere.core.data.dto.DailyForecastWeatherResponseDTO
 import ru.syndicate.atmosphere.core.data.dto.HourlyWeatherResponseDTO
+import ru.syndicate.atmosphere.core.data.dto.WidgetWeatherDTO
 
 interface RemoteWeatherDataSource {
 
@@ -24,4 +25,10 @@ interface RemoteWeatherDataSource {
         longitude: Double,
         timeZone: String
     ): ApiResponse<DailyForecastWeatherResponseDTO>
+
+    suspend fun getWidgetWeather(
+        latitude: Double,
+        longitude: Double,
+        timeZone: String
+    ): ApiResponse<WidgetWeatherDTO>
 }

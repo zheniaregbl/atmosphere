@@ -1,7 +1,7 @@
 package ru.syndicate.atmosphere.widget.domain.repository
 
-import ru.syndicate.atmosphere.widget.domain.model.WidgetWeatherInfo
+import ru.syndicate.atmosphere.widget.domain.model.WeatherWidgetInfo
 
 interface WidgetWeatherRepository {
-    suspend fun getWidgetWeather(): WidgetWeatherInfo
+    suspend fun getWidgetWeather(): WeatherWidgetInfo
 }
