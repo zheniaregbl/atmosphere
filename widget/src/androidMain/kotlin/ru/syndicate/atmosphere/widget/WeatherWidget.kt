@@ -11,6 +11,7 @@ import androidx.glance.layout.Box
 import androidx.glance.layout.fillMaxSize
 import kotlinx.datetime.LocalDateTime
 import ru.syndicate.atmosphere.core.presentation.translation.Locales
+import ru.syndicate.atmosphere.widget.presentation.WeatherWidgetErrorUI
 import ru.syndicate.atmosphere.widget.presentation.WeatherWidgetUI
 import ru.syndicate.atmosphere.widget.presentation.util.getWeekDayByLanguage
 
@@ -24,6 +25,7 @@ internal class WeatherWidget : GlanceAppWidget() {
         val currentWeatherCode = currentState(WeatherWidgetReceiver.CurrentWeatherCodeKey) ?: 1
         val lastUpdateDateTime = currentState(WeatherWidgetReceiver.LastUpdateTime) ?: ""
         val isUpdating = currentState(WeatherWidgetReceiver.IsUpdating) ?: true
+        val isError = currentState(WeatherWidgetReceiver.IsError) ?: false
         val appLanguage = currentState(WeatherWidgetReceiver.AppLanguage) ?: Locales.EN
 
         val lastUpdateTime = if (lastUpdateDateTime.isBlank()) "" else {
@@ -41,16 +43,21 @@ internal class WeatherWidget : GlanceAppWidget() {
             modifier = GlanceModifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            WeatherWidgetUI(
-                currentTemperature = currentTemperature,
-                maxTemperature = maxTemperature,
-                minTemperature = minTemperature,
-                currentWeatherCode = currentWeatherCode,
-                lastUpdateTime = lastUpdateTime,
-                lastUpdateDay = lastUpdateDay,
-                isUpdating = isUpdating,
-                appLanguage = appLanguage
-            )
+
+            if (isError) {
+                WeatherWidgetErrorUI(appLanguage)
+            } else {
+                WeatherWidgetUI(
+                    currentTemperature = currentTemperature,
+                    maxTemperature = maxTemperature,
+                    minTemperature = minTemperature,
+                    currentWeatherCode = currentWeatherCode,
+                    lastUpdateTime = lastUpdateTime,
+                    lastUpdateDay = lastUpdateDay,
+                    isUpdating = isUpdating,
+                    appLanguage = appLanguage
+                )
+            }
         }
     }
 }

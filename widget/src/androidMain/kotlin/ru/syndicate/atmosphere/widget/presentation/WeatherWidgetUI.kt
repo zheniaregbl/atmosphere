@@ -38,7 +38,7 @@ import ru.syndicate.atmosphere.widget.presentation.util.getRefreshTextByLanguage
 import ru.syndicate.atmosphere.widget.presentation.util.iconByWeatherCode
 
 @Composable
-fun WeatherWidgetUI(
+internal fun WeatherWidgetUI(
     currentTemperature: Int,
     maxTemperature: Int,
     minTemperature: Int,
@@ -56,7 +56,7 @@ fun WeatherWidgetUI(
                 imageProvider = ImageProvider(R.drawable.widget_background),
                 colorFilter = ColorFilter.tint(ColorProvider(BackgroundColor))
             )
-            .clickable(onClick = actionRunCallback<UpdateWeatherAction>())
+            .clickable(actionRunCallback<UpdateWeatherAction>())
             .padding(14.dp)
     ) {
 

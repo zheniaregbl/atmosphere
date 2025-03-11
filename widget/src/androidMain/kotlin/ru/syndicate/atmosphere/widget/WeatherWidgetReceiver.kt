@@ -70,6 +70,7 @@ class WeatherWidgetReceiver: GlanceAppWidgetReceiver(), KoinComponent {
                 state[CurrentWeatherCodeKey] = weatherWidgetInfo.weatherCode
                 state[LastUpdateTime] = weatherWidgetInfo.lastUpdateTime.toString()
                 state[AppLanguage] = weatherWidgetInfo.appLanguage
+                state[IsError] = weatherWidgetInfo.isError
                 state[IsUpdating] = false
             }
 
@@ -86,6 +87,7 @@ class WeatherWidgetReceiver: GlanceAppWidgetReceiver(), KoinComponent {
         val CurrentWeatherCodeKey = intPreferencesKey("current_weather_code")
         val LastUpdateTime = stringPreferencesKey("last_update_time")
         val IsUpdating = booleanPreferencesKey("is_updating")
+        val IsError = booleanPreferencesKey("is_error")
         val AppLanguage = stringPreferencesKey("app_language")
 
         const val UPDATE_ACTION = "update_action"

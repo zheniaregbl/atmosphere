@@ -26,11 +26,13 @@ internal class DefaultWidgetWeatherRepository(
         return when (response) {
             is ApiResponse.Failure.Error -> WeatherWidgetInfo(
                 lastUpdateTime = currentDateTime,
-                appLanguage = appLanguage
+                appLanguage = appLanguage,
+                isError = true
             )
             is ApiResponse.Failure.Exception -> WeatherWidgetInfo(
                 lastUpdateTime = currentDateTime,
-                appLanguage = appLanguage
+                appLanguage = appLanguage,
+                isError = true
             )
             is ApiResponse.Success -> WeatherWidgetInfo(
                 currentTemperature = response.data.currentParameters.temperature.roundToInt(),

@@ -2,6 +2,7 @@ package ru.syndicate.atmosphere.widget.presentation.translation
 
 internal data class Strings(
     val refreshText: String,
+    val errorMessage: String,
     val weekDayTitle: WeekDayTitle
 )
 

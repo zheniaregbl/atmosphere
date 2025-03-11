@@ -15,5 +15,6 @@ internal data class WeatherWidgetInfo(
         .System
         .now()
         .toLocalDateTime(TimeZone.currentSystemDefault()),
-    val appLanguage: String = Locales.EN
+    val appLanguage: String = Locales.EN,
+    val isError: Boolean = false
 )
