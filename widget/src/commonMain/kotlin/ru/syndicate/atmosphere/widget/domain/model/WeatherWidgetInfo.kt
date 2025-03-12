@@ -7,14 +7,24 @@ import kotlinx.datetime.toLocalDateTime
 import ru.syndicate.atmosphere.core.presentation.translation.Locales
 
 internal data class WeatherWidgetInfo(
-    val currentTemperature: Int = -99,
-    val maxTemperature: Int = -99,
-    val minTemperature: Int = -99,
+    val currentTemperature: Int = 20,
+    val maxTemperature: Int = 30,
+    val minTemperature: Int = 10,
     val weatherCode: Int = 1,
-    val lastUpdateTime: LocalDateTime = Clock
+    val lastUpdateDateTime: String = Clock
         .System
         .now()
-        .toLocalDateTime(TimeZone.currentSystemDefault()),
+        .toLocalDateTime(TimeZone.currentSystemDefault())
+        .toString(),
     val appLanguage: String = Locales.EN,
     val isError: Boolean = false
-)
+) {
+
+    val lastUpdateTime: String
+        get() {
+            val localDateTime = LocalDateTime.parse(lastUpdateDateTime)
+            val minutes = if (localDateTime.minute < 10) "0${localDateTime.minute}"
+            else localDateTime.minute.toString()
+            return "${localDateTime.hour}:$minutes"
+        }
+}

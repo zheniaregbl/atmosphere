@@ -7,7 +7,7 @@ import io.ktor.client.request.parameter
 import ru.syndicate.atmosphere.core.data.dto.DailyDetailWeatherResponseDTO
 import ru.syndicate.atmosphere.core.data.dto.DailyForecastWeatherResponseDTO
 import ru.syndicate.atmosphere.core.data.dto.HourlyWeatherResponseDTO
-import ru.syndicate.atmosphere.core.data.dto.WidgetWeatherDTO
+import ru.syndicate.atmosphere.core.data.dto.WeatherWidgetDTO
 
 private const val BASE_URL = "https://api.open-meteo.com/v1/forecast"
 
@@ -66,7 +66,7 @@ data class KtorRemoteWeatherDataSource(
         latitude: Double,
         longitude: Double,
         timeZone: String
-    ): ApiResponse<WidgetWeatherDTO> {
+    ): ApiResponse<WeatherWidgetDTO> {
         return httpClient.getApiResponse(BASE_URL) {
             parameter("latitude", latitude)
             parameter("longitude", longitude)

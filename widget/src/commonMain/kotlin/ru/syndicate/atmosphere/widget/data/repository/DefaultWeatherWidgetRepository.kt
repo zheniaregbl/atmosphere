@@ -8,13 +8,13 @@ import kotlinx.datetime.toLocalDateTime
 import ru.syndicate.atmosphere.core.data.network.RemoteWeatherDataSource
 import ru.syndicate.atmosphere.core.domain.repository.SettingsRepository
 import ru.syndicate.atmosphere.widget.domain.model.WeatherWidgetInfo
-import ru.syndicate.atmosphere.widget.domain.repository.WidgetWeatherRepository
+import ru.syndicate.atmosphere.widget.domain.repository.WeatherWidgetRepository
 import kotlin.math.roundToInt
 
-internal class DefaultWidgetWeatherRepository(
+internal class DefaultWeatherWidgetRepository(
     private val remoteWeatherDataSource: RemoteWeatherDataSource,
     private val settingsRepository: SettingsRepository
-): WidgetWeatherRepository {
+): WeatherWidgetRepository {
 
     override suspend fun getWidgetWeather(): WeatherWidgetInfo {
 
@@ -25,12 +25,12 @@ internal class DefaultWidgetWeatherRepository(
 
         return when (response) {
             is ApiResponse.Failure.Error -> WeatherWidgetInfo(
-                lastUpdateTime = currentDateTime,
+                lastUpdateDateTime = currentDateTime.toString(),
                 appLanguage = appLanguage,
                 isError = true
             )
             is ApiResponse.Failure.Exception -> WeatherWidgetInfo(
-                lastUpdateTime = currentDateTime,
+                lastUpdateDateTime = currentDateTime.toString(),
                 appLanguage = appLanguage,
                 isError = true
             )
@@ -39,7 +39,7 @@ internal class DefaultWidgetWeatherRepository(
                 maxTemperature = response.data.dailyParameters.maxTemperature.first().roundToInt(),
                 minTemperature = response.data.dailyParameters.minTemperature.first().roundToInt(),
                 weatherCode = response.data.currentParameters.weatherCode,
-                lastUpdateTime = currentDateTime,
+                lastUpdateDateTime = currentDateTime.toString(),
                 appLanguage = appLanguage
             )
         }

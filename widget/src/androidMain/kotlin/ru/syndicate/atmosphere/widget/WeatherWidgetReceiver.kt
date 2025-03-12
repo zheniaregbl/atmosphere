@@ -4,7 +4,6 @@ import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetManager
@@ -14,13 +13,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import ru.syndicate.atmosphere.widget.domain.repository.WidgetWeatherRepository
+import ru.syndicate.atmosphere.widget.data.mapper.toDTO
+import ru.syndicate.atmosphere.widget.domain.repository.WeatherWidgetRepository
 
 class WeatherWidgetReceiver: GlanceAppWidgetReceiver(), KoinComponent {
 
-    private val widgetWeatherRepository by inject<WidgetWeatherRepository>()
+    private val widgetWeatherRepository by inject<WeatherWidgetRepository>()
 
     override val glanceAppWidget: GlanceAppWidget
         get() = WeatherWidget()
@@ -45,7 +47,7 @@ class WeatherWidgetReceiver: GlanceAppWidgetReceiver(), KoinComponent {
             glanceIds.forEach { id ->
 
                 updateAppWidgetState(context, id) { state ->
-                    state[IsUpdating] = true
+                    state[IsLoading] = true
                 }
                 glanceAppWidget.update(context, id)
             }
@@ -64,14 +66,8 @@ class WeatherWidgetReceiver: GlanceAppWidgetReceiver(), KoinComponent {
 
                 val weatherWidgetInfo = widgetWeatherRepository.getWidgetWeather()
 
-                state[CurrentTemperatureKey] = weatherWidgetInfo.currentTemperature
-                state[MaxTemperatureKey] = weatherWidgetInfo.maxTemperature
-                state[MinTemperatureKey] = weatherWidgetInfo.minTemperature
-                state[CurrentWeatherCodeKey] = weatherWidgetInfo.weatherCode
-                state[LastUpdateTime] = weatherWidgetInfo.lastUpdateTime.toString()
-                state[AppLanguage] = weatherWidgetInfo.appLanguage
-                state[IsError] = weatherWidgetInfo.isError
-                state[IsUpdating] = false
+                state[WeatherWidgetInfo] = Json.encodeToString(weatherWidgetInfo.toDTO())
+                state[IsLoading] = false
             }
 
             delay(500)
@@ -81,14 +77,8 @@ class WeatherWidgetReceiver: GlanceAppWidgetReceiver(), KoinComponent {
     }
 
     companion object {
-        val CurrentTemperatureKey = intPreferencesKey("current_temperature")
-        val MaxTemperatureKey = intPreferencesKey("max_temperature")
-        val MinTemperatureKey = intPreferencesKey("min_temperature")
-        val CurrentWeatherCodeKey = intPreferencesKey("current_weather_code")
-        val LastUpdateTime = stringPreferencesKey("last_update_time")
-        val IsUpdating = booleanPreferencesKey("is_updating")
-        val IsError = booleanPreferencesKey("is_error")
-        val AppLanguage = stringPreferencesKey("app_language")
+        val IsLoading = booleanPreferencesKey("is_loading")
+        val WeatherWidgetInfo = stringPreferencesKey("weather_widget")
 
         const val UPDATE_ACTION = "update_action"
     }

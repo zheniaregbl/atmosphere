@@ -28,26 +28,26 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
+import kotlinx.datetime.LocalDateTime
 import ru.syndicate.atmosphere.core.presentation.theme.BackgroundColor
 import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
-import ru.syndicate.atmosphere.core.presentation.translation.Locales
 import ru.syndicate.atmosphere.widget.R
 import ru.syndicate.atmosphere.widget.UpdateWeatherAction
-import ru.syndicate.atmosphere.widget.presentation.translation.EnStrings
+import ru.syndicate.atmosphere.widget.domain.model.WeatherWidgetInfo
 import ru.syndicate.atmosphere.widget.presentation.util.getRefreshTextByLanguage
+import ru.syndicate.atmosphere.widget.presentation.util.getWeekDayByLanguage
 import ru.syndicate.atmosphere.widget.presentation.util.iconByWeatherCode
 
 @Composable
 internal fun WeatherWidgetUI(
-    currentTemperature: Int,
-    maxTemperature: Int,
-    minTemperature: Int,
-    currentWeatherCode: Int,
-    lastUpdateTime: String,
-    lastUpdateDay: String,
-    isUpdating: Boolean,
-    appLanguage: String
+    weatherWidgetInfo: WeatherWidgetInfo,
+    isLoading: Boolean
 ) {
+
+    val lastUpdateDay = getWeekDayByLanguage(
+        LocalDateTime.parse(weatherWidgetInfo.lastUpdateDateTime).dayOfWeek,
+        weatherWidgetInfo.appLanguage
+    )
 
     Column(
         modifier = GlanceModifier
@@ -57,76 +57,81 @@ internal fun WeatherWidgetUI(
                 colorFilter = ColorFilter.tint(ColorProvider(BackgroundColor))
             )
             .clickable(actionRunCallback<UpdateWeatherAction>())
-            .padding(14.dp)
+            .padding(14.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Row(
-            modifier = GlanceModifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-
-            if (isUpdating) {
+        when {
+            isLoading -> {
                 CircularProgressIndicator(color = ColorProvider(LightWhite))
-            } else {
+            }
+            weatherWidgetInfo.isError -> {
+                WeatherWidgetErrorUI(weatherWidgetInfo.appLanguage)
+            }
+            else -> {
+                Row(
+                    modifier = GlanceModifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
 
-                Column {
+                    Column {
 
-                    Text(
-                        text = "$lastUpdateDay,$lastUpdateTime",
-                        style = TextStyle(
-                            fontFamily = FontFamily.Monospace,
-                            fontWeight = FontWeight.Normal,
-                            fontSize = 14.sp,
-                            color = ColorProvider(LightWhite)
+                        Text(
+                            text = "$lastUpdateDay,${weatherWidgetInfo.lastUpdateTime}",
+                            style = TextStyle(
+                                fontFamily = FontFamily.Monospace,
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 14.sp,
+                                color = ColorProvider(LightWhite)
+                            )
                         )
-                    )
 
-                    Text(
-                        text = "${currentTemperature}°",
-                        style = TextStyle(
-                            fontFamily = FontFamily.Monospace,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 30.sp,
-                            color = ColorProvider(LightWhite)
+                        Text(
+                            text = "${weatherWidgetInfo.currentTemperature}°",
+                            style = TextStyle(
+                                fontFamily = FontFamily.Monospace,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 30.sp,
+                                color = ColorProvider(LightWhite)
+                            )
                         )
-                    )
 
-                    Text(
-                        text = "$maxTemperature°/$minTemperature°",
-                        style = TextStyle(
-                            fontFamily = FontFamily.Monospace,
-                            fontWeight = FontWeight.Normal,
-                            fontSize = 16.sp,
-                            color = ColorProvider(LightWhite)
+                        Text(
+                            text = "${weatherWidgetInfo.maxTemperature}°/${weatherWidgetInfo.minTemperature}°",
+                            style = TextStyle(
+                                fontFamily = FontFamily.Monospace,
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 16.sp,
+                                color = ColorProvider(LightWhite)
+                            )
                         )
+                    }
+
+                    Spacer(modifier = GlanceModifier.defaultWeight())
+
+                    Image(
+                        modifier = GlanceModifier.size(64.dp),
+                        provider = ImageProvider(iconByWeatherCode(weatherWidgetInfo.weatherCode)),
+                        contentDescription = null
                     )
                 }
 
-                Spacer(modifier = GlanceModifier.defaultWeight())
+                Spacer(modifier = GlanceModifier.height(4.dp))
 
-                Image(
-                    modifier = GlanceModifier.size(64.dp),
-                    provider = ImageProvider(iconByWeatherCode(currentWeatherCode)),
-                    contentDescription = null
+                Text(
+                    modifier = GlanceModifier.fillMaxWidth(),
+                    text = getRefreshTextByLanguage(weatherWidgetInfo.appLanguage),
+                    style = TextStyle(
+                        fontFamily = FontFamily.Monospace,
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 10.sp,
+                        color = ColorProvider(LightWhite)
+                    )
                 )
-
             }
         }
-
-        Spacer(modifier = GlanceModifier.height(4.dp))
-
-        Text(
-            modifier = GlanceModifier.fillMaxWidth(),
-            text = getRefreshTextByLanguage(appLanguage),
-            style = TextStyle(
-                fontFamily = FontFamily.Monospace,
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Normal,
-                fontSize = 10.sp,
-                color = ColorProvider(LightWhite)
-            )
-        )
     }
 }
 
@@ -140,14 +145,8 @@ private fun WeatherWidgetPreview() {
         contentAlignment = Alignment.Center
     ) {
         WeatherWidgetUI(
-            currentTemperature = 20,
-            maxTemperature = 20,
-            minTemperature = 0,
-            currentWeatherCode = 1,
-            lastUpdateTime = "10:10",
-            lastUpdateDay = EnStrings.weekDayTitle.monday,
-            isUpdating = false,
-            appLanguage = Locales.EN
+            weatherWidgetInfo = WeatherWidgetInfo(),
+            isLoading = false
         )
     }
 }
@@ -155,21 +154,31 @@ private fun WeatherWidgetPreview() {
 @OptIn(ExperimentalGlancePreviewApi::class)
 @Preview(widthDp = 200, heightDp = 150)
 @Composable
-private fun WeatherWidgetUpdatingPreview() {
+private fun WeatherWidgetLoadingPreview() {
 
     Box(
         modifier = GlanceModifier.padding(10.dp),
         contentAlignment = Alignment.Center
     ) {
         WeatherWidgetUI(
-            currentTemperature = 20,
-            maxTemperature = 20,
-            minTemperature = 0,
-            currentWeatherCode = 1,
-            lastUpdateTime = "10:10",
-            lastUpdateDay = EnStrings.weekDayTitle.monday,
-            isUpdating = true,
-            appLanguage = Locales.EN
+            weatherWidgetInfo = WeatherWidgetInfo(),
+            isLoading = true
+        )
+    }
+}
+
+@OptIn(ExperimentalGlancePreviewApi::class)
+@Preview(widthDp = 200, heightDp = 150)
+@Composable
+private fun WeatherWidgetErrorPreview() {
+
+    Box(
+        modifier = GlanceModifier.padding(10.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        WeatherWidgetUI(
+            weatherWidgetInfo = WeatherWidgetInfo(isError = true),
+            isLoading = false
         )
     }
 }
