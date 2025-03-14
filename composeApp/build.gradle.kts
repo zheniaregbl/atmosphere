@@ -1,3 +1,4 @@
+import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.compose.reload.ComposeHotRun
 import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
@@ -107,6 +108,16 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+    applicationVariants.all {
+        val variant = this
+        variant.outputs
+            .map { it as BaseVariantOutputImpl }
+            .forEach { output ->
+                val outputFileName = "atmosphere-android-${variant.baseName}-${variant.versionName}" +
+                        "-${variant.versionCode}.apk"
+                output.outputFileName = outputFileName
+            }
     }
 }
 
