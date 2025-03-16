@@ -75,8 +75,8 @@ internal data class HomeState(
     fun toUiState(): HomeScreenState {
         return when {
             isLoading -> HomeScreenState.Loading
-            errorMessageCode != null -> HomeScreenState.Error(errorMessageCode)
             weatherInfo != null -> HomeScreenState.Success(weatherInfo)
+            errorMessageCode != null -> HomeScreenState.Error(errorMessageCode)
             else -> HomeScreenState.Idle
         }
     }
