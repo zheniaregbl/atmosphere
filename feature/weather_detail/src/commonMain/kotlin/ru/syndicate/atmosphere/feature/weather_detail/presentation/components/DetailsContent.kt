@@ -24,7 +24,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.chrisbanes.haze.HazeState
 import org.jetbrains.compose.resources.painterResource
 import ru.syndicate.atmosphere.core.util.PlatformName
 import ru.syndicate.atmosphere.core.util.platformName
@@ -37,8 +36,7 @@ import ru.syndicate.atmosphere.feature.weather_detail.resources.temperature_svg
 @Composable
 internal fun DetailsContent(
     modifier: Modifier = Modifier,
-    weatherDetail: WeatherDetail,
-    hazeState: HazeState
+    weatherDetail: WeatherDetail
 ) {
 
     val platformName = platformName()
@@ -51,7 +49,6 @@ internal fun DetailsContent(
         item {
             ParameterCard(
                 modifier = Modifier.fillMaxWidth(),
-                hazeState = hazeState,
                 title = {
                     Image(
                         painter = painterResource(Res.drawable.temperature_svg),
@@ -112,7 +109,6 @@ internal fun DetailsContent(
         item {
             ParameterCard(
                 modifier = Modifier.fillMaxWidth(),
-                hazeState = hazeState,
                 title = {
                     Image(
                         modifier = Modifier.size(20.dp),
@@ -154,13 +150,11 @@ internal fun DetailsContent(
                 DiagramSectionMobile(
                     modifier = Modifier.fillMaxWidth(),
                     weatherDetail = weatherDetail,
-                    hazeState = hazeState
                 )
             } else {
                 DiagramSectionDesktop(
                     modifier = Modifier.fillMaxWidth(),
                     weatherDetail = weatherDetail,
-                    hazeState = hazeState
                 )
             }
         }

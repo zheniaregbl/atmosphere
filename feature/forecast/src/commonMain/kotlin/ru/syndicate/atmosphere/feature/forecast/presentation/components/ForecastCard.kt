@@ -42,9 +42,9 @@ import atmosphere.feature.forecast.generated.resources.temperature_svg
 import atmosphere.feature.forecast.generated.resources.wind_svg
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
+import ru.syndicate.atmosphere.core.presentation.theme.GrayColor
 import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
 import ru.syndicate.atmosphere.feature.forecast.domain.model.DailyForecast
-import ru.syndicate.atmosphere.feature.forecast.presentation.theme.CardColor
 import ru.syndicate.atmosphere.feature.forecast.presentation.translation.util.LocalForecastStrings
 import ru.syndicate.atmosphere.feature.forecast.presentation.util.iconByWeatherCode
 import ru.syndicate.atmosphere.feature.forecast.presentation.util.localize
@@ -60,7 +60,7 @@ internal fun ForecastCard(
     Column(
         modifier = modifier
             .clip(RoundedCornerShape(8.dp))
-            .background(CardColor)
+            .background(GrayColor)
             .clickable(
                 onClick = { isExpanded = !isExpanded },
                 indication = null,

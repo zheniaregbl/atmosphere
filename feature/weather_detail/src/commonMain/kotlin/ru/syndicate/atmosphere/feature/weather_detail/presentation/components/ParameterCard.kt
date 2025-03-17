@@ -1,5 +1,6 @@
 package ru.syndicate.atmosphere.feature.weather_detail.presentation.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -20,16 +21,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.chrisbanes.haze.HazeDefaults
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeTint
-import dev.chrisbanes.haze.hazeChild
-import ru.syndicate.atmosphere.core.presentation.theme.BackgroundColor
+import ru.syndicate.atmosphere.core.presentation.theme.GrayColor
 
 @Composable
 internal fun ParameterCard(
     modifier: Modifier = Modifier,
-    hazeState: HazeState,
     title: @Composable RowScope.() -> Unit,
     content: @Composable ColumnScope.() -> Unit
 ) {
@@ -37,15 +33,7 @@ internal fun ParameterCard(
     Column(
         modifier = modifier
             .clip(RoundedCornerShape(8.dp))
-            .hazeChild(
-                state = hazeState,
-                style = HazeDefaults
-                    .style(
-                        backgroundColor = BackgroundColor,
-                        tint = HazeTint(color = Color.DarkGray.copy(alpha = .5f)),
-                        blurRadius = 8.dp,
-                    )
-            )
+            .background(GrayColor)
             .padding(10.dp),
         verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {

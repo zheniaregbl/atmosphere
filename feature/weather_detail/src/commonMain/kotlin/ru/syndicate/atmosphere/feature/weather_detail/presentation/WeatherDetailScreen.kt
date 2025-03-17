@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,7 +23,6 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.mohamedrejeb.calf.ui.progress.AdaptiveCircularProgressIndicator
-import dev.chrisbanes.haze.HazeState
 import org.koin.compose.viewmodel.koinViewModel
 import ru.syndicate.atmosphere.core.presentation.translation.Locales
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.DetailsContent
@@ -61,8 +59,6 @@ internal fun WeatherDetailScreenImpl(
     onAction: (WeatherDetailAction) -> Unit,
     onBackClick: () -> Unit
 ) {
-
-    val hazeState = remember { HazeState() }
 
     val lyricist = rememberStrings(
         translations = translations,
@@ -114,8 +110,7 @@ internal fun WeatherDetailScreenImpl(
                             modifier = Modifier
                                 .widthIn(max = 800.dp)
                                 .fillMaxWidth(),
-                            weatherDetail = screenState.details,
-                            hazeState = hazeState
+                            weatherDetail = screenState.details
                         )
                     },
                     onError = {

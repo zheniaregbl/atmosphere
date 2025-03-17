@@ -22,10 +22,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ru.syndicate.atmosphere.core.presentation.theme.GrayColor
 import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
 import ru.syndicate.atmosphere.core.presentation.util.extension.scaleOnClick
 import ru.syndicate.atmosphere.feature.search.domain.model.City
-import ru.syndicate.atmosphere.feature.search.presentation.theme.CardColor
 
 @Composable
 internal fun CityCard(
@@ -38,7 +38,7 @@ internal fun CityCard(
         modifier = modifier
             .scaleOnClick(0.96f)
             .clip(RoundedCornerShape(8.dp))
-            .background(CardColor)
+            .background(GrayColor)
             .clickable(
                 onClick = onClick,
                 indication = null,

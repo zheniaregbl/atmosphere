@@ -22,7 +22,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.chrisbanes.haze.HazeState
 import org.jetbrains.compose.resources.painterResource
 import ru.syndicate.atmosphere.feature.weather_detail.domain.model.WeatherDetail
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.translation.util.LocalDetailsStrings
@@ -33,15 +32,13 @@ import ru.syndicate.atmosphere.feature.weather_detail.resources.wind_svg
 @Composable
 internal fun DiagramSectionMobile(
     modifier: Modifier = Modifier,
-    weatherDetail: WeatherDetail,
-    hazeState: HazeState,
+    weatherDetail: WeatherDetail
 ) {
 
     Row(modifier = modifier) {
 
         ParameterCard(
             modifier = Modifier.weight(1f),
-            hazeState = hazeState,
             title = {
                 Image(
                     modifier = Modifier.size(20.dp),
@@ -74,7 +71,6 @@ internal fun DiagramSectionMobile(
 
         ParameterCard(
             modifier = Modifier.weight(1f),
-            hazeState = hazeState,
             title = {
                 Image(
                     modifier = Modifier.size(20.dp),
@@ -104,8 +100,7 @@ internal fun DiagramSectionMobile(
 @Composable
 internal fun DiagramSectionDesktop(
     modifier: Modifier = Modifier,
-    weatherDetail: WeatherDetail,
-    hazeState: HazeState,
+    weatherDetail: WeatherDetail
 ) {
 
     Column(
@@ -115,7 +110,6 @@ internal fun DiagramSectionDesktop(
 
         ParameterCard(
             modifier = Modifier.fillMaxWidth(),
-            hazeState = hazeState,
             title = {
                 Image(
                     modifier = Modifier.size(20.dp),
@@ -185,7 +179,6 @@ internal fun DiagramSectionDesktop(
 
         ParameterCard(
             modifier = Modifier.fillMaxWidth(),
-            hazeState = hazeState,
             title = {
                 Image(
                     modifier = Modifier.size(20.dp),
