@@ -27,10 +27,10 @@ internal fun TemperatureChart(
     CommonChart(
         modifier = modifier,
         values = temperatures,
-        yRange = temperatures.min() - 1..temperatures.max() + 1,
+        yRange = temperatures.min() - 1..temperatures.max(),
         yAxisLabels = { "$it°" },
         xViewRange = 0.0..10.0,
-        yViewRange = temperatures.min() - 1.0..temperatures.max() + 1.0,
+        yViewRange = temperatures.min().toDouble()..temperatures.max().toDouble(),
         color = SelectedBlue,
         hoverableItem = { HoverableItem(it) }
     )
