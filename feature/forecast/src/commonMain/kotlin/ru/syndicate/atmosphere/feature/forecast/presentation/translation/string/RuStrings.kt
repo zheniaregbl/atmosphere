@@ -39,5 +39,10 @@ internal val RuStrings = Strings(
         friday = "Пятница",
         saturday = "Суббота",
         sunday = "Воскресенье"
+    ),
+    errorContentStrings = ErrorContentStrings(
+        title = "Ошибка запроса",
+        text = "Произошла ошибка при получении прогноза погоды.",
+        repeatText = "Повторить"
     )
 )

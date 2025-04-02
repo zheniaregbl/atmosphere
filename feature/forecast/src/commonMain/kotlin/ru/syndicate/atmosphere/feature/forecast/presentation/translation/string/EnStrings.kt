@@ -39,5 +39,10 @@ internal val EnStrings = Strings(
         friday = "Friday",
         saturday = "Saturday",
         sunday = "Sunday"
+    ),
+    errorContentStrings = ErrorContentStrings(
+        title = "Request Error",
+        text = "An error occurred while retrieving forecast weather information.",
+        repeatText = "Repeat"
     )
 )

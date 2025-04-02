@@ -30,6 +30,7 @@ private fun ForecastScreenPreview() {
                 .background(BackgroundColor)
                 .statusBarsPadding(),
             state = state,
+            onAction = { },
             onBackClick = { }
         )
     }

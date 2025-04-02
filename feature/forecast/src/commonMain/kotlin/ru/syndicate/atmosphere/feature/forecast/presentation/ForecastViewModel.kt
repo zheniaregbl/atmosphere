@@ -48,9 +48,18 @@ internal class ForecastViewModel(
         }
     }
 
+    fun onAction(action: ForecastAction) {
+        when (action) {
+            ForecastAction.OnUpdate -> getForecastWeather()
+        }
+    }
+
     private fun getForecastWeather() = viewModelScope.launch {
 
-        _state.update { it.copy(isLoading = true) }
+        _state.update { it.copy(
+            isLoading = true,
+            showErrorContent = false
+        ) }
 
         delay(1000)
 
@@ -68,13 +77,15 @@ internal class ForecastViewModel(
             .onException {
                 println("error: $messageOrNull")
                 _state.update { it.copy(
-                    isLoading = false
+                    isLoading = false,
+                    showErrorContent = true
                 ) }
             }
             .onError {
                 println("error: ${statusCode.code}")
                 _state.update { it.copy(
-                    isLoading = false
+                    isLoading = false,
+                    showErrorContent = true
                 ) }
             }
     }

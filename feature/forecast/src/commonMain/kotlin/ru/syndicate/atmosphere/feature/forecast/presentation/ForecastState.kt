@@ -21,6 +21,7 @@ internal sealed class ForecastScreenState {
     data object Idle : ForecastScreenState()
     data object Loading : ForecastScreenState()
     data class Success(val forecasts: List<DailyForecast>) : ForecastScreenState()
+    data object Error : ForecastScreenState()
 }
 
 @Composable
@@ -35,7 +36,8 @@ internal fun ForecastScreenState.DisplayResult(
     },
     onIdle: (@Composable () -> Unit)? = null,
     onLoading: @Composable () -> Unit,
-    onSuccess: @Composable (ForecastScreenState.Success) -> Unit
+    onSuccess: @Composable (ForecastScreenState.Success) -> Unit,
+    onError: @Composable () -> Unit
 ) {
 
     AnimatedContent(
@@ -55,6 +57,8 @@ internal fun ForecastScreenState.DisplayResult(
                 ForecastScreenState.Loading -> onLoading.invoke()
 
                 is ForecastScreenState.Success -> onSuccess.invoke(state)
+
+                ForecastScreenState.Error -> onError.invoke()
             }
         }
     }
@@ -62,6 +66,7 @@ internal fun ForecastScreenState.DisplayResult(
 
 internal data class ForecastState(
     val isLoading: Boolean = false,
+    private val showErrorContent: Boolean = false,
     val forecasts: List<DailyForecast>? = null,
     val currentLocation: CurrentLocation = CurrentLocation(),
     val appLanguage: String = Locales.EN
@@ -70,6 +75,7 @@ internal data class ForecastState(
     fun toUiState(): ForecastScreenState {
         return when {
             isLoading -> ForecastScreenState.Loading
+            showErrorContent -> ForecastScreenState.Error
             forecasts != null -> ForecastScreenState.Success(forecasts)
             else -> ForecastScreenState.Idle
         }

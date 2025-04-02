@@ -24,9 +24,9 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.mohamedrejeb.calf.ui.progress.AdaptiveCircularProgressIndicator
 import org.koin.compose.viewmodel.koinViewModel
+import ru.syndicate.atmosphere.core.presentation.components.ErrorContentWithRetry
 import ru.syndicate.atmosphere.core.presentation.translation.Locales
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.DetailsContent
-import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.ErrorContent
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.components.TopPanel
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.translation.util.LocalDetailsStrings
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.translation.util.TranslationUtil.translations
@@ -114,11 +114,14 @@ internal fun WeatherDetailScreenImpl(
                         )
                     },
                     onError = {
-                        ErrorContent(
+                        ErrorContentWithRetry(
                             modifier = Modifier
                                 .widthIn(max = 400.dp)
                                 .fillMaxWidth()
                                 .padding(bottom = 60.dp),
+                            title = LocalDetailsStrings.current.errorContentStrings.title,
+                            text = LocalDetailsStrings.current.errorContentStrings.text,
+                            buttonText = LocalDetailsStrings.current.errorContentStrings.repeatText,
                             onRepeat = { onAction(WeatherDetailAction.OnUpdate) }
                         )
                     }

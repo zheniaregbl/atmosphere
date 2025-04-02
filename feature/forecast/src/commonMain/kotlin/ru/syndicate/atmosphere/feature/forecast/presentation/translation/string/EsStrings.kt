@@ -39,5 +39,10 @@ internal val EsStrings = Strings(
         friday = "Viernes",
         saturday = "Sábado",
         sunday = "Domingo"
+    ),
+    errorContentStrings = ErrorContentStrings(
+        title = "Error de solicitud",
+        text = "Se produjo un error al obtener el pronóstico del tiempo.",
+        repeatText = "Reintentar"
     )
 )

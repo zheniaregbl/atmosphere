@@ -31,6 +31,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.mohamedrejeb.calf.ui.progress.AdaptiveCircularProgressIndicator
 import org.koin.compose.viewmodel.koinViewModel
+import ru.syndicate.atmosphere.core.presentation.components.ErrorContentWithRetry
 import ru.syndicate.atmosphere.core.presentation.translation.Locales
 import ru.syndicate.atmosphere.feature.forecast.presentation.components.ForecastCard
 import ru.syndicate.atmosphere.feature.forecast.presentation.components.TopPanel
@@ -52,6 +53,7 @@ internal class ForecastScreen : Screen {
                 .fillMaxSize()
                 .statusBarsPadding(),
             state = state,
+            onAction = { viewModel.onAction(it) },
             onBackClick = { navigator.pop() }
         )
     }
@@ -61,6 +63,7 @@ internal class ForecastScreen : Screen {
 internal fun ForecastScreenImpl(
     modifier: Modifier = Modifier,
     state: State<ForecastState>,
+    onAction: (ForecastAction) -> Unit,
     onBackClick: () -> Unit
 ) {
 
@@ -138,6 +141,18 @@ internal fun ForecastScreenImpl(
                                 )
                             }
                         }
+                    },
+                    onError = {
+                        ErrorContentWithRetry(
+                            modifier = Modifier
+                                .widthIn(max = 400.dp)
+                                .fillMaxWidth()
+                                .padding(bottom = 60.dp),
+                            title = LocalForecastStrings.current.errorContentStrings.title,
+                            text = LocalForecastStrings.current.errorContentStrings.text,
+                            buttonText = LocalForecastStrings.current.errorContentStrings.repeatText,
+                            onRepeat = { onAction(ForecastAction.OnUpdate) }
+                        )
                     }
                 )
             }

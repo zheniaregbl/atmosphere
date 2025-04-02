@@ -39,5 +39,10 @@ internal val DeStrings = Strings(
         friday = "Freitag",
         saturday = "Samstag",
         sunday = "Sonntag"
+    ),
+    errorContentStrings = ErrorContentStrings(
+        title = "Anfragefehler",
+        text = "Beim Abrufen der Wettervorhersage ist ein Fehler aufgetreten.",
+        repeatText = "Wiederholen"
     )
 )

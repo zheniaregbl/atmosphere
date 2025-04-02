@@ -39,5 +39,10 @@ internal val ItStrings = Strings(
         friday = "Venerdì",
         saturday = "Sabato",
         sunday = "Domenica"
+    ),
+    errorContentStrings = ErrorContentStrings(
+        title = "Errore di richiesta",
+        text = "Si è verificato un errore durante il recupero delle previsioni meteo.",
+        repeatText = "Riprova"
     )
 )

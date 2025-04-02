@@ -39,5 +39,10 @@ internal val PtStrings = Strings(
         friday = "Sexta-feira",
         saturday = "Sábado",
         sunday = "Domingo"
+    ),
+    errorContentStrings = ErrorContentStrings(
+        title = "Erro na solicitação",
+        text = "Ocorreu um erro ao recuperar a previsão do tempo.",
+        repeatText = "Repetir"
     )
 )

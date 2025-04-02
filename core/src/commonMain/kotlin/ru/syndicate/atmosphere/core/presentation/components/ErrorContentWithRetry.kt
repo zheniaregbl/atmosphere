@@ -1,4 +1,4 @@
-package ru.syndicate.atmosphere.feature.weather_detail.presentation.components
+package ru.syndicate.atmosphere.core.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,13 +15,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ru.syndicate.atmosphere.core.presentation.components.ActionButton
 import ru.syndicate.atmosphere.core.presentation.theme.GrayColor
-import ru.syndicate.atmosphere.feature.weather_detail.presentation.translation.util.LocalDetailsStrings
 
 @Composable
-internal fun ErrorContent(
+fun ErrorContentWithRetry(
     modifier: Modifier = Modifier,
+    title: String,
+    text: String,
+    buttonText: String,
     onRepeat: () -> Unit
 ) {
 
@@ -37,7 +38,7 @@ internal fun ErrorContent(
     ) {
 
         Text(
-            text = LocalDetailsStrings.current.errorContentStrings.title,
+            text = title,
             style = LocalTextStyle.current,
             fontWeight = FontWeight.SemiBold,
             fontSize = 20.sp,
@@ -45,7 +46,7 @@ internal fun ErrorContent(
         )
 
         Text(
-            text = LocalDetailsStrings.current.errorContentStrings.text,
+            text = text,
             style = LocalTextStyle.current,
             fontWeight = FontWeight.Normal,
             fontSize = 16.sp,
@@ -54,7 +55,7 @@ internal fun ErrorContent(
 
         ActionButton(
             modifier = Modifier.fillMaxWidth(),
-            text = LocalDetailsStrings.current.errorContentStrings.repeatText,
+            text = buttonText,
             isConfirm = true,
             onClick = onRepeat
         )

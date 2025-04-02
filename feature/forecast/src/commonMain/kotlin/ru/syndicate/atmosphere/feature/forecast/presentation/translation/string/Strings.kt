@@ -14,7 +14,8 @@ internal data class Strings(
     val sunset: String,
     val windUnit: String,
     val monthTitle: MonthTitle,
-    val weekDayTitle: WeekDayTitle
+    val weekDayTitle: WeekDayTitle,
+    val errorContentStrings: ErrorContentStrings
 )
 
 internal data class MonthTitle(
@@ -40,4 +41,10 @@ internal data class WeekDayTitle(
     val friday: String,
     val saturday: String,
     val sunday: String
+)
+
+internal data class ErrorContentStrings(
+    val title: String,
+    val text: String,
+    val repeatText: String
 )

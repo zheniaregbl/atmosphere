@@ -39,5 +39,10 @@ internal val FrStrings = Strings(
         friday = "Vendredi",
         saturday = "Samedi",
         sunday = "Dimanche"
+    ),
+    errorContentStrings = ErrorContentStrings(
+        title = "Erreur de requête",
+        text = "Une erreur s'est produite lors de la récupération des prévisions météo.",
+        repeatText = "Réessayer"
     )
 )
