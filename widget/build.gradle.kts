@@ -34,6 +34,8 @@ kotlin {
         androidMain.dependencies {
             api(libs.ui.tooling.preview)
 
+            api(libs.androidx.work.runtime.ktx)
+
             api(libs.glance.appwidget)
             api(libs.glance.preview)
             api(libs.glance.appwidget.preview)
