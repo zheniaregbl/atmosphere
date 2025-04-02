@@ -15,10 +15,12 @@ import kotlinx.coroutines.launch
 import ru.syndicate.atmosphere.core.domain.repository.SettingsRepository
 import ru.syndicate.atmosphere.feature.home.domain.repository.WeatherRepository
 import ru.syndicate.atmosphere.feature.home.presentation.util.ErrorMessageCode
+import ru.syndicate.atmosphere.widget.domain.WidgetManager
 
 internal class HomeViewModel(
     private val weatherRepository: WeatherRepository,
-    private val settingsRepository: SettingsRepository
+    private val settingsRepository: SettingsRepository,
+    private val widgetManager: WidgetManager
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
@@ -44,6 +46,7 @@ internal class HomeViewModel(
                 .collect { currentLocation ->
                     if (currentLocation.latitude != _state.value.currentLocation.latitude
                         || currentLocation.longitude != _state.value.currentLocation.longitude) {
+                        widgetManager.updateWidget()
                         getHourlyWeather()
                     }
                     _state.update { it.copy(currentLocation = currentLocation) }
