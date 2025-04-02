@@ -3,6 +3,7 @@ package ru.syndicate.atmosphere.core.data.repository
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -24,6 +25,7 @@ class DefaultSettingsRepository(
         val launchAppTypeKey = stringPreferencesKey("launch_app_type")
         val locationKey = stringPreferencesKey("selected_location")
         val appLanguageKey = stringPreferencesKey("app_language")
+        val widgetTimingKey = intPreferencesKey("widget_timing")
     }
 
     override val launchAppType: Flow<String> = dataStore
@@ -51,6 +53,13 @@ class DefaultSettingsRepository(
             else it[PreferenceKeys.appLanguageKey]!!
         }
 
+    override val widgetTiming: Flow<Int> = dataStore
+        .data
+        .map {
+            if (it[PreferenceKeys.widgetTimingKey] == null) 15
+            else it[PreferenceKeys.widgetTimingKey]!!
+        }
+
     override suspend fun changeAppLaunchAppType(type: String) {
         dataStore.edit { it[PreferenceKeys.launchAppTypeKey] = type }
     }
@@ -61,5 +70,9 @@ class DefaultSettingsRepository(
 
     override suspend fun changeSearchLanguage(language: String) {
         dataStore.edit { it[PreferenceKeys.appLanguageKey] = language }
+    }
+
+    override suspend fun changeWidgetTiming(timing: Int) {
+        dataStore.edit { it[PreferenceKeys.widgetTimingKey] = timing }
     }
 }

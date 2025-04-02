@@ -18,11 +18,24 @@ internal class SettingsViewModel(
     val state = _state.asStateFlow()
 
     init {
+
         viewModelScope.launch {
             settingsRepository.appLanguage
                 .collect { language ->
                     _state.update { it.copy(appLanguage = language) }
                     widgetManager.updateWidget()
+                }
+        }
+
+        viewModelScope.launch {
+            settingsRepository.widgetTiming
+                .collect { timing ->
+                    val timingIndex = when (timing) {
+                        30 -> 1
+                        60 -> 2
+                        else -> 0
+                    }
+                    _state.update { it.copy(selectedWidgetTimingIndex = timingIndex) }
                 }
         }
     }
@@ -42,7 +55,12 @@ internal class SettingsViewModel(
     }
 
     private fun changeWidgetTiming(index: Int) = viewModelScope.launch {
-        _state.update { it.copy(selectedWidgetTimingIndex = index) }
-        // TODO: Save timing in data store and setup new worker
+        val timing = when (index) {
+            1 -> 30
+            2 -> 60
+            else -> 15
+        }
+        settingsRepository.changeWidgetTiming(timing)
+        widgetManager.rerunWidget(timing)
     }
 }

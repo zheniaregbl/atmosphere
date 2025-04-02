@@ -7,7 +7,9 @@ interface SettingsRepository {
     val launchAppType: Flow<String>
     val currentLocation: Flow<CurrentLocation>
     val appLanguage: Flow<String>
+    val widgetTiming: Flow<Int>
     suspend fun changeAppLaunchAppType(type: String)
     suspend fun saveSelectedCity(location: CurrentLocation)
     suspend fun changeSearchLanguage(language: String)
+    suspend fun changeWidgetTiming(timing: Int)
 }
