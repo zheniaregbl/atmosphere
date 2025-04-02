@@ -3,5 +3,8 @@ package ru.syndicate.atmosphere.feature.onboarding.presentation.translation.stri
 internal data class Strings(
     val languageSelectionTitle: String,
     val languageSelectionDesc: String,
+    val batteryTitle: String,
+    val batteryDesc: String,
+    val confirmButtonText: String,
     val continueButtonText: String
 )

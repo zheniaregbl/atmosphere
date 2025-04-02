@@ -9,6 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import ru.syndicate.atmosphere.core.presentation.theme.AppTheme
 import ru.syndicate.atmosphere.core.presentation.theme.BackgroundColor
 import ru.syndicate.atmosphere.feature.onboarding.presentation.OnboardingScreenImpl
+import ru.syndicate.atmosphere.feature.onboarding.presentation.translation.OnboardingState
 
 @Preview
 @Composable
@@ -19,6 +20,7 @@ private fun OnboardingScreenPreview() {
                 .fillMaxSize()
                 .background(BackgroundColor)
                 .statusBarsPadding(),
+            state = OnboardingState(),
             onAction = { }
         )
     }

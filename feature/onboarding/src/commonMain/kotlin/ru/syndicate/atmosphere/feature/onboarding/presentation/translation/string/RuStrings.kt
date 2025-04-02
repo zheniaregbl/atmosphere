@@ -7,5 +7,8 @@ import ru.syndicate.atmosphere.core.presentation.translation.Locales
 internal val RuStrings = Strings(
     languageSelectionTitle = "Выберите язык приложения",
     languageSelectionDesc = "Выберите язык приложения для продолжения.",
+    batteryTitle = "Фоновая активность",
+    batteryDesc = "Отключите контроль фоновой активности чтобы приложение могло корректно обновлять данные о погоде.",
+    confirmButtonText = "Подтвердить",
     continueButtonText = "Продолжить"
 )

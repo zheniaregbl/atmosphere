@@ -27,8 +27,12 @@ import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
 import ru.syndicate.atmosphere.core.navigation.SharedScreen
 import ru.syndicate.atmosphere.core.presentation.translation.Locales
+import ru.syndicate.atmosphere.core.util.PlatformName
+import ru.syndicate.atmosphere.core.util.platformName
+import ru.syndicate.atmosphere.feature.onboarding.presentation.components.BatteryOptimizationContent
 import ru.syndicate.atmosphere.feature.onboarding.presentation.components.WelcomeSectionContent
 import ru.syndicate.atmosphere.feature.onboarding.presentation.components.LanguageSelectionContent
+import ru.syndicate.atmosphere.feature.onboarding.presentation.translation.OnboardingState
 import ru.syndicate.atmosphere.feature.onboarding.presentation.translation.util.LocalOnboardingStrings
 import ru.syndicate.atmosphere.feature.onboarding.presentation.translation.util.TranslationUtil.translations
 
@@ -62,6 +66,7 @@ internal class OnboardingScreen : Screen {
                 modifier = Modifier
                     .fillMaxSize()
                     .statusBarsPadding(),
+                state = state,
                 onAction = {
                     viewModel.onAction(it)
                     when (it) {
@@ -77,6 +82,7 @@ internal class OnboardingScreen : Screen {
 @Composable
 internal fun OnboardingScreenImpl(
     modifier: Modifier = Modifier,
+    state: OnboardingState,
     onAction: (OnboardingAction) -> Unit
 ) {
 
@@ -84,8 +90,21 @@ internal fun OnboardingScreenImpl(
 
     val pagerState = rememberPagerState(
         initialPage = 0,
-        pageCount = { 2 }
+        pageCount = { 3 }
     )
+
+    val platformName = platformName()
+
+    LaunchedEffect(state.isBackgroundPermissionGranted) {
+        println(state.isBackgroundPermissionGranted)
+        if (pagerState.currentPage == 2 && state.isBackgroundPermissionGranted != null) {
+            if (state.isBackgroundPermissionGranted) {
+                onAction(OnboardingAction.NavigateToSearch)
+            } else {
+                onAction(OnboardingAction.OnRequestBackgroundPermission)
+            }
+        }
+    }
 
     Box(modifier = modifier) {
 
@@ -125,10 +144,33 @@ internal fun OnboardingScreenImpl(
                             .fillMaxWidth()
                             .padding(horizontal = 20.dp),
                         onSelected = {
+
                             if (!pagerState.isScrollInProgress) {
+
                                 onAction(OnboardingAction.OnChangeSearchLanguage(it))
-                                onAction(OnboardingAction.NavigateToSearch)
+
+                                if (platformName != PlatformName.ANDROID) {
+                                    onAction(OnboardingAction.NavigateToSearch)
+                                } else {
+                                    scope.launch {
+                                        pagerState.animateScrollToPage(
+                                            page = 2,
+                                            animationSpec = tween(durationMillis = 400)
+                                        )
+                                    }
+                                }
                             }
+                        }
+                    )
+
+                    2 -> BatteryOptimizationContent(
+                        modifier = Modifier
+                            .widthIn(max = 800.dp)
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp),
+                        onClick = {
+                            println(state.isBackgroundPermissionGranted)
+                            onAction(OnboardingAction.CheckBackgroundPermission)
                         }
                     )
                 }
