@@ -9,5 +9,9 @@ internal val DeStrings = Strings(
     langSectionTitle = "Anwendungssprache",
     langSectionDesc = "Diese Einstellung gibt die Sprache der Anwendungsoberfläche an.",
     selectLangDialogTitle = "Sprache auswählen",
-    selectButtonText = "Wählen"
+    selectButtonText = "Wählen",
+    widgetTimingTitle = "Widget-Aktualisierungsfrequenz",
+    widgetTimingDesc = "Diese Einstellung legt fest, wie oft das Widget Wetterdaten im Hintergrund aktualisiert.",
+    minutesText = "min",
+    hoursText = "Std"
 )

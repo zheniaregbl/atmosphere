@@ -9,5 +9,9 @@ internal val EnStrings = Strings(
     langSectionTitle = "Application language",
     langSectionDesc = "This setting specifies the application interface language.",
     selectLangDialogTitle = "Select language",
-    selectButtonText = "Choose"
+    selectButtonText = "Choose",
+    widgetTimingTitle = "Widget update frequency",
+    widgetTimingDesc = "This setting determines how often the widget will update weather data in the background.",
+    minutesText = "min",
+    hoursText = "hour"
 )

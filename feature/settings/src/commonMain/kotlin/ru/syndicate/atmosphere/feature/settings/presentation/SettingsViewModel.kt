@@ -28,12 +28,21 @@ internal class SettingsViewModel(
     }
 
     fun onAction(action: SettingsAction) {
+
         when (action) {
+
             is SettingsAction.OnChangeSearchLanguage -> changeSearchLanguage(action.language)
+
+            is SettingsAction.OnChangeWidgetTiming -> changeWidgetTiming(action.selectedIndex)
         }
     }
 
     private fun changeSearchLanguage(language: String) = viewModelScope.launch {
         settingsRepository.changeSearchLanguage(language)
+    }
+
+    private fun changeWidgetTiming(index: Int) = viewModelScope.launch {
+        _state.update { it.copy(selectedWidgetTimingIndex = index) }
+        // TODO: Save timing in data store and setup new worker
     }
 }

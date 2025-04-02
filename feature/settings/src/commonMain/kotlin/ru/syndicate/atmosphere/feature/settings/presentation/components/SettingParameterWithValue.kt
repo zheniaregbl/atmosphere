@@ -25,7 +25,7 @@ import ru.syndicate.atmosphere.feature.settings.resources.Res
 import ru.syndicate.atmosphere.feature.settings.resources.arrow_right_svg
 
 @Composable
-internal fun SettingParameter(
+internal fun SettingParameterWithValue(
     modifier: Modifier = Modifier,
     title: String,
     description: String,

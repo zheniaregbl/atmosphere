@@ -9,5 +9,9 @@ internal val PtStrings = Strings(
     langSectionTitle = "Idioma do aplicativo",
     langSectionDesc = "Esta configuração especifica o idioma da interface do aplicativo.",
     selectLangDialogTitle = "Selecione o idioma",
-    selectButtonText = "Escolher"
+    selectButtonText = "Escolher",
+    widgetTimingTitle = "Frequência de atualização do widget",
+    widgetTimingDesc = "Esta configuração determina com que frequência o widget atualizará os dados climáticos em segundo plano.",
+    minutesText = "min",
+    hoursText = "hora"
 )

@@ -30,8 +30,11 @@ import cafe.adriel.voyager.navigator.internal.BackHandler
 import org.koin.compose.viewmodel.koinViewModel
 import ru.syndicate.atmosphere.core.presentation.components.LanguageDialog
 import ru.syndicate.atmosphere.core.presentation.translation.Locales
-import ru.syndicate.atmosphere.feature.settings.presentation.components.SettingParameter
+import ru.syndicate.atmosphere.core.util.PlatformName
+import ru.syndicate.atmosphere.core.util.platformName
+import ru.syndicate.atmosphere.feature.settings.presentation.components.SettingParameterWithValue
 import ru.syndicate.atmosphere.feature.settings.presentation.components.TopPanel
+import ru.syndicate.atmosphere.feature.settings.presentation.components.WidgetTimingParameter
 import ru.syndicate.atmosphere.feature.settings.presentation.translation.util.TranslationUtil.LocalSettingsStrings
 import ru.syndicate.atmosphere.feature.settings.presentation.translation.util.TranslationUtil.translations
 
@@ -62,6 +65,8 @@ internal fun SettingsScreenImpl(
     onAction: (SettingsAction) -> Unit,
     onBackClick: () -> Unit
 ) {
+
+    val platformName = platformName()
 
     var showLanguageDialog by remember { mutableStateOf(false) }
 
@@ -127,11 +132,12 @@ internal fun SettingsScreenImpl(
                 LazyColumn(
                     modifier = Modifier
                         .widthIn(max = 800.dp)
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
 
                     item {
-                        SettingParameter(
+                        SettingParameterWithValue(
                             modifier = Modifier
                                 .widthIn(max = 800.dp)
                                 .fillMaxWidth()
@@ -141,6 +147,21 @@ internal fun SettingsScreenImpl(
                             value = searchLanguage,
                             onClick = { showLanguageDialog = true }
                         )
+                    }
+
+                    if (platformName == PlatformName.ANDROID) {
+                        item {
+                            WidgetTimingParameter(
+                                modifier = Modifier
+                                    .widthIn(max = 800.dp)
+                                    .fillMaxWidth()
+                                    .padding(vertical = 14.dp),
+                                title = LocalSettingsStrings.current.widgetTimingTitle,
+                                description = LocalSettingsStrings.current.widgetTimingDesc,
+                                selectedTimingWidget = state.value.selectedWidgetTimingIndex,
+                                onClick = { onAction(SettingsAction.OnChangeWidgetTiming(it)) }
+                            )
+                        }
                     }
                 }
             }

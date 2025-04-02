@@ -9,5 +9,9 @@ internal val RuStrings = Strings(
     langSectionTitle = "Язык приложения",
     langSectionDesc = "Этот параметр задает язык интерфейса приложения.",
     selectLangDialogTitle = "Выберите язык",
-    selectButtonText = "Выбрать"
+    selectButtonText = "Выбрать",
+    widgetTimingTitle = "Частота обновления виджета",
+    widgetTimingDesc = "Этот параметр определяет как часто виджет будет обновлять данные погоды в фоновом режиме.",
+    minutesText = "мин",
+    hoursText = "час"
 )

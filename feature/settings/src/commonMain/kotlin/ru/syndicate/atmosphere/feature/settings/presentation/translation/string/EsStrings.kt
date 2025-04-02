@@ -9,5 +9,9 @@ internal val EsStrings = Strings(
     langSectionTitle = "Idioma de la aplicación",
     langSectionDesc = "Esta configuración especifica el idioma de la interfaz de la aplicación.",
     selectLangDialogTitle = "Seleccionar idioma",
-    selectButtonText = "Elegir"
+    selectButtonText = "Elegir",
+    widgetTimingTitle = "Frecuencia de actualización del widget",
+    widgetTimingDesc = "Esta configuración determina con qué frecuencia el widget actualizará los datos del clima en segundo plano.",
+    minutesText = "min",
+    hoursText = "hora"
 )

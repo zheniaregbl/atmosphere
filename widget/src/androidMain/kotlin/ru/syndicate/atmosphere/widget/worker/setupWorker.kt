@@ -7,11 +7,17 @@ import androidx.work.WorkManager
 import java.time.Duration
 import java.util.concurrent.TimeUnit
 
-fun setupWorker(workManager: WorkManager) {
+fun setupWorker(
+    workManager: WorkManager,
+    timing: Long = 15,
+    disableBefore: Boolean = false
+) {
+
+    if (disableBefore) workManager.cancelUniqueWork("atmosphereWeatherWork")
 
     val workRequest = PeriodicWorkRequest.Builder(
         WeatherWorker::class.java,
-        15,
+        timing,
         TimeUnit.MINUTES
     ).setBackoffCriteria(
         BackoffPolicy.LINEAR,

@@ -5,5 +5,9 @@ internal data class Strings(
     val langSectionTitle: String,
     val langSectionDesc: String,
     val selectLangDialogTitle: String,
-    val selectButtonText: String
+    val selectButtonText: String,
+    val widgetTimingTitle: String,
+    val widgetTimingDesc: String,
+    val minutesText: String,
+    val hoursText: String,
 )
