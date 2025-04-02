@@ -31,10 +31,12 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.lyricist.ProvideStrings
 import cafe.adriel.lyricist.rememberStrings
+import cafe.adriel.voyager.core.annotation.InternalVoyagerApi
 import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cafe.adriel.voyager.navigator.internal.BackHandler
 import dev.chrisbanes.haze.HazeState
 import org.koin.compose.viewmodel.koinViewModel
 import ru.syndicate.atmosphere.core.navigation.SharedScreen
@@ -83,6 +85,7 @@ internal class HomeScreen : Screen {
     }
 }
 
+@OptIn(InternalVoyagerApi::class)
 @Composable
 internal fun HomeScreenImpl(
     modifier: Modifier = Modifier,
@@ -101,6 +104,11 @@ internal fun HomeScreenImpl(
         translations = translations,
         defaultLanguageTag = Locales.EN,
         currentLanguageTag = state.value.appLanguage
+    )
+
+    BackHandler(
+        enabled = state.value.showErrorDialog,
+        onBack = { onAction(HomeAction.OnCloseErrorDialog) }
     )
 
     LaunchedEffect(state.value.appLanguage) {

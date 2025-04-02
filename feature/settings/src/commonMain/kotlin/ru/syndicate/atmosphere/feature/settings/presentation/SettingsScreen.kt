@@ -22,9 +22,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.lyricist.ProvideStrings
 import cafe.adriel.lyricist.rememberStrings
+import cafe.adriel.voyager.core.annotation.InternalVoyagerApi
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cafe.adriel.voyager.navigator.internal.BackHandler
 import org.koin.compose.viewmodel.koinViewModel
 import ru.syndicate.atmosphere.core.presentation.components.LanguageDialog
 import ru.syndicate.atmosphere.core.presentation.translation.Locales
@@ -52,6 +54,7 @@ class SettingsScreen : Screen {
     }
 }
 
+@OptIn(InternalVoyagerApi::class)
 @Composable
 internal fun SettingsScreenImpl(
     modifier: Modifier = Modifier,
@@ -84,6 +87,11 @@ internal fun SettingsScreenImpl(
         translations = translations,
         defaultLanguageTag = Locales.EN,
         currentLanguageTag = state.value.appLanguage
+    )
+
+    BackHandler(
+        enabled = showLanguageDialog,
+        onBack = { showLanguageDialog = false }
     )
 
     LaunchedEffect(state.value.appLanguage) {
