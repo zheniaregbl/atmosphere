@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -120,6 +121,16 @@ internal fun HomeScreenImpl(
         provider = LocalHomeStrings
     ) {
 
+        val topPanelDefaultTitle = LocalHomeStrings.current.screenTitle
+        val topPanelTitle = remember { mutableStateOf(topPanelDefaultTitle) }
+
+        LaunchedEffect(lazyListState.firstVisibleItemIndex) {
+            if (lazyListState.firstVisibleItemIndex > 0)
+                topPanelTitle.value = state.value.currentLocation.title
+            else
+                topPanelTitle.value = topPanelDefaultTitle
+        }
+
         Box(modifier = modifier) {
 
             WeatherImage(
@@ -143,6 +154,7 @@ internal fun HomeScreenImpl(
                         .widthIn(max = 800.dp)
                         .fillMaxWidth()
                         .padding(horizontal = 20.dp),
+                    topPanelTitle = topPanelTitle,
                     onSearchClick = onSearchClick,
                     onSettingsClick = onSettingsClick
                 )
