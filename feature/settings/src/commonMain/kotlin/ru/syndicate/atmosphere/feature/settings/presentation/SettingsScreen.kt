@@ -132,8 +132,7 @@ internal fun SettingsScreenImpl(
                 LazyColumn(
                     modifier = Modifier
                         .widthIn(max = 800.dp)
-                        .fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(2.dp)
+                        .fillMaxWidth()
                 ) {
 
                     item {

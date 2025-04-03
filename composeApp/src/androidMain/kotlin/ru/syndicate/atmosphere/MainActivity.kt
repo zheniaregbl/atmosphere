@@ -9,8 +9,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.work.WorkManager
-import ru.syndicate.atmosphere.widget.worker.setupWorker
 
 class MainActivity : ComponentActivity() {
 
@@ -22,8 +20,6 @@ class MainActivity : ComponentActivity() {
             statusBarStyle = SystemBarStyle.dark(scrim = Color.TRANSPARENT),
             navigationBarStyle = SystemBarStyle.dark(scrim = Color.TRANSPARENT)
         )
-
-        setupWorker(WorkManager.getInstance(applicationContext))
 
         setContent {
             CompositionLocalProvider(
