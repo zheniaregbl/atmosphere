@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,12 +24,15 @@ import atmosphere.feature.home.generated.resources.arrow_svg
 import atmosphere.feature.home.generated.resources.search_svg
 import atmosphere.feature.home.generated.resources.settings_svg
 import org.jetbrains.compose.resources.painterResource
+import ru.syndicate.atmosphere.core.domain.model.CurrentLocation
 import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
+import ru.syndicate.atmosphere.feature.home.presentation.translation.util.LocalHomeStrings
 
 @Composable
 internal fun TopPanel(
     modifier: Modifier = Modifier,
-    topPanelTitle: MutableState<String>,
+    currentLocation: CurrentLocation = CurrentLocation(),
+    isShowedTownTitle: Boolean = false,
     onSearchClick: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
@@ -63,12 +65,12 @@ internal fun TopPanel(
             )
 
             AnimatedContent(
-                targetState = topPanelTitle.value,
+                targetState = isShowedTownTitle,
                 transitionSpec = { fadeIn().togetherWith(fadeOut()) }
-            ) { title ->
+            ) { state ->
 
                 Text(
-                    text = title,
+                    text = if (state) currentLocation.title else LocalHomeStrings.current.screenTitle,
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Normal,
                     fontSize = 14.sp,

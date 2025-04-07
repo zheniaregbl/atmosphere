@@ -21,8 +21,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -107,6 +109,8 @@ internal fun HomeScreenImpl(
         currentLanguageTag = state.value.appLanguage
     )
 
+    var isShowedTownTitle by remember { mutableStateOf(false) }
+
     BackHandler(
         enabled = state.value.showErrorDialog,
         onBack = { onAction(HomeAction.OnCloseErrorDialog) }
@@ -121,14 +125,8 @@ internal fun HomeScreenImpl(
         provider = LocalHomeStrings
     ) {
 
-        val topPanelDefaultTitle = LocalHomeStrings.current.screenTitle
-        val topPanelTitle = remember { mutableStateOf(topPanelDefaultTitle) }
-
         LaunchedEffect(lazyListState.firstVisibleItemIndex) {
-            if (lazyListState.firstVisibleItemIndex > 0)
-                topPanelTitle.value = state.value.currentLocation.title
-            else
-                topPanelTitle.value = topPanelDefaultTitle
+            isShowedTownTitle = lazyListState.firstVisibleItemIndex > 0
         }
 
         Box(modifier = modifier) {
@@ -154,7 +152,8 @@ internal fun HomeScreenImpl(
                         .widthIn(max = 800.dp)
                         .fillMaxWidth()
                         .padding(horizontal = 20.dp),
-                    topPanelTitle = topPanelTitle,
+                    currentLocation = state.value.currentLocation,
+                    isShowedTownTitle = isShowedTownTitle,
                     onSearchClick = onSearchClick,
                     onSettingsClick = onSettingsClick
                 )
