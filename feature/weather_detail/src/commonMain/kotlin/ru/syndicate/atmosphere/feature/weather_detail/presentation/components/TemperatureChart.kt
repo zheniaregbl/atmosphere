@@ -27,7 +27,7 @@ internal fun TemperatureChart(
     CommonChart(
         modifier = modifier,
         values = temperatures,
-        yRange = temperatures.min()..temperatures.max(),
+        yRange = temperatures.min() - 1..temperatures.max() + 1,
         yAxisLabels = { "$it°" },
         xViewRange = 0.0..10.0,
         yViewRange = temperatures.min().toDouble()..temperatures.max().toDouble(),

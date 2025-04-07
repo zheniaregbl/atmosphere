@@ -60,7 +60,7 @@ internal fun CommonChart(
     val yAxisModel = if (platformName != PlatformName.DESKTOP) {
         rememberIntLinearAxisModel(
             range = yRange,
-            allowPanning = true,
+            allowPanning = true
         ).apply { setViewRange(yViewRange) }
     } else {
         rememberIntLinearAxisModel(yRange)
