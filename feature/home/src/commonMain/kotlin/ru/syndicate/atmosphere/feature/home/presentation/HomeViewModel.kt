@@ -2,9 +2,6 @@ package ru.syndicate.atmosphere.feature.home.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.skydoves.sandwich.onError
-import com.skydoves.sandwich.onException
-import com.skydoves.sandwich.onSuccess
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -13,12 +10,15 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.syndicate.atmosphere.core.domain.repository.SettingsRepository
+import ru.syndicate.atmosphere.core.domain.use_case.CaseResult
+import ru.syndicate.atmosphere.feature.home.domain.model.WeatherInfo
 import ru.syndicate.atmosphere.feature.home.domain.repository.WeatherRepository
-import ru.syndicate.atmosphere.feature.home.presentation.util.ErrorMessageCode
+import ru.syndicate.atmosphere.feature.home.domain.use_case.GetHourlyWeatherCase
 import ru.syndicate.atmosphere.widget.domain.WidgetManager
 
 internal class HomeViewModel(
     private val weatherRepository: WeatherRepository,
+    private val getHourlyWeatherCase: GetHourlyWeatherCase,
     private val settingsRepository: SettingsRepository,
     private val widgetManager: WidgetManager
 ) : ViewModel() {
@@ -68,30 +68,18 @@ internal class HomeViewModel(
 
         delay(2000)
 
-        weatherRepository.getHourlyWeather(
-            _state.value.currentLocation.latitude,
-            _state.value.currentLocation.longitude,
-            _state.value.currentLocation.timeZone
-        )
-            .onSuccess {
+        when (val result = getHourlyWeatherCase(_state.value.currentLocation)) {
+            is CaseResult.Error ->
                 _state.update { it.copy(
                     isLoading = false,
-                    weatherInfo = data
-                ) }
-            }
-            .onException {
-                _state.update { it.copy(
-                    isLoading = false,
-                    errorMessageCode = ErrorMessageCode.REQUEST_EXCEPTION,
+                    errorMessageCode = result.errorMessageCode,
                     showErrorDialog = true
                 ) }
-            }
-            .onError {
+            is CaseResult.Success<WeatherInfo> ->
                 _state.update { it.copy(
                     isLoading = false,
-                    errorMessageCode = ErrorMessageCode.REQUEST_ERROR,
-                    showErrorDialog = true
+                    weatherInfo = result.data
                 ) }
-            }
+        }
     }
 }

@@ -10,13 +10,14 @@ import ru.syndicate.atmosphere.feature.search.data.network.KtorRemoteSearchCityD
 import ru.syndicate.atmosphere.feature.search.data.network.RemoteSearchCityDataSource
 import ru.syndicate.atmosphere.feature.search.data.repository.DefaultSearchCityRepository
 import ru.syndicate.atmosphere.feature.search.domain.repository.SearchCityRepository
+import ru.syndicate.atmosphere.feature.search.domain.use_case.GetSearchCityCase
 import ru.syndicate.atmosphere.feature.search.presentation.CityListViewModel
 import ru.syndicate.atmosphere.feature.search.presentation.SearchScreen
 
 val featureSearchModule = module {
     singleOf(::KtorRemoteSearchCityDataSource).bind<RemoteSearchCityDataSource>()
     singleOf(::DefaultSearchCityRepository).bind<SearchCityRepository>()
-
+    singleOf(::GetSearchCityCase)
     viewModelOf(::CityListViewModel)
 }
 

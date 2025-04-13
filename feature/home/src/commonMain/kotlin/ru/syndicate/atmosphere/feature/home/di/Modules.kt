@@ -7,12 +7,14 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 import ru.syndicate.atmosphere.feature.home.data.repository.DefaultWeatherRepository
 import ru.syndicate.atmosphere.feature.home.domain.repository.WeatherRepository
+import ru.syndicate.atmosphere.feature.home.domain.use_case.GetHourlyWeatherCase
 import ru.syndicate.atmosphere.core.navigation.SharedScreen
 import ru.syndicate.atmosphere.feature.home.presentation.HomeScreen
 import ru.syndicate.atmosphere.feature.home.presentation.HomeViewModel
 
 val featureHomeModule = module {
     singleOf(::DefaultWeatherRepository).bind<WeatherRepository>()
+    singleOf(::GetHourlyWeatherCase)
     viewModelOf(::HomeViewModel)
 }
 

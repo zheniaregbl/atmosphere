@@ -2,9 +2,6 @@ package ru.syndicate.atmosphere.feature.weather_detail.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.skydoves.sandwich.onError
-import com.skydoves.sandwich.onException
-import com.skydoves.sandwich.onSuccess
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -13,10 +10,12 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.syndicate.atmosphere.core.domain.repository.SettingsRepository
-import ru.syndicate.atmosphere.feature.weather_detail.domain.repository.WeatherRepository
+import ru.syndicate.atmosphere.core.domain.use_case.CaseResult
+import ru.syndicate.atmosphere.feature.weather_detail.domain.model.WeatherDetail
+import ru.syndicate.atmosphere.feature.weather_detail.domain.use_case.GetDailyWeatherCase
 
 internal class WeatherDetailViewModel(
-    private val weatherRepository: WeatherRepository,
+    private val getDailyWeatherCase: GetDailyWeatherCase,
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
@@ -61,28 +60,17 @@ internal class WeatherDetailViewModel(
 
         delay(1000)
 
-        weatherRepository.getDailyWeather(
-            _state.value.currentLocation.latitude,
-            _state.value.currentLocation.longitude,
-            _state.value.currentLocation.timeZone
-        )
-            .onSuccess {
-                _state.update { it.copy(
-                    isLoading = false,
-                    details = data
-                ) }
-            }
-            .onException {
+        when (val result = getDailyWeatherCase(_state.value.currentLocation)) {
+            is CaseResult.Error ->
                 _state.update { it.copy(
                     isLoading = false,
                     showErrorContent = true
                 ) }
-            }
-            .onError {
+            is CaseResult.Success<WeatherDetail> ->
                 _state.update { it.copy(
                     isLoading = false,
-                    showErrorContent = true
+                    details = result.data
                 ) }
-            }
+        }
     }
 }

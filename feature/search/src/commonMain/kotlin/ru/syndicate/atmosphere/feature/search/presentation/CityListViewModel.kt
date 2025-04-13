@@ -2,10 +2,6 @@ package ru.syndicate.atmosphere.feature.search.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.skydoves.sandwich.ktor.statusCode
-import com.skydoves.sandwich.onError
-import com.skydoves.sandwich.onException
-import com.skydoves.sandwich.onSuccess
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -20,13 +16,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.syndicate.atmosphere.core.domain.model.CurrentLocation
 import ru.syndicate.atmosphere.core.domain.repository.SettingsRepository
+import ru.syndicate.atmosphere.core.domain.use_case.CaseResult
 import ru.syndicate.atmosphere.core.presentation.util.LaunchAppType
 import ru.syndicate.atmosphere.feature.search.domain.model.City
-import ru.syndicate.atmosphere.feature.search.domain.repository.SearchCityRepository
-import ru.syndicate.atmosphere.feature.search.presentation.util.ErrorMessageCode
+import ru.syndicate.atmosphere.feature.search.domain.use_case.GetSearchCityCase
 
 internal class CityListViewModel(
-    private val searchCityRepository: SearchCityRepository,
+    private val getSearchCityCase: GetSearchCityCase,
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
@@ -96,43 +92,19 @@ internal class CityListViewModel(
             )
         }
 
-        searchCityRepository.searchCity(text, _state.value.appLanguage)
-            .onSuccess {
-                if (data.isNotEmpty()) {
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            searchCityList = data
-                        )
-                    }
-                } else {
-                    _state.update { it.copy(
-                        isLoading = false,
-                        searchCityList = emptyList(),
-                        errorMessageCode = ErrorMessageCode.NOT_FOUND_LOCATION
-                    ) }
-                }
-            }
-            .onError {
-                println(statusCode.code)
-                _state.update {
-                    it.copy(
-                        isLoading = false,
-                        searchCityList = emptyList(),
-                        errorMessageCode = ErrorMessageCode.PROBLEM_WITH_REQUEST
-                    )
-                }
-            }
-            .onException {
-                println(message)
-                _state.update {
-                    it.copy(
-                        isLoading = false,
-                        searchCityList = emptyList(),
-                        errorMessageCode = ErrorMessageCode.NOT_FOUND_LOCATION
-                    )
-                }
-            }
+        when (val result = getSearchCityCase(text, _state.value.appLanguage)) {
+            is CaseResult.Error ->
+                _state.update { it.copy(
+                    isLoading = false,
+                    searchCityList = emptyList(),
+                    errorMessageCode = result.errorMessageCode
+                ) }
+            is CaseResult.Success<List<City>> ->
+                _state.update { it.copy(
+                    isLoading = false,
+                    searchCityList = result.data
+                ) }
+        }
     }
 
     private fun selectCity(city: City) = viewModelScope.launch {
