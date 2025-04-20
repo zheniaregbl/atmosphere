@@ -34,6 +34,7 @@ ui-tooling = "1.7.8"
 ui-tooling-preview = "1.7.0"
 glance = "1.1.1"
 work-runtime-ktx = "2.10.0"
+build-config = "5.5.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -119,6 +120,7 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hot-reload = { id = "org.jetbrains.compose.hot-reload", version = "1.0.0-dev-60" }
+build-config = { id = "com.github.gmazzo.buildconfig", version.ref = "build-config" }
 
 [bundles]
 ktor = [

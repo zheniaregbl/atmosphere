@@ -33,6 +33,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import ru.syndicate.atmosphere.core.navigation.SharedScreen
 import ru.syndicate.atmosphere.core.presentation.util.LaunchAppType
+import ru.syndicate.atmosphere.core.presentation.util.UIInfo
 import ru.syndicate.atmosphere.feature.splash.resources.Res
 import ru.syndicate.atmosphere.feature.splash.resources.fog_svg
 import ru.syndicate.atmosphere.feature.splash.resources.open_meteo_svg
@@ -99,32 +100,46 @@ internal fun SplashScreenImpl(
             )
         }
 
-        Row(
+        Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 30.dp),
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-            verticalAlignment = Alignment.CenterVertically
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
 
-            Text(
-                text = buildAnnotatedString {
-                    withStyle(SpanStyle(fontWeight = FontWeight.Medium)) {
-                        append("Powered by ")
-                    }
-                    withStyle(SpanStyle(fontWeight = FontWeight.SemiBold)) {
-                        append("Open-Meteo")
-                    }
-                },
-                style = LocalTextStyle.current,
-                fontSize = 14.sp,
-                color = Color.White
-            )
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
 
-            Image(
-                modifier = Modifier.size(20.dp),
-                painter = painterResource(Res.drawable.open_meteo_svg),
-                contentDescription = null
+                Text(
+                    text = buildAnnotatedString {
+                        withStyle(SpanStyle(fontWeight = FontWeight.Medium)) {
+                            append("Powered by ")
+                        }
+                        withStyle(SpanStyle(fontWeight = FontWeight.SemiBold)) {
+                            append("Open-Meteo")
+                        }
+                    },
+                    style = LocalTextStyle.current,
+                    fontSize = 14.sp,
+                    color = Color.White
+                )
+
+                Image(
+                    modifier = Modifier.size(20.dp),
+                    painter = painterResource(Res.drawable.open_meteo_svg),
+                    contentDescription = null
+                )
+            }
+
+            Text(
+                text = UIInfo.APP_VERSION_NAME,
+                style = LocalTextStyle.current,
+                fontWeight = FontWeight.Medium,
+                fontSize = 14.sp,
+                color = Color.White.copy(0.7f)
             )
         }
     }

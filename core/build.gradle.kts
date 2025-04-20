@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -6,6 +7,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.jetbrains.kotlin.serialization)
+    alias(libs.plugins.build.config)
 }
 
 kotlin {
@@ -62,6 +64,18 @@ kotlin {
             api(libs.kotlinx.coroutines.swing)
         }
     }
+}
+
+val localProperties = project.rootProject.file("local.properties")
+val properties = Properties()
+if (localProperties.exists()) {
+    properties.load(localProperties.inputStream())
+}
+
+val appVersionName = properties.getProperty("APP_VERSION_NAME") ?: ""
+
+buildConfig {
+    buildConfigField("APP_VERSION_NAME", appVersionName)
 }
 
 android {
