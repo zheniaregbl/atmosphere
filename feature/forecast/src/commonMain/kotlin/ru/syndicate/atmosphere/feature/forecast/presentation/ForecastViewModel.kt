@@ -58,7 +58,7 @@ internal class ForecastViewModel(
             showErrorContent = false
         ) }
 
-        delay(1000)
+        delay(200)
 
         when (val result = getForecastWeatherCase(_state.value.currentLocation)) {
             is CaseResult.Error ->

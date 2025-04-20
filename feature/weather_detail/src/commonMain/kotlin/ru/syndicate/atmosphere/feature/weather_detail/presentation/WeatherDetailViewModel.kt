@@ -58,7 +58,7 @@ internal class WeatherDetailViewModel(
             showErrorContent = false
         ) }
 
-        delay(1000)
+        delay(200)
 
         when (val result = getDailyWeatherCase(_state.value.currentLocation)) {
             is CaseResult.Error ->

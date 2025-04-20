@@ -29,8 +29,9 @@ internal fun DailyDetailWeatherResponseDTO.toWeatherDetail(): WeatherDetail {
             direction = this.dailyParameters.windDirection.first()
         ),
         sunInfo = SunInfo(
-            sunrise = LocalDateTime.parse(this.dailyParameters.sunriseTime.first()).time,
-            sunset = LocalDateTime.parse(this.dailyParameters.sunsetTime.first()).time,
+            sunrise = LocalDateTime.parse(this.dailyParameters.sunriseTime.first()),
+            nextDaySunrise = LocalDateTime.parse(this.dailyParameters.sunriseTime.last()),
+            sunset = LocalDateTime.parse(this.dailyParameters.sunsetTime.first()),
             daylightDuration = this.dailyParameters.daylightDuration.first().toInt() / 3600
         ),
         weatherCode = this.dailyParameters.weatherCode.first()

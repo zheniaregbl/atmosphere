@@ -90,7 +90,10 @@ internal fun DiagramSectionMobile(
                     modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ) {
-                    SunDiagram(modifier = Modifier.size(130.dp))
+                    SunDiagram(
+                        modifier = Modifier.size(130.dp),
+                        percentage = weatherDetail.sunInfo.percentage
+                    )
                 }
             }
         )
@@ -200,7 +203,10 @@ internal fun DiagramSectionDesktop(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
 
-                    SunDiagram(modifier = Modifier.size(130.dp))
+                    SunDiagram(
+                        modifier = Modifier.size(130.dp),
+                        percentage = weatherDetail.sunInfo.percentage
+                    )
 
                     Spacer(modifier = Modifier.width(50.dp))
 
@@ -211,12 +217,12 @@ internal fun DiagramSectionDesktop(
 
                         ParameterRow(
                             parameter = LocalDetailsStrings.current.sunriseText,
-                            value = "${weatherDetail.sunInfo.sunrise}"
+                            value = "${weatherDetail.sunInfo.sunrise.time}"
                         )
 
                         ParameterRow(
                             parameter = LocalDetailsStrings.current.sunsetText,
-                            value = "${weatherDetail.sunInfo.sunset}"
+                            value = "${weatherDetail.sunInfo.sunset.time}"
                         )
 
                         ParameterRow(

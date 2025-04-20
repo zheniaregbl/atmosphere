@@ -66,7 +66,7 @@ internal class HomeViewModel(
 
         _state.update { it.copy(isLoading = true) }
 
-        delay(2000)
+        delay(500)
 
         when (val result = getHourlyWeatherCase(_state.value.currentLocation)) {
             is CaseResult.Error ->
