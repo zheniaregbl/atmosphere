@@ -16,12 +16,12 @@ internal fun DailyDetailWeatherResponseDTO.toWeatherDetail(): WeatherDetail {
             maxApparentTemperature = this.dailyParameters.apparentMaxTemperature.first().roundToInt(),
             minTemperature = this.dailyParameters.minTemperature.first().roundToInt(),
             minApparentTemperature = this.dailyParameters.apparentMinTemperature.first().roundToInt(),
-            temperatures = this.hourlyDayParameters.temperatures.map { it.toInt() }
+            temperatures = this.hourlyDayParameters.temperatures.dropLast(24).map { it.toInt() }
         ),
         precipitationInfo = PrecipitationInfo(
             hours = this.dailyParameters.precipitationHours.first().toInt(),
             sum = this.dailyParameters.precipitationSum.first(),
-            probabilities = this.hourlyDayParameters.precipitationProbability.map { it.toInt() }
+            probabilities = this.hourlyDayParameters.precipitationProbability.dropLast(24).map { it.toInt() }
         ),
         windInfo = WindInfo(
             maxSpeed = this.dailyParameters.maxWindSpeed.first().toInt(),
