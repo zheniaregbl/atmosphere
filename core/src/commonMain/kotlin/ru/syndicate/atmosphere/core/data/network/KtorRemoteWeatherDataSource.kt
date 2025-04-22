@@ -44,6 +44,7 @@ data class KtorRemoteWeatherDataSource(
             parameter("wind_speed_unit", "ms")
             parameter("timezone", timeZone)
             parameter("forecast_days", 2)
+            parameter("past_days", 1)
         }
     }
 

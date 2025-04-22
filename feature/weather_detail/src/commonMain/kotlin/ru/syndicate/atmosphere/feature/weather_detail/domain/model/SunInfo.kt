@@ -14,6 +14,10 @@ internal data class SunInfo(
         .System
         .now()
         .toLocalDateTime(TimeZone.currentSystemDefault()),
+    val previousDaySunset: LocalDateTime = Clock
+        .System
+        .now()
+        .toLocalDateTime(TimeZone.currentSystemDefault()),
     val sunset: LocalDateTime = Clock
         .System
         .now()

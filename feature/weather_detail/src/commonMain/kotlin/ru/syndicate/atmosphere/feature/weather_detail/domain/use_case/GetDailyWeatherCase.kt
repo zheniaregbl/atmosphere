@@ -27,24 +27,34 @@ internal class GetDailyWeatherCase(
 
         return when {
 
-            weatherResponse is ApiResponse.Success<WeatherDetail> &&
-                    timeResponse is ApiResponse.Success<LocalDateTime> -> {
+            weatherResponse is ApiResponse.Success<WeatherDetail>
+                    && timeResponse is ApiResponse.Success<LocalDateTime> -> {
 
-                        val timeZone = TimeZone.of(currentLocation.timeZone)
+                val timeZone = TimeZone.of(currentLocation.timeZone)
+                val now = timeResponse.data
+                val sunInfo = weatherResponse.data.sunInfo
 
-                        val instant1 = weatherResponse.data.sunInfo.sunrise.toInstant(timeZone)
-                        val instant2 = weatherResponse.data.sunInfo.nextDaySunrise.toInstant(timeZone)
-                        val currentInstant = timeResponse.data.toInstant(timeZone)
+                val (start, end, offset) = when {
+                    now.time >= sunInfo.sunrise.time && now.time <= sunInfo.sunset.time ->
+                        Triple(sunInfo.sunrise, sunInfo.sunset, 0f)
+                    now.time > sunInfo.sunset.time ->
+                        Triple(sunInfo.sunset, sunInfo.nextDaySunrise, 0.5f)
+                    else ->
+                        Triple(sunInfo.previousDaySunset, sunInfo.sunrise, 0.5f)
+                }
 
-                        val difference1 = instant1.until(instant2, DateTimeUnit.MINUTE).toFloat()
-                        val difference2 = currentInstant.until(instant2, DateTimeUnit.MINUTE).toFloat()
+                val startInstant = start.toInstant(timeZone)
+                val endInstant = end.toInstant(timeZone)
+                val nowInstant = now.toInstant(timeZone)
 
-                        CaseResult.Success(weatherResponse.data.copy(
-                            sunInfo = weatherResponse.data.sunInfo.copy(
-                                percentage = 1.0f - (difference2 / difference1)
-                            )
-                        ))
-                    }
+                val totalMinutes = startInstant.until(endInstant, DateTimeUnit.MINUTE)
+                val remainingMinutes = nowInstant.until(endInstant, DateTimeUnit.MINUTE)
+                val percentage = 0.5f * ((totalMinutes.toFloat() - remainingMinutes.toFloat()) / totalMinutes.toFloat()) + offset
+
+                CaseResult.Success(weatherResponse.data.copy(
+                    sunInfo = weatherResponse.data.sunInfo.copy(percentage = percentage)
+                ))
+            }
 
             else -> CaseResult.Error()
         }

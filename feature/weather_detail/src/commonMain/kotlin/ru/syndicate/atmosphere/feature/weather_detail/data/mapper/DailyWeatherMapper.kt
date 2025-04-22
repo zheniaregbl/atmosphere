@@ -12,28 +12,31 @@ import kotlin.math.roundToInt
 internal fun DailyDetailWeatherResponseDTO.toWeatherDetail(): WeatherDetail {
     return WeatherDetail(
         temperatureInfo = TemperatureInfo(
-            maxTemperature = this.dailyParameters.maxTemperature.first().roundToInt(),
-            maxApparentTemperature = this.dailyParameters.apparentMaxTemperature.first().roundToInt(),
-            minTemperature = this.dailyParameters.minTemperature.first().roundToInt(),
-            minApparentTemperature = this.dailyParameters.apparentMinTemperature.first().roundToInt(),
-            temperatures = this.hourlyDayParameters.temperatures.dropLast(24).map { it.toInt() }
+            maxTemperature = this.dailyParameters.maxTemperature[1].roundToInt(),
+            maxApparentTemperature = this.dailyParameters.apparentMaxTemperature[1].roundToInt(),
+            minTemperature = this.dailyParameters.minTemperature[1].roundToInt(),
+            minApparentTemperature = this.dailyParameters.apparentMinTemperature[1].roundToInt(),
+            temperatures = this.hourlyDayParameters.temperatures
+                .dropLast(24).takeLast(24).map { it.toInt() }
         ),
         precipitationInfo = PrecipitationInfo(
-            hours = this.dailyParameters.precipitationHours.first().toInt(),
-            sum = this.dailyParameters.precipitationSum.first(),
-            probabilities = this.hourlyDayParameters.precipitationProbability.dropLast(24).map { it.toInt() }
+            hours = this.dailyParameters.precipitationHours[1].toInt(),
+            sum = this.dailyParameters.precipitationSum[1],
+            probabilities = this.hourlyDayParameters.precipitationProbability
+                .dropLast(24).takeLast(24).map { it.toInt() }
         ),
         windInfo = WindInfo(
-            maxSpeed = this.dailyParameters.maxWindSpeed.first().toInt(),
-            maxGusts = this.dailyParameters.maxWindGusts.first().toInt(),
-            direction = this.dailyParameters.windDirection.first()
+            maxSpeed = this.dailyParameters.maxWindSpeed[1].toInt(),
+            maxGusts = this.dailyParameters.maxWindGusts[1].toInt(),
+            direction = this.dailyParameters.windDirection[1]
         ),
         sunInfo = SunInfo(
-            sunrise = LocalDateTime.parse(this.dailyParameters.sunriseTime.first()),
+            sunrise = LocalDateTime.parse(this.dailyParameters.sunriseTime[1]),
             nextDaySunrise = LocalDateTime.parse(this.dailyParameters.sunriseTime.last()),
-            sunset = LocalDateTime.parse(this.dailyParameters.sunsetTime.first()),
-            daylightDuration = this.dailyParameters.daylightDuration.first().toInt() / 3600
+            previousDaySunset = LocalDateTime.parse(this.dailyParameters.sunsetTime.first()),
+            sunset = LocalDateTime.parse(this.dailyParameters.sunsetTime[1]),
+            daylightDuration = this.dailyParameters.daylightDuration[1].toInt() / 3600
         ),
-        weatherCode = this.dailyParameters.weatherCode.first()
+        weatherCode = this.dailyParameters.weatherCode[1]
     )
 }
