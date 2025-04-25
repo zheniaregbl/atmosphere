@@ -5,6 +5,7 @@ import com.skydoves.sandwich.mapSuccess
 import ru.syndicate.atmosphere.core.data.network.RemoteWeatherDataSource
 import ru.syndicate.atmosphere.feature.home.data.mapper.toCurrentWeatherParameters
 import ru.syndicate.atmosphere.feature.home.data.mapper.toHourlyWeather
+import ru.syndicate.atmosphere.feature.home.data.mapper.toSunParameters
 import ru.syndicate.atmosphere.feature.home.domain.model.WeatherInfo
 import ru.syndicate.atmosphere.feature.home.domain.repository.WeatherRepository
 
@@ -23,7 +24,8 @@ internal class DefaultWeatherRepository(
                 WeatherInfo(
                     currentWeatherParameters = currentParameters
                         .toCurrentWeatherParameters(),
-                    hourlyWeather = hourlyParameters.toHourlyWeather()
+                    hourlyWeather = hourlyParameters.toHourlyWeather(),
+                    sunParameters = sunParametersDTO.toSunParameters()
                 )
             }
     }

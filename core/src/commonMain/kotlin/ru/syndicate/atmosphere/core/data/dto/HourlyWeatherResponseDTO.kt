@@ -6,5 +6,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class HourlyWeatherResponseDTO(
     @SerialName("current") val currentParameters: CurrentParametersDTO,
-    @SerialName("hourly") val hourlyParameters: HourlyParametersDTO
+    @SerialName("hourly") val hourlyParameters: HourlyParametersDTO,
+    @SerialName("daily") val sunParametersDTO: SunParametersDTO
 )

@@ -6,13 +6,16 @@ import atmosphere.feature.home.generated.resources.drizzle_svg
 import atmosphere.feature.home.generated.resources.fog_svg
 import atmosphere.feature.home.generated.resources.heavy_snow_shower_svg
 import atmosphere.feature.home.generated.resources.heavy_snow_svg
+import atmosphere.feature.home.generated.resources.light_cloudy_night_svg
 import atmosphere.feature.home.generated.resources.light_cloudy_svg
 import atmosphere.feature.home.generated.resources.light_drizzle_svg
 import atmosphere.feature.home.generated.resources.light_rain_svg
 import atmosphere.feature.home.generated.resources.light_snow_svg
+import atmosphere.feature.home.generated.resources.middle_cloudy_night_svg
 import atmosphere.feature.home.generated.resources.middle_cloudy_svg
 import atmosphere.feature.home.generated.resources.middle_rain_svg
 import atmosphere.feature.home.generated.resources.middle_snow_svg
+import atmosphere.feature.home.generated.resources.moon_svg
 import atmosphere.feature.home.generated.resources.rain_shower_svg
 import atmosphere.feature.home.generated.resources.rain_svg
 import atmosphere.feature.home.generated.resources.snow_grains_svg
@@ -20,10 +23,10 @@ import atmosphere.feature.home.generated.resources.snow_shower_svg
 import atmosphere.feature.home.generated.resources.sun_svg
 import atmosphere.feature.home.generated.resources.thunderstorm_svg
 
-internal fun iconByWeatherCode(weatherCode: Int) = when (weatherCode) {
-    0 -> Res.drawable.sun_svg
-    1 -> Res.drawable.light_cloudy_svg
-    2 -> Res.drawable.middle_cloudy_svg
+internal fun iconByWeatherCode(weatherCode: Int, isDay: Boolean = true) = when (weatherCode) {
+    0 -> if (isDay) Res.drawable.sun_svg else Res.drawable.moon_svg
+    1 -> if (isDay) Res.drawable.light_cloudy_svg else Res.drawable.light_cloudy_night_svg
+    2 -> if (isDay) Res.drawable.middle_cloudy_svg else Res.drawable.middle_cloudy_night_svg
     3 -> Res.drawable.cloudy_svg
     45, 48 -> Res.drawable.fog_svg
     51, 56 -> Res.drawable.light_drizzle_svg

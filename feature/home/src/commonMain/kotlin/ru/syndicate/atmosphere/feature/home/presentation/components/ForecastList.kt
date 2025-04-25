@@ -145,13 +145,19 @@ internal fun ForecastList(
 
                         itemsIndexed(screenState.weatherInfo.hourlyWeather.temperatures) { index, temperature ->
 
+                            val sunriseHour = screenState.weatherInfo.sunParameters.sunrise.hour
+                            val sunsetHour = screenState.weatherInfo.sunParameters.sunset.hour
+
+                            val isDay = index in sunriseHour..sunsetHour
+
                             ForecastItem(
                                 modifier = Modifier.padding(10.dp),
                                 time = if (index < 9) "0$index:00"
                                 else "$index:00",
                                 temperature = "${temperature.roundToInt()}°",
                                 weatherIcon = iconByWeatherCode(
-                                    screenState.weatherInfo.hourlyWeather.weatherCodes[index]
+                                    screenState.weatherInfo.hourlyWeather.weatherCodes[index],
+                                    isDay = isDay
                                 ),
                                 isCurrentHour = index == currentHourIndex
                             )
