@@ -39,6 +39,7 @@ internal class DefaultWeatherWidgetRepository(
                 maxTemperature = response.data.dailyParameters.maxTemperature.first().roundToInt(),
                 minTemperature = response.data.dailyParameters.minTemperature.first().roundToInt(),
                 weatherCode = response.data.currentParameters.weatherCode,
+                isDay = response.data.currentParameters.isDay == 1,
                 lastUpdateDateTime = currentDateTime.toString(),
                 appLanguage = appLanguage
             )

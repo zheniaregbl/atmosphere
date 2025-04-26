@@ -2,10 +2,10 @@ package ru.syndicate.atmosphere.widget.presentation.util
 
 import ru.syndicate.atmosphere.widget.R
 
-internal fun iconByWeatherCode(weatherCode: Int) = when (weatherCode) {
-    0 -> R.drawable.sun_svg
-    1 -> R.drawable.light_cloudy_svg
-    2 -> R.drawable.middle_cloudy_svg
+internal fun iconByWeatherCode(weatherCode: Int, isDay: Boolean) = when (weatherCode) {
+    0 -> if (isDay) R.drawable.sun_svg else R.drawable.moon_svg
+    1 -> if (isDay) R.drawable.light_cloudy_svg else R.drawable.light_cloudy_night_svg
+    2 -> if (isDay) R.drawable.middle_cloudy_svg else R.drawable.middle_cloudy_night_svg
     3 -> R.drawable.cloudy_svg
     45, 48 -> R.drawable.fog_svg
     51, 56 -> R.drawable.light_drizzle_svg

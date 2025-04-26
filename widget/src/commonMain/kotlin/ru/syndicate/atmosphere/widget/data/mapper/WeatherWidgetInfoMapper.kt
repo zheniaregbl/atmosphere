@@ -9,6 +9,7 @@ internal fun WeatherWidgetInfoDTO.toModel() =
         maxTemperature,
         minTemperature,
         weatherCode,
+        isDay,
         lastUpdateDateTime,
         appLanguage,
         isError
@@ -20,6 +21,7 @@ internal fun WeatherWidgetInfo.toDTO() =
         maxTemperature,
         minTemperature,
         weatherCode,
+        isDay,
         lastUpdateDateTime,
         appLanguage,
         isError

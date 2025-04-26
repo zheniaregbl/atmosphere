@@ -9,6 +9,7 @@ internal data class WeatherWidgetInfoDTO(
     @SerialName("max_temperature") val maxTemperature: Int,
     @SerialName("min_temperature") val minTemperature: Int,
     @SerialName("weather_code") val weatherCode: Int,
+    @SerialName("is_day") val isDay: Boolean,
     @SerialName("last_update_date_time") val lastUpdateDateTime: String,
     @SerialName("app_language") val appLanguage: String,
     @SerialName("is_error") val isError: Boolean

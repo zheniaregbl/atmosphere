@@ -112,7 +112,12 @@ internal fun WeatherWidgetUI(
 
                     Image(
                         modifier = GlanceModifier.size(64.dp),
-                        provider = ImageProvider(iconByWeatherCode(weatherWidgetInfo.weatherCode)),
+                        provider = ImageProvider(
+                            iconByWeatherCode(
+                                weatherWidgetInfo.weatherCode,
+                                weatherWidgetInfo.isDay
+                            )
+                        ),
                         contentDescription = null
                     )
                 }

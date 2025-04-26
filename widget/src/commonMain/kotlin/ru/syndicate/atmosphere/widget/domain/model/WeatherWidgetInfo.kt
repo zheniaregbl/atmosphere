@@ -11,6 +11,7 @@ internal data class WeatherWidgetInfo(
     val maxTemperature: Int = 30,
     val minTemperature: Int = 10,
     val weatherCode: Int = 1,
+    val isDay: Boolean = true,
     val lastUpdateDateTime: String = Clock
         .System
         .now()
