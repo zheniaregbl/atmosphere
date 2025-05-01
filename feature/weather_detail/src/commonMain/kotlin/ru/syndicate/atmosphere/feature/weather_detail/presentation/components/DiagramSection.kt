@@ -26,7 +26,6 @@ import org.jetbrains.compose.resources.painterResource
 import ru.syndicate.atmosphere.feature.weather_detail.domain.model.WeatherDetail
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.translation.util.LocalDetailsStrings
 import ru.syndicate.atmosphere.feature.weather_detail.resources.Res
-import ru.syndicate.atmosphere.feature.weather_detail.resources.sun_svg
 import ru.syndicate.atmosphere.feature.weather_detail.resources.wind_svg
 
 @Composable

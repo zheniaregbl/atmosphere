@@ -3,6 +3,7 @@ package ru.syndicate.atmosphere.feature.weather_detail.data.mapper
 import kotlinx.datetime.LocalDateTime
 import ru.syndicate.atmosphere.core.data.dto.DailyDetailWeatherResponseDTO
 import ru.syndicate.atmosphere.feature.weather_detail.domain.model.PrecipitationInfo
+import ru.syndicate.atmosphere.feature.weather_detail.domain.model.PressureInfo
 import ru.syndicate.atmosphere.feature.weather_detail.domain.model.SunInfo
 import ru.syndicate.atmosphere.feature.weather_detail.domain.model.TemperatureInfo
 import ru.syndicate.atmosphere.feature.weather_detail.domain.model.WeatherDetail
@@ -36,6 +37,11 @@ internal fun DailyDetailWeatherResponseDTO.toWeatherDetail(): WeatherDetail {
             previousDaySunset = LocalDateTime.parse(this.dailyParameters.sunsetTime.first()),
             sunset = LocalDateTime.parse(this.dailyParameters.sunsetTime[1]),
             daylightDuration = this.dailyParameters.daylightDuration[1].toInt() / 3600
+        ),
+        pressureInfo = PressureInfo(
+            mean = this.dailyParameters.meanPressure[1],
+            max = this.dailyParameters.maxPressure[1],
+            min = this.dailyParameters.minPressure[1]
         ),
         weatherCode = this.dailyParameters.weatherCode[1]
     )

@@ -5,5 +5,6 @@ internal data class WeatherDetail(
     val precipitationInfo: PrecipitationInfo = PrecipitationInfo(),
     val windInfo: WindInfo = WindInfo(),
     val sunInfo: SunInfo = SunInfo(),
+    val pressureInfo: PressureInfo = PressureInfo(),
     val weatherCode: Int = 1
 )
