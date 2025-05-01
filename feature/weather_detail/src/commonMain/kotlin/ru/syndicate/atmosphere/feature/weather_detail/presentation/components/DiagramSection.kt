@@ -26,6 +26,7 @@ import org.jetbrains.compose.resources.painterResource
 import ru.syndicate.atmosphere.feature.weather_detail.domain.model.WeatherDetail
 import ru.syndicate.atmosphere.feature.weather_detail.presentation.translation.util.LocalDetailsStrings
 import ru.syndicate.atmosphere.feature.weather_detail.resources.Res
+import ru.syndicate.atmosphere.feature.weather_detail.resources.pressure_svg
 import ru.syndicate.atmosphere.feature.weather_detail.resources.wind_svg
 
 @Composable
@@ -61,6 +62,37 @@ internal fun DiagramSectionMobile(
                         modifier = Modifier.size(130.dp),
                         speed = weatherDetail.windInfo.maxSpeed,
                         direction = weatherDetail.windInfo.direction
+                    )
+                }
+            }
+        )
+
+        Spacer(modifier = Modifier.width(10.dp))
+
+        ParameterCard(
+            modifier = Modifier.weight(1f),
+            title = {
+                Image(
+                    modifier = Modifier.size(20.dp),
+                    painter = painterResource(Res.drawable.pressure_svg),
+                    contentDescription = null
+                )
+                Text(
+                    text = "Pressure",
+                    style = LocalTextStyle.current,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 14.sp,
+                    color = Color.White
+                )
+            },
+            content = {
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    PressureDiagram(
+                        modifier = Modifier.size(130.dp),
+                        meanPressure = weatherDetail.pressureInfo.mean
                     )
                 }
             }
@@ -142,6 +174,60 @@ internal fun DiagramSectionDesktop(
                                 fontWeight = FontWeight.Normal,
                                 fontSize = 14.sp
                             )
+                        )
+                    }
+                }
+            }
+        )
+
+        ParameterCard(
+            modifier = Modifier.fillMaxWidth(),
+            title = {
+                Image(
+                    modifier = Modifier.size(20.dp),
+                    painter = painterResource(Res.drawable.pressure_svg),
+                    contentDescription = null
+                )
+                Text(
+                    text = "Pressure",
+                    style = LocalTextStyle.current,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 14.sp,
+                    color = Color.White
+                )
+            },
+            content = {
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    PressureDiagram(
+                        modifier = Modifier.size(130.dp),
+                        meanPressure = weatherDetail.pressureInfo.mean
+                    )
+
+                    Spacer(modifier = Modifier.width(50.dp))
+
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+
+                        ParameterRow(
+                            parameter = "Mean pressure",
+                            value = "${weatherDetail.pressureInfo.mean} hPa"
+                        )
+
+                        ParameterRow(
+                            parameter = "Maximum pressure",
+                            value = "${weatherDetail.pressureInfo.max} hPa"
+                        )
+
+                        ParameterRow(
+                            parameter = "Minimum pressure",
+                            value = "${weatherDetail.pressureInfo.min} hPa"
                         )
                     }
                 }

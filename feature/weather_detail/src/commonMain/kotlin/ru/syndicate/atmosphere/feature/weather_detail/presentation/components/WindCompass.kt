@@ -38,7 +38,7 @@ internal fun WindCompass(
         Canvas(
             modifier = Modifier
                 .matchParentSize()
-                .padding(22.dp)
+                .padding(18.dp)
         ) {
 
             val center = Offset(size.width / 2, size.height / 2)
