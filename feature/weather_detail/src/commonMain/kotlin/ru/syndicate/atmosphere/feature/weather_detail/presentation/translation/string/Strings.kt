@@ -13,6 +13,7 @@ internal data class Strings(
     val timePrefix: String,
     val windSectionTitle: String,
     val sunSectionTitle: String,
+    val pressureSectionTitle: String,
     val windUnit: String,
     val northSide: String,
     val eastSide: String,
@@ -24,6 +25,10 @@ internal data class Strings(
     val sunriseText: String,
     val sunsetText: String,
     val daylightDuration: String,
+    val meanPressureText: String,
+    val maxPressureText: String,
+    val minPressureText: String,
+    val pressureUnit: String,
     val errorContentStrings: ErrorContentStrings
 )
 

@@ -78,7 +78,7 @@ internal fun DiagramSectionMobile(
                     contentDescription = null
                 )
                 Text(
-                    text = "Pressure",
+                    text = LocalDetailsStrings.current.pressureSectionTitle,
                     style = LocalTextStyle.current,
                     fontWeight = FontWeight.Medium,
                     fontSize = 14.sp,
@@ -189,7 +189,7 @@ internal fun DiagramSectionDesktop(
                     contentDescription = null
                 )
                 Text(
-                    text = "Pressure",
+                    text = LocalDetailsStrings.current.pressureSectionTitle,
                     style = LocalTextStyle.current,
                     fontWeight = FontWeight.Medium,
                     fontSize = 14.sp,
@@ -216,18 +216,21 @@ internal fun DiagramSectionDesktop(
                     ) {
 
                         ParameterRow(
-                            parameter = "Mean pressure",
-                            value = "${weatherDetail.pressureInfo.mean} hPa"
+                            parameter = LocalDetailsStrings.current.meanPressureText,
+                            value = "${weatherDetail.pressureInfo.mean}" +
+                                    " ${LocalDetailsStrings.current.pressureUnit}"
                         )
 
                         ParameterRow(
-                            parameter = "Maximum pressure",
-                            value = "${weatherDetail.pressureInfo.max} hPa"
+                            parameter = LocalDetailsStrings.current.maxPressureText,
+                            value = "${weatherDetail.pressureInfo.max}" +
+                                    " ${LocalDetailsStrings.current.pressureUnit}"
                         )
 
                         ParameterRow(
-                            parameter = "Minimum pressure",
-                            value = "${weatherDetail.pressureInfo.min} hPa"
+                            parameter = LocalDetailsStrings.current.minPressureText,
+                            value = "${weatherDetail.pressureInfo.min}" +
+                                    " ${LocalDetailsStrings.current.pressureUnit}"
                         )
                     }
                 }
