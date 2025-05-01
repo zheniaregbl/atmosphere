@@ -1,38 +1,36 @@
 package ru.syndicate.atmosphere.feature.weather_detail.domain.use_case
 
 import com.skydoves.sandwich.ApiResponse
+import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
-import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
+import kotlinx.datetime.toLocalDateTime
 import kotlinx.datetime.until
 import ru.syndicate.atmosphere.core.domain.model.CurrentLocation
 import ru.syndicate.atmosphere.core.domain.use_case.CaseResult
 import ru.syndicate.atmosphere.feature.weather_detail.domain.model.WeatherDetail
-import ru.syndicate.atmosphere.feature.weather_detail.domain.repository.TimeRepository
 import ru.syndicate.atmosphere.feature.weather_detail.domain.repository.WeatherRepository
 
 internal class GetDailyWeatherCase(
-    private val weatherRepository: WeatherRepository,
-    private val timeRepository: TimeRepository
+    private val weatherRepository: WeatherRepository
 ) {
     suspend operator fun invoke(currentLocation: CurrentLocation): CaseResult<WeatherDetail> {
 
-        val weatherResponse = weatherRepository.getDailyWeather(
-            currentLocation.latitude,
-            currentLocation.longitude,
-            currentLocation.timeZone
-        )
-        val timeResponse = timeRepository.getDateTimeByTimeZone(currentLocation.timeZone)
+        return when (
+            val response = weatherRepository
+                .getDailyWeather(
+                    currentLocation.latitude,
+                    currentLocation.longitude,
+                    currentLocation.timeZone
+                )
+        ) {
 
-        return when {
-
-            weatherResponse is ApiResponse.Success<WeatherDetail>
-                    && timeResponse is ApiResponse.Success<LocalDateTime> -> {
+            is ApiResponse.Success<WeatherDetail> -> {
 
                 val timeZone = TimeZone.of(currentLocation.timeZone)
-                val now = timeResponse.data
-                val sunInfo = weatherResponse.data.sunInfo
+                val now = Clock.System.now().toLocalDateTime(timeZone)
+                val sunInfo = response.data.sunInfo
 
                 val (start, end, offset) = when {
                     now.time >= sunInfo.sunrise.time && now.time <= sunInfo.sunset.time ->
@@ -51,8 +49,8 @@ internal class GetDailyWeatherCase(
                 val remainingMinutes = nowInstant.until(endInstant, DateTimeUnit.MINUTE)
                 val percentage = 0.5f * ((totalMinutes.toFloat() - remainingMinutes.toFloat()) / totalMinutes.toFloat()) + offset
 
-                CaseResult.Success(weatherResponse.data.copy(
-                    sunInfo = weatherResponse.data.sunInfo.copy(percentage = percentage)
+                CaseResult.Success(response.data.copy(
+                    sunInfo = response.data.sunInfo.copy(percentage = percentage)
                 ))
             }
 

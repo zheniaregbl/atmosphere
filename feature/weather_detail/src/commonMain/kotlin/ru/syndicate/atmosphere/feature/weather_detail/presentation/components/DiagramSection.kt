@@ -66,37 +66,6 @@ internal fun DiagramSectionMobile(
                 }
             }
         )
-
-        Spacer(modifier = Modifier.width(10.dp))
-
-        ParameterCard(
-            modifier = Modifier.weight(1f),
-            title = {
-                Image(
-                    modifier = Modifier.size(20.dp),
-                    painter = painterResource(Res.drawable.sun_svg),
-                    contentDescription = null
-                )
-                Text(
-                    text = LocalDetailsStrings.current.sunSectionTitle,
-                    style = LocalTextStyle.current,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 14.sp,
-                    color = Color.White
-                )
-            },
-            content = {
-                Box(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    SunDiagram(
-                        modifier = Modifier.size(130.dp),
-                        percentage = weatherDetail.sunInfo.percentage
-                    )
-                }
-            }
-        )
     }
 }
 
@@ -174,61 +143,6 @@ internal fun DiagramSectionDesktop(
                                 fontWeight = FontWeight.Normal,
                                 fontSize = 14.sp
                             )
-                        )
-                    }
-                }
-            }
-        )
-
-        ParameterCard(
-            modifier = Modifier.fillMaxWidth(),
-            title = {
-                Image(
-                    modifier = Modifier.size(20.dp),
-                    painter = painterResource(Res.drawable.sun_svg),
-                    contentDescription = null
-                )
-                Text(
-                    text = LocalDetailsStrings.current.sunSectionTitle,
-                    style = LocalTextStyle.current,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 14.sp,
-                    color = Color.White
-                )
-            },
-            content = {
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    SunDiagram(
-                        modifier = Modifier.size(130.dp),
-                        percentage = weatherDetail.sunInfo.percentage
-                    )
-
-                    Spacer(modifier = Modifier.width(50.dp))
-
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalArrangement = Arrangement.spacedBy(6.dp)
-                    ) {
-
-                        ParameterRow(
-                            parameter = LocalDetailsStrings.current.sunriseText,
-                            value = "${weatherDetail.sunInfo.sunrise.time}"
-                        )
-
-                        ParameterRow(
-                            parameter = LocalDetailsStrings.current.sunsetText,
-                            value = "${weatherDetail.sunInfo.sunset.time}"
-                        )
-
-                        ParameterRow(
-                            parameter = LocalDetailsStrings.current.daylightDuration,
-                            value = "${weatherDetail.sunInfo.daylightDuration}" +
-                                    " ${LocalDetailsStrings.current.hourUnit}"
                         )
                     }
                 }
