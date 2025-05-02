@@ -95,15 +95,21 @@ internal fun WeatherDetailScreenImpl(
                 )
 
                 state.value.toUiState().DisplayResult(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .widthIn(max = 800.dp)
+                        .fillMaxSize(),
+                    contentAlignment = Alignment.TopStart,
                     onIdle = { },
                     onLoading = {
-                        AdaptiveCircularProgressIndicator(
-                            modifier = Modifier
-                                .padding(bottom = 80.dp)
-                                .size(50.dp),
-                            color = Color.White,
-                        )
+                        Box(modifier = Modifier.fillMaxSize()) {
+                            AdaptiveCircularProgressIndicator(
+                                modifier = Modifier
+                                    .align(Alignment.Center)
+                                    .padding(bottom = 80.dp)
+                                    .size(50.dp),
+                                color = Color.White,
+                            )
+                        }
                     },
                     onSuccess = { screenState ->
                         DetailsContent(
