@@ -4,7 +4,6 @@ import android.widget.RemoteViews
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.glance.ColorFilter
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
 import androidx.glance.ImageProvider
@@ -31,7 +30,6 @@ import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import kotlinx.datetime.LocalDateTime
-import ru.syndicate.atmosphere.core.presentation.theme.BackgroundColor
 import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
 import ru.syndicate.atmosphere.widget.R
 import ru.syndicate.atmosphere.widget.UpdateWeatherAction
@@ -60,10 +58,7 @@ internal fun WeatherWidgetUI(
     Column(
         modifier = GlanceModifier
             .fillMaxWidth()
-            .background(
-                imageProvider = ImageProvider(R.drawable.widget_background),
-                colorFilter = ColorFilter.tint(ColorProvider(BackgroundColor))
-            )
+            .background(ImageProvider(R.drawable.widget_background))
             .clickable(actionRunCallback<UpdateWeatherAction>())
             .padding(14.dp),
         horizontalAlignment = Alignment.CenterHorizontally
