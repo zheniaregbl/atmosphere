@@ -1,5 +1,6 @@
 package ru.syndicate.atmosphere.widget.presentation
 
+import android.widget.RemoteViews
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -7,8 +8,9 @@ import androidx.glance.ColorFilter
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
 import androidx.glance.ImageProvider
+import androidx.glance.LocalContext
 import androidx.glance.action.clickable
-import androidx.glance.appwidget.CircularProgressIndicator
+import androidx.glance.appwidget.AndroidRemoteViews
 import androidx.glance.appwidget.action.actionRunCallback
 import androidx.glance.background
 import androidx.glance.layout.Alignment
@@ -44,6 +46,12 @@ internal fun WeatherWidgetUI(
     isLoading: Boolean
 ) {
 
+    val context = LocalContext.current
+    val widgetProgressBarLayout = RemoteViews(
+        context.packageName,
+        R.layout.widget_progress_bar
+    )
+
     val lastUpdateDay = getWeekDayByLanguage(
         LocalDateTime.parse(weatherWidgetInfo.lastUpdateDateTime).dayOfWeek,
         weatherWidgetInfo.appLanguage
@@ -63,7 +71,10 @@ internal fun WeatherWidgetUI(
 
         when {
             isLoading -> {
-                CircularProgressIndicator(color = ColorProvider(LightWhite))
+                AndroidRemoteViews(
+                    modifier = GlanceModifier.size(40.dp),
+                    remoteViews = widgetProgressBarLayout
+                )
             }
             weatherWidgetInfo.isError -> {
                 WeatherWidgetErrorUI(weatherWidgetInfo.appLanguage)
