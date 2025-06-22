@@ -30,7 +30,8 @@ kotlin {
             isStatic = true
         }
     }
-    
+
+    jvmToolchain(21)
     jvm("desktop")
     
     sourceSets {
@@ -149,8 +150,4 @@ compose.desktop {
             }
         }
     }
-}
-
-tasks.register<ComposeHotRun>("runHot") {
-    mainClass.set("ru.syndicate.atmosphere.MainKt")
 }
