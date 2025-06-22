@@ -147,7 +147,7 @@ internal fun WeatherWidgetUI(
 }
 
 @OptIn(ExperimentalGlancePreviewApi::class)
-@Preview(widthDp = 200, heightDp = 150)
+@Preview(widthDp = 240, heightDp = 150)
 @Composable
 private fun WeatherWidgetPreview() {
 
@@ -163,7 +163,7 @@ private fun WeatherWidgetPreview() {
 }
 
 @OptIn(ExperimentalGlancePreviewApi::class)
-@Preview(widthDp = 200, heightDp = 150)
+@Preview(widthDp = 240, heightDp = 150)
 @Composable
 private fun WeatherWidgetLoadingPreview() {
 
@@ -179,7 +179,7 @@ private fun WeatherWidgetLoadingPreview() {
 }
 
 @OptIn(ExperimentalGlancePreviewApi::class)
-@Preview(widthDp = 200, heightDp = 150)
+@Preview(widthDp = 240, heightDp = 150)
 @Composable
 private fun WeatherWidgetErrorPreview() {
 
