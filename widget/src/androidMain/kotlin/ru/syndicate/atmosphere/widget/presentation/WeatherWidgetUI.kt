@@ -59,7 +59,10 @@ internal fun WeatherWidgetUI(
         modifier = GlanceModifier
             .fillMaxWidth()
             .background(ImageProvider(R.drawable.widget_background))
-            .clickable(actionRunCallback<UpdateWeatherAction>())
+            .clickable(
+                onClick = actionRunCallback<UpdateWeatherAction>(),
+                rippleOverride = R.color.transparent
+            )
             .padding(14.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
