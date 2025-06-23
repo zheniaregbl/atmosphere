@@ -4,12 +4,12 @@ internal val RuStrings = Strings(
     refreshText = "Нажмите, чтобы обновить",
     errorMessage = "Не удалось получить данные.",
     weekDayTitle = WeekDayTitle(
-        monday = "Пон",
-        tuesday = "Вто",
-        wednesday = "Сре",
-        thursday = "Чет",
-        friday = "Пят",
-        saturday = "Суб",
-        sunday = "Вос"
+        monday = "Пн",
+        tuesday = "Вт",
+        wednesday = "Ср",
+        thursday = "Чт",
+        friday = "Пт",
+        saturday = "Сб",
+        sunday = "Вс"
     )
 )
