@@ -33,7 +33,7 @@ class ShortWeatherWidgetReceiver: GlanceAppWidgetReceiver(), KoinComponent {
         appWidgetIds: IntArray
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
-        CoroutineScope(Dispatchers.IO).launch { getWeather(context) }
+        CoroutineScope(Dispatchers.IO).launch { fetchWeather(context) }
     }
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -52,11 +52,11 @@ class ShortWeatherWidgetReceiver: GlanceAppWidgetReceiver(), KoinComponent {
                 glanceAppWidget.update(context, id)
             }
 
-            getWeather(context)
+            fetchWeather(context)
         }
     }
 
-    private suspend fun getWeather(context: Context) {
+    private suspend fun fetchWeather(context: Context) {
 
         val glanceIds = GlanceAppWidgetManager(context).getGlanceIds(ShortWeatherWidget::class.java)
 
