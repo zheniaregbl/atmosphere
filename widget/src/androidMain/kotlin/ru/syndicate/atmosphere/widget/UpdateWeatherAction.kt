@@ -13,8 +13,8 @@ internal class UpdateWeatherAction : ActionCallback {
         glanceId: GlanceId,
         parameters: ActionParameters
     ) {
-        val intent = Intent(context, WeatherWidgetReceiver::class.java).apply {
-            action = WeatherWidgetReceiver.UPDATE_ACTION
+        val intent = Intent(context, ShortWeatherWidgetReceiver::class.java).apply {
+            action = ShortWeatherWidgetReceiver.UPDATE_ACTION
         }
         context.sendBroadcast(intent)
     }

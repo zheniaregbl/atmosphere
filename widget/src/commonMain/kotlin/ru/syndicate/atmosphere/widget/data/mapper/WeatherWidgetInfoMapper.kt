@@ -1,10 +1,10 @@
 package ru.syndicate.atmosphere.widget.data.mapper
 
-import ru.syndicate.atmosphere.widget.data.dto.WeatherWidgetInfoDTO
-import ru.syndicate.atmosphere.widget.domain.model.WeatherWidgetInfo
+import ru.syndicate.atmosphere.widget.data.dto.ShortWeatherWidgetInfoDTO
+import ru.syndicate.atmosphere.widget.domain.model.ShortWeatherWidgetInfo
 
-internal fun WeatherWidgetInfoDTO.toModel() =
-    WeatherWidgetInfo(
+internal fun ShortWeatherWidgetInfoDTO.toModel() =
+    ShortWeatherWidgetInfo(
         currentTemperature,
         maxTemperature,
         minTemperature,
@@ -15,8 +15,8 @@ internal fun WeatherWidgetInfoDTO.toModel() =
         isError
     )
 
-internal fun WeatherWidgetInfo.toDTO() =
-    WeatherWidgetInfoDTO(
+internal fun ShortWeatherWidgetInfo.toDTO() =
+    ShortWeatherWidgetInfoDTO(
         currentTemperature,
         maxTemperature,
         minTemperature,

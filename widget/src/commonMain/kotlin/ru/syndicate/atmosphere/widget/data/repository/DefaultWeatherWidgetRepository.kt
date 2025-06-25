@@ -7,7 +7,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import ru.syndicate.atmosphere.core.data.network.RemoteWeatherDataSource
 import ru.syndicate.atmosphere.core.domain.repository.SettingsRepository
-import ru.syndicate.atmosphere.widget.domain.model.WeatherWidgetInfo
+import ru.syndicate.atmosphere.widget.domain.model.ShortWeatherWidgetInfo
 import ru.syndicate.atmosphere.widget.domain.repository.WeatherWidgetRepository
 import kotlin.math.roundToInt
 
@@ -16,7 +16,7 @@ internal class DefaultWeatherWidgetRepository(
     private val settingsRepository: SettingsRepository
 ): WeatherWidgetRepository {
 
-    override suspend fun getWidgetWeather(): WeatherWidgetInfo {
+    override suspend fun getWidgetWeather(): ShortWeatherWidgetInfo {
 
         val location = settingsRepository.currentLocation.first()
         val appLanguage = settingsRepository.appLanguage.first()
@@ -24,17 +24,17 @@ internal class DefaultWeatherWidgetRepository(
         val currentDateTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
 
         return when (response) {
-            is ApiResponse.Failure.Error -> WeatherWidgetInfo(
+            is ApiResponse.Failure.Error -> ShortWeatherWidgetInfo(
                 lastUpdateDateTime = currentDateTime.toString(),
                 appLanguage = appLanguage,
                 isError = true
             )
-            is ApiResponse.Failure.Exception -> WeatherWidgetInfo(
+            is ApiResponse.Failure.Exception -> ShortWeatherWidgetInfo(
                 lastUpdateDateTime = currentDateTime.toString(),
                 appLanguage = appLanguage,
                 isError = true
             )
-            is ApiResponse.Success -> WeatherWidgetInfo(
+            is ApiResponse.Success -> ShortWeatherWidgetInfo(
                 currentTemperature = response.data.currentParameters.temperature.roundToInt(),
                 maxTemperature = response.data.dailyParameters.maxTemperature.first().roundToInt(),
                 minTemperature = response.data.dailyParameters.minTemperature.first().roundToInt(),

@@ -20,12 +20,12 @@ import org.koin.core.component.inject
 import ru.syndicate.atmosphere.widget.data.mapper.toDTO
 import ru.syndicate.atmosphere.widget.domain.repository.WeatherWidgetRepository
 
-class WeatherWidgetReceiver: GlanceAppWidgetReceiver(), KoinComponent {
+class ShortWeatherWidgetReceiver: GlanceAppWidgetReceiver(), KoinComponent {
 
     private val widgetWeatherRepository by inject<WeatherWidgetRepository>()
 
     override val glanceAppWidget: GlanceAppWidget
-        get() = WeatherWidget()
+        get() = ShortWeatherWidget()
 
     override fun onUpdate(
         context: Context,
@@ -42,7 +42,7 @@ class WeatherWidgetReceiver: GlanceAppWidgetReceiver(), KoinComponent {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val glanceIds = GlanceAppWidgetManager(context).getGlanceIds(WeatherWidget::class.java)
+            val glanceIds = GlanceAppWidgetManager(context).getGlanceIds(ShortWeatherWidget::class.java)
 
             glanceIds.forEach { id ->
 
@@ -58,7 +58,7 @@ class WeatherWidgetReceiver: GlanceAppWidgetReceiver(), KoinComponent {
 
     private suspend fun getWeather(context: Context) {
 
-        val glanceIds = GlanceAppWidgetManager(context).getGlanceIds(WeatherWidget::class.java)
+        val glanceIds = GlanceAppWidgetManager(context).getGlanceIds(ShortWeatherWidget::class.java)
 
         glanceIds.forEach { id ->
 

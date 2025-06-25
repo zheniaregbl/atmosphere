@@ -10,27 +10,27 @@ import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.fillMaxSize
 import kotlinx.serialization.json.Json
-import ru.syndicate.atmosphere.widget.data.dto.WeatherWidgetInfoDTO
+import ru.syndicate.atmosphere.widget.data.dto.ShortWeatherWidgetInfoDTO
 import ru.syndicate.atmosphere.widget.data.mapper.toModel
-import ru.syndicate.atmosphere.widget.presentation.WeatherWidgetUI
+import ru.syndicate.atmosphere.widget.presentation.ShortWeatherWidgetUI
 
-internal class WeatherWidget : GlanceAppWidget() {
+internal class ShortWeatherWidget : GlanceAppWidget() {
 
     override suspend fun provideGlance(context: Context, id: GlanceId) = provideContent {
 
-        val weatherWidgetInfoString = currentState(WeatherWidgetReceiver.WeatherWidgetInfo) ?: ""
-        val isLoading = currentState(WeatherWidgetReceiver.IsLoading) ?: false
+        val weatherWidgetInfoString = currentState(ShortWeatherWidgetReceiver.WeatherWidgetInfo) ?: ""
+        val isLoading = currentState(ShortWeatherWidgetReceiver.IsLoading) ?: false
 
         val weatherWidgetInfo = Json
-            .decodeFromString<WeatherWidgetInfoDTO>(weatherWidgetInfoString)
+            .decodeFromString<ShortWeatherWidgetInfoDTO>(weatherWidgetInfoString)
             .toModel()
 
         Box(
             modifier = GlanceModifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            WeatherWidgetUI(
-                weatherWidgetInfo = weatherWidgetInfo,
+            ShortWeatherWidgetUI(
+                shortWeatherWidgetInfo = weatherWidgetInfo,
                 isLoading = isLoading
             )
         }

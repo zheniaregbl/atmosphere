@@ -6,7 +6,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import ru.syndicate.atmosphere.core.presentation.translation.Locales
 
-internal data class WeatherWidgetInfo(
+internal data class ShortWeatherWidgetInfo(
     val currentTemperature: Int = 20,
     val maxTemperature: Int = 30,
     val minTemperature: Int = 10,

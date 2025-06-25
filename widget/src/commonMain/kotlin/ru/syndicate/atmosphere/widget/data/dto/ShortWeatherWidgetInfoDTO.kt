@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class WeatherWidgetInfoDTO(
+internal data class ShortWeatherWidgetInfoDTO(
     @SerialName("current_temperature") val currentTemperature: Int,
     @SerialName("max_temperature") val maxTemperature: Int,
     @SerialName("min_temperature") val minTemperature: Int,

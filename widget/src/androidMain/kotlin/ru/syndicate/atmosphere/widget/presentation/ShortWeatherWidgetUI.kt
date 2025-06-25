@@ -33,14 +33,14 @@ import kotlinx.datetime.LocalDateTime
 import ru.syndicate.atmosphere.core.presentation.theme.LightWhite
 import ru.syndicate.atmosphere.widget.R
 import ru.syndicate.atmosphere.widget.UpdateWeatherAction
-import ru.syndicate.atmosphere.widget.domain.model.WeatherWidgetInfo
+import ru.syndicate.atmosphere.widget.domain.model.ShortWeatherWidgetInfo
 import ru.syndicate.atmosphere.widget.presentation.util.getRefreshTextByLanguage
 import ru.syndicate.atmosphere.widget.presentation.util.getWeekDayByLanguage
 import ru.syndicate.atmosphere.widget.presentation.util.iconByWeatherCode
 
 @Composable
-internal fun WeatherWidgetUI(
-    weatherWidgetInfo: WeatherWidgetInfo,
+internal fun ShortWeatherWidgetUI(
+    shortWeatherWidgetInfo: ShortWeatherWidgetInfo,
     isLoading: Boolean
 ) {
 
@@ -51,8 +51,8 @@ internal fun WeatherWidgetUI(
     )
 
     val lastUpdateDay = getWeekDayByLanguage(
-        LocalDateTime.parse(weatherWidgetInfo.lastUpdateDateTime).dayOfWeek,
-        weatherWidgetInfo.appLanguage
+        LocalDateTime.parse(shortWeatherWidgetInfo.lastUpdateDateTime).dayOfWeek,
+        shortWeatherWidgetInfo.appLanguage
     )
 
     Column(
@@ -74,8 +74,8 @@ internal fun WeatherWidgetUI(
                     remoteViews = widgetProgressBarLayout
                 )
             }
-            weatherWidgetInfo.isError -> {
-                WeatherWidgetErrorUI(weatherWidgetInfo.appLanguage)
+            shortWeatherWidgetInfo.isError -> {
+                WeatherWidgetErrorUI(shortWeatherWidgetInfo.appLanguage)
             }
             else -> {
                 Row(
@@ -87,7 +87,7 @@ internal fun WeatherWidgetUI(
                     Column {
 
                         Text(
-                            text = "$lastUpdateDay,${weatherWidgetInfo.lastUpdateTime}",
+                            text = "$lastUpdateDay,${shortWeatherWidgetInfo.lastUpdateTime}",
                             style = TextStyle(
                                 fontFamily = FontFamily.Monospace,
                                 fontWeight = FontWeight.Normal,
@@ -97,7 +97,7 @@ internal fun WeatherWidgetUI(
                         )
 
                         Text(
-                            text = "${weatherWidgetInfo.currentTemperature}°",
+                            text = "${shortWeatherWidgetInfo.currentTemperature}°",
                             style = TextStyle(
                                 fontFamily = FontFamily.Monospace,
                                 fontWeight = FontWeight.Bold,
@@ -107,7 +107,7 @@ internal fun WeatherWidgetUI(
                         )
 
                         Text(
-                            text = "${weatherWidgetInfo.maxTemperature}°/${weatherWidgetInfo.minTemperature}°",
+                            text = "${shortWeatherWidgetInfo.maxTemperature}°/${shortWeatherWidgetInfo.minTemperature}°",
                             style = TextStyle(
                                 fontFamily = FontFamily.Monospace,
                                 fontWeight = FontWeight.Normal,
@@ -123,8 +123,8 @@ internal fun WeatherWidgetUI(
                         modifier = GlanceModifier.size(64.dp),
                         provider = ImageProvider(
                             iconByWeatherCode(
-                                weatherWidgetInfo.weatherCode,
-                                weatherWidgetInfo.isDay
+                                shortWeatherWidgetInfo.weatherCode,
+                                shortWeatherWidgetInfo.isDay
                             )
                         ),
                         contentDescription = null
@@ -135,7 +135,7 @@ internal fun WeatherWidgetUI(
 
                 Text(
                     modifier = GlanceModifier.fillMaxWidth(),
-                    text = getRefreshTextByLanguage(weatherWidgetInfo.appLanguage),
+                    text = getRefreshTextByLanguage(shortWeatherWidgetInfo.appLanguage),
                     style = TextStyle(
                         fontFamily = FontFamily.Monospace,
                         textAlign = TextAlign.Center,
@@ -152,14 +152,14 @@ internal fun WeatherWidgetUI(
 @OptIn(ExperimentalGlancePreviewApi::class)
 @Preview(widthDp = 240, heightDp = 150)
 @Composable
-private fun WeatherWidgetPreview() {
+private fun ShortWeatherWidgetPreview() {
 
     Box(
         modifier = GlanceModifier.padding(10.dp),
         contentAlignment = Alignment.Center
     ) {
-        WeatherWidgetUI(
-            weatherWidgetInfo = WeatherWidgetInfo(),
+        ShortWeatherWidgetUI(
+            shortWeatherWidgetInfo = ShortWeatherWidgetInfo(),
             isLoading = false
         )
     }
@@ -168,14 +168,14 @@ private fun WeatherWidgetPreview() {
 @OptIn(ExperimentalGlancePreviewApi::class)
 @Preview(widthDp = 240, heightDp = 150)
 @Composable
-private fun WeatherWidgetLoadingPreview() {
+private fun ShortWeatherWidgetLoadingPreview() {
 
     Box(
         modifier = GlanceModifier.padding(10.dp),
         contentAlignment = Alignment.Center
     ) {
-        WeatherWidgetUI(
-            weatherWidgetInfo = WeatherWidgetInfo(),
+        ShortWeatherWidgetUI(
+            shortWeatherWidgetInfo = ShortWeatherWidgetInfo(),
             isLoading = true
         )
     }
@@ -184,14 +184,14 @@ private fun WeatherWidgetLoadingPreview() {
 @OptIn(ExperimentalGlancePreviewApi::class)
 @Preview(widthDp = 240, heightDp = 150)
 @Composable
-private fun WeatherWidgetErrorPreview() {
+private fun ShortWeatherWidgetErrorPreview() {
 
     Box(
         modifier = GlanceModifier.padding(10.dp),
         contentAlignment = Alignment.Center
     ) {
-        WeatherWidgetUI(
-            weatherWidgetInfo = WeatherWidgetInfo(isError = true),
+        ShortWeatherWidgetUI(
+            shortWeatherWidgetInfo = ShortWeatherWidgetInfo(isError = true),
             isLoading = false
         )
     }

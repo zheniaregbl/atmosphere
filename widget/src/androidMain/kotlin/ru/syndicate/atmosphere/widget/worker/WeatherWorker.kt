@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import ru.syndicate.atmosphere.widget.WeatherWidgetReceiver
+import ru.syndicate.atmosphere.widget.ShortWeatherWidgetReceiver
 
 internal class WeatherWorker(
     private val context: Context,
@@ -12,8 +12,8 @@ internal class WeatherWorker(
 ) : CoroutineWorker(context, workerParameters) {
     override suspend fun doWork(): Result {
 
-        val intent = Intent(context, WeatherWidgetReceiver::class.java).apply {
-            action = WeatherWidgetReceiver.UPDATE_ACTION
+        val intent = Intent(context, ShortWeatherWidgetReceiver::class.java).apply {
+            action = ShortWeatherWidgetReceiver.UPDATE_ACTION
         }
         applicationContext.sendBroadcast(intent)
 
