@@ -1,55 +1,27 @@
-# 🌤️ Atmosphere App
-Atmosphere is a cross-platform weather forecasting application developed on Kotlin Multiplatform and Compose Multiplatform. The app provides up-to-date weather information and a forecast for several days for Android, iOS, and Desktop users.
+This is a Kotlin Multiplatform project targeting Android, iOS, Desktop (JVM).
 
-### 🌟 Features
-- **Real-time Weather**: Get current weather conditions for selected city.
-- **Multi-day Forecast**: View detailed forecasts for the upcoming days.
-- **Search Functionality**: Easily find weather updates for any city worldwide.
-- **Cross-Platform Support**: Available on Android, iOS, and Desktop platforms.
-- **User-friendly Interface**: Intuitive design for smooth user interaction.
+* [/iosApp](./iosApp/iosApp) contains an iOS application. Even if you’re sharing your UI with Compose Multiplatform,
+  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
 
-### 📸 Screenshots
+* [/shared](./shared/src) is for code that will be shared across your Compose Multiplatform applications.
+  It contains several subfolders:
+  - [commonMain](./shared/src/commonMain/kotlin) is for code that’s common for all targets.
+  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
+    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
+    the [iosMain](./shared/src/iosMain/kotlin) folder would be the right place for such calls.
+    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./shared/src/jvmMain/kotlin)
+    folder is the appropriate location.
 
-Android app
-<p align="left">
-  <img src="docs/screenshots/android-home.png" alt="Main Screen" width="25%" />
-  <img src="docs/screenshots/android-search.png" alt="Search Screen" width="25%" />
-  <img src="docs/screenshots/android-details.png" alt="Search Screen" width="25%" />
-  <img src="docs/screenshots/android-forecast.png" alt="Search Screen" width="25%" />
-</p>
+### Running the apps
 
-iOS app
-<p align="left">
-  <img src="docs/screenshots/ios-home.png" alt="Main Screen" width="25%" />
-  <img src="docs/screenshots/ios-search.png" alt="Search Screen" width="25%" />
-  <img src="docs/screenshots/ios-details.png" alt="Search Screen" width="25%" />
-  <img src="docs/screenshots/ios-forecast.png" alt="Search Screen" width="25%" />
-</p>
+Use the run configurations provided by the run widget in your IDE's toolbar. You can also use these commands and options:
 
-Desktop app
-<p align="left">
-  <img src="docs/screenshots/desktop-home.png" alt="Main Screen" width="25%" />
-  <img src="docs/screenshots/desktop-search.png" alt="Search Screen" width="25%" />
-  <img src="docs/screenshots/desktop-details.png" alt="Search Screen" width="25%" />
-  <img src="docs/screenshots/desktop-forecast.png" alt="Search Screen" width="25%" />
-</p>
+- Android app: `./gradlew :androidApp:assembleDebug`
+- Desktop app:
+  - Hot reload: `./gradlew :desktopApp:hotRun --auto`
+  - Standard run: `./gradlew :desktopApp:run`
+- iOS app: open the [/iosApp](./iosApp) directory in Xcode and run it from there.
 
-Android widget
-<p align="left">
-  <img src="docs/screenshots/android-short-widget.png" alt="Main Screen" width="25%" />
-</p>
+---
 
-### 🛠️ Technologies
-- **Development language**: [Kotlin](https://kotlinlang.org/).
-- **Frameworks**: [Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html), [Compose Multiplatform](https://www.jetbrains.com/compose-multiplatform/).
-- **Widget**: [Glance](https://developer.android.com/develop/ui/compose/glance?hl=ru) (Android).
-- **Navigation**: [Voyager](https://voyager.adriel.cafe).
-- **Charts**: [Koalaplot](https://koalaplot.github.io).
-- **Localization**: [Lyricist](https://github.com/adrielcafe/lyricist).
-- **Network**: [Ktor](https://ktor.io), [Sandwich](https://skydoves.github.io/sandwich/).
-- **Dependency Injection**: [Koin](https://insert-koin.io).
-- **Tools**: [Hot reload](https://github.com/JetBrains/compose-hot-reload).
-- **Others**: [Calf UI](https://mohamedrejeb.github.io/Calf/), [Shimmer](https://github.com/valentinilk/compose-shimmer), [Haze](https://chrisbanes.github.io/haze/latest/), [Coil](https://coil-kt.github.io/coil/compose/), [Compottie](https://github.com/alexzhirkevich/compottie).
-
-### 🙏 Acknowledgements
-- Weather data provided by [Open-Meteo](https://open-meteo.com/).
+Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…

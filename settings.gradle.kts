@@ -1,5 +1,4 @@
 rootProject.name = "atmosphere"
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
     repositories {
@@ -10,9 +9,7 @@ pluginManagement {
                 includeGroupAndSubgroups("com.google")
             }
         }
-        maven("https://packages.jetbrains.team/maven/p/firework/dev")
         mavenCentral()
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
         gradlePluginPortal()
     }
 }
@@ -26,20 +23,14 @@ dependencyResolutionManagement {
                 includeGroupAndSubgroups("com.google")
             }
         }
-        maven("https://packages.jetbrains.team/maven/p/firework/dev")
         mavenCentral()
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-        mavenLocal()
     }
 }
 
-include(":composeApp")
-include(":core")
-include(":widget")
-include(":feature:splash")
-include(":feature:onboarding")
-include(":feature:home")
-include(":feature:search")
-include(":feature:settings")
-include(":feature:weather_detail")
-include(":feature:forecast")
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+}
+
+include(":androidApp")
+include(":desktopApp")
+include(":shared")
